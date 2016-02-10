@@ -1,0 +1,420 @@
+$dark-red: #880403;
+$dark-green: #323d2a;
+$dark-purple: #422b71;
+$dark-blue: #1b4f70;
+$yellow: #ffd40c;
+
+$card-width: 120px;
+$card-height: 170px;
+
+$smallCard-width: 99px;
+$smallCard-height: 139px;
+
+$bigCard-width: 135px;
+$bigCard-height: 195px;
+
+html, body, div {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4 {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.table {
+    display: table;
+}
+
+
+.top-row {
+    display: table-row;
+    height: 25%;
+}
+
+.middle-row {
+    display: table-row;
+    height: 50%;
+    //background-color: rgba(255, 100, 100, 0.5);
+}
+
+.bottom-row {
+    display: table-row;
+    height: 25%;
+}
+
+.cards-row {
+    width: 100%;
+    height: $card-height + 40px;
+}
+
+
+
+
+@mixin quantity-query( $number, $comparison: 'equal' ) {
+  $nth: '';
+
+  @if index( ('greater' 'more' '>'), $comparison ) {
+    $nth: 'n + #{$number}';
+  } @else if index( ('less' 'fewer' '<'), $comparison ) {
+    $nth: '-n + #{$number}';
+  } @else if index( ('equal' 'same' '='), $comparison ) {
+    $nth: $number;
+  } @else {
+    @warn "Sorry, that's an invalid $comparison value."
+  }
+
+  &:nth-last-child(#{$nth}):first-child {
+    &,
+    & ~ * {
+      @content;
+    }
+  }
+}
+
+
+@mixin box-shadow($options) {
+    -webkit-box-shadow: $options;
+    -moz-box-shadow: $options;
+    -ms-box-shadow: $options;
+    box-shadow: $options;
+}
+
+
+@mixin linearGradient($top, $bottom){
+    background: $top; /* Old browsers */
+    background: -moz-linear-gradient(top,  $top 0%, $bottom 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$top), color-stop(100%,$bottom)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  $top 0%,$bottom 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  $top 0%,$bottom 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  $top 0%,$bottom 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  $top 0%,$bottom 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+}
+
+@import url(https://fonts.googleapis.com/css?family=Playfair+Display);
+
+
+#menuBar {
+    height: 3em;
+    width: 18em;
+    background-color: $dark-red;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-top: 2px solid #435237;
+    @include box-shadow(0px -3px 5px 0px rgba(0,0,0,0.75));
+}
+
+
+
+#endTurn-button {
+    background: #8f0404;
+    @include linearGradient(#8f0404, #420803);
+    -webkit-border-radius: 4;
+    -moz-border-radius: 4;
+    border-radius: 4px;
+    -webkit-box-shadow: 1px 2px 2px #000000;
+    -moz-box-shadow: 1px 2px 2px #000000;
+    box-shadow: 1px 2px 2px #000000;
+    font-family: Arial;
+    color: #ff9c00;
+    font-size: 20px;
+
+    width: 7.5em;
+
+    height: 4em;
+    left: 6em;
+
+    $height: 4em / 48em * 100%;
+
+    top: 50% - ($height / 2);
+    text-decoration: none;
+    position: absolute;
+
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    letter-spacing: 0.1em;
+}
+
+
+#board {
+    height: 100vh;
+    background: url("../images/texture.jpg");
+}
+
+#board-left {
+    //background-color: rgba(255, 0, 0, 0.1);
+    //display: inline-block;
+    width: 25%;
+    height: 100%;
+    float: left;
+
+    .button-container {
+        width: 192px;
+        height: 10%;
+        margin-left: 100px;
+        padding: 10px 30px;
+
+
+        button {
+            width: 100%;
+            height: 100%;
+            background-color: $dark-red;
+            display: block;
+            margin: auto;
+            color: $yellow;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+        }
+    }
+
+
+
+    .avatarContainer {
+        width: 100%;
+        height: 45%;
+        //border: 1px dashed white;
+        position: relative;
+        top: 0;
+        left: 0;
+
+        .avatar-box {
+            width: 192px;
+            height: 269px;
+            left: 100px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .player-name {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            letter-spacing: 0.1em;
+            font-size: 1.8em;
+            width: 192px;
+            margin-left: 100px;
+            position: absolute;
+        }
+
+        .resource-box {
+            width: 80px;
+            height: 269px;
+            border: 2px solid #222;
+            background-color: rgba(255, 255, 255, 0.03);
+            position: absolute;
+            left: 300px;
+        }
+    }
+
+    .avatarContainer:first-child {
+
+        .player-name {
+            color: red;
+            top: 40px;
+        }
+
+        .avatar-box {
+            position: absolute;
+            bottom: 2.5em;
+        }
+
+        .resource-box {
+            bottom: 2.5em;
+        }
+    }
+
+    .avatarContainer:last-child {
+
+        .player-name {
+            color: $yellow;
+            bottom: 40px;
+        }
+
+         .avatar-box {
+            position: absolute;
+            top: 2.5em;
+        }
+
+        .resource-box {
+            top: 2.5em;
+        }
+    }
+}
+
+#board-center {
+    //display: inline-block;
+    width: 50%;
+    height: 100%;
+    display: inline-block;
+
+
+}
+
+#board-right {
+    float: right;
+    width: 75%;
+    height: 100%;
+    //background-color: rgba(0, 0, 255, 0.2);
+
+
+    .top-row {
+
+        .hand {
+            width: 100%;
+            height: 100%;
+            padding-top: 50px;
+        }
+
+        .card {
+            width: $smallCard-width;
+            height: $smallCard-height;
+            //background-color: black;
+            //border: 3px solid $dark-red;
+            display: inline-block;
+            margin: 0 -30px;
+            @include box-shadow(-3px 3px 2px 0px rgba(0, 0, 0, 0.5));
+            background-image: url("../images/card-back.png");
+        }
+    }
+
+    .middle-row {
+        //background-color: rgba(255, 100, 100, 0.5);
+
+
+        .cards-row {
+
+            .card-box {
+                width: $card-width;
+                height: $card-height;
+                border: 5px solid $dark-green;
+                display: inline-block;
+                margin: 0 5px;
+                border-radius: 5px;
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .deck-container {
+            width: 30%;
+            display: inline-block;
+            float: right;
+            height: 100%;
+            margin-right: 5%;
+
+        }
+
+        .deck-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            display: inline-block;
+            height: $card-width;
+            //margin: 100px 0 0 30px;
+            width: $card-height;
+            margin-top: 25px;
+            margin-left: 20px;
+
+            p {
+                margin: 0;
+                padding: 0;
+                height: $card-width;
+                width: 100%;
+                line-height: $card-width;
+                font-family: 'Playfair Display', serif;
+                font-size: 1.3em;
+                text-align: center;
+            }
+        }
+
+        .deck-box:nth-child(odd) {
+            border: 5px solid $dark-purple;
+            color: lighten( $dark-purple, 20% );
+
+        }
+
+        .deck-box:nth-child(even) {
+            border: 5px solid $dark-blue;
+            color: lighten( $dark-blue, 20% );
+        }
+    }
+
+    .bottom-row {
+
+        #hand {
+            width: 100%;
+            height: 100%;
+        }
+
+        .card {
+            width: $bigCard-width;
+            height: $bigCard-height;
+            background-color: white;
+            border-radius: 5px;
+            border: 5px solid black;
+            margin: 0 2px;
+            display: inline-block;
+            cursor: pointer;
+            @include box-shadow(-3px 3px 2px 0px rgba(0, 0, 0, 0.5));
+            @include quantity-query(5, greater) {
+                margin: 0 2px 0 -40px;
+            }
+
+            &:hover {
+                border: 5px solid $dark-red;
+                position: absolute;
+                z-index: 2;
+                transform: scale(1.25);
+            }
+        }
+    }
+
+
+    #info-container {
+        width: 400px;
+        background-color: rgba(255, 255, 255, 0.3);
+        position: absolute;
+        bottom: -500px;
+        border-radius: 5px;
+        border: 5px solid $dark-red;
+        border-bottom: none;
+        height: 300px;
+        padding: 10px 20px;
+        font-family: 'Playfair Display', serif;
+        color: white;
+        right: 5%;
+
+
+        h3 {
+             letter-spacing: 0.1em;
+            font-size: 1.8em;
+        }
+
+        h4 {
+             letter-spacing: 0.1em;
+            font-size: 1em;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
