@@ -104,18 +104,9 @@ html, body {
 }
 
 @import url(https://fonts.googleapis.com/css?family=Playfair+Display);
+@import url(https://fonts.googleapis.com/css?family=Milonga);
 
 
-#menuBar {
-    height: 3em;
-    width: 18em;
-    background-color: $dark-red;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-top: 2px solid #435237;
-    @include box-shadow(0px -3px 5px 0px rgba(0,0,0,0.75));
-}
 
 
 
@@ -199,7 +190,7 @@ html, body {
         }
 
         .player-name {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Milonga', cursive;
             text-align: center;
             letter-spacing: 0.1em;
             font-size: 1.8em;
@@ -286,6 +277,34 @@ html, body {
             margin: 0 -30px;
             @include box-shadow(-3px 3px 2px 0px rgba(0, 0, 0, 0.5));
             background-image: url("../images/card-back.png");
+        }
+
+
+        .menu-bar {
+            position: relative;
+            top: 0;
+            right: 0;
+            height: 3em;
+            width: 18em;
+            background-color: $dark-red;
+            position: absolute;
+            border-top: 2px solid #435237;
+            @include box-shadow(0px -3px 5px 0px rgba(0,0,0,0.75));
+
+            span {
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                width: 80px;
+                background-color: lighten($dark-red, 20%);
+                text-align: center;
+                line-height: 3em;
+                font-size: 1em;
+                font-family: 'Milonga', cursive;
+                color: $yellow;
+                cursor: pointer;
+            }
         }
     }
 

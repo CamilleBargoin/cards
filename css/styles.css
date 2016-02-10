@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Playfair+Display);
+@import url(https://fonts.googleapis.com/css?family=Milonga);
 html, body, div {
   margin: 0;
   padding: 0;
@@ -34,33 +35,29 @@ html, body {
   width: 100%;
   height: 210px; }
 
-#menuBar {
-  height: 3em;
-  width: 18em;
-  background-color: #880403;
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-top: 2px solid #435237;
-  -ms-box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.75); }
-
 #endTurn-button {
   background: #8f0404;
   background: #8f0404;
   /* Old browsers */
+  background: -moz-linear-gradient(top, #8f0404 0%, #420803 100%);
   /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #8f0404), color-stop(100%, #420803));
   /* Chrome,Safari4+ */
   background: -webkit-linear-gradient(top, #8f0404 0%, #420803 100%);
   /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #8f0404 0%, #420803 100%);
   /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #8f0404 0%, #420803 100%);
   /* IE10+ */
   background: linear-gradient(to bottom, #8f0404 0%, #420803 100%);
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000',GradientType=0 );
   /* IE6-9 */
+  -webkit-border-radius: 4;
+  -moz-border-radius: 4;
   border-radius: 4px;
+  -webkit-box-shadow: 1px 2px 2px #000000;
+  -moz-box-shadow: 1px 2px 2px #000000;
   box-shadow: 1px 2px 2px #000000;
   font-family: Arial;
   color: #ff9c00;
@@ -110,7 +107,7 @@ html, body {
       left: 100px;
       background-color: rgba(255, 255, 255, 0.1); }
     #board-left .avatarContainer .player-name {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Milonga', cursive;
       text-align: center;
       letter-spacing: 0.1em;
       font-size: 1.8em;
@@ -159,9 +156,37 @@ html, body {
     height: 139px;
     display: inline-block;
     margin: 0 -30px;
+    -webkit-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
     -ms-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
     box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
     background-image: url("../images/card-back.png"); }
+  #board-right .top-row .menu-bar {
+    position: relative;
+    top: 0;
+    right: 0;
+    height: 3em;
+    width: 18em;
+    background-color: #880403;
+    position: absolute;
+    border-top: 2px solid #435237;
+    -webkit-box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.75);
+    -ms-box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.75); }
+    #board-right .top-row .menu-bar span {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 80px;
+      background-color: #ec0705;
+      text-align: center;
+      line-height: 3em;
+      font-size: 1em;
+      font-family: 'Milonga', cursive;
+      color: #ffd40c;
+      cursor: pointer; }
   #board-right .middle-row .cards-row .card-box {
     width: 120px;
     height: 170px;
@@ -211,6 +236,8 @@ html, body {
     margin: 0 2px;
     display: inline-block;
     cursor: pointer;
+    -webkit-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
     -ms-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
     box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5); }
     #board-right .bottom-row .card:nth-last-child(n + 5):first-child, #board-right .bottom-row .card:nth-last-child(n + 5):first-child ~ * {
@@ -219,9 +246,7 @@ html, body {
       border: 5px solid #880403;
       position: absolute;
       z-index: 2;
-      -webkit-transform: scale(1.25);
-          -ms-transform: scale(1.25);
-              transform: scale(1.25); }
+      transform: scale(1.25); }
   #board-right #info-container {
     width: 400px;
     background-color: rgba(255, 255, 255, 0.3);
