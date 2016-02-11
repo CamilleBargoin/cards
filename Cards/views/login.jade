@@ -1,0 +1,25 @@
+if username
+    p= "bienvenue " + username
+    a(id="logoutButton", class="button", href="/users/logout") Déconnexion
+else
+    div(id="loginContainer")
+        form(method="post", action="/users/login", id="loginForm")
+            input(type="text", placeholder="username", name="username", class="inputTextfield")
+            br
+            input(type="password", placeholder="password", name="password", class="inputTextfield")
+            br
+            input(type="submit", id="loginSubmit", class="button dark-grey", value="Go !")
+            span(id="showRegisterButton", class="button dark-grey") Create new General
+
+        form(method="post", action="/users/register", id="registerForm")
+            p Create new General
+            input(type="text", placeholder="username", name="username", class="inputTextfield")
+            br
+            input(type="password", placeholder="password", name="password", class="inputTextfield")
+            br
+            input(type="text", placeholder="email", name="email", class="inputTextfield")
+            br
+            input(type="submit", id="registerSubmit", class="button dark-grey", value="Create !")
+            span(id="showLoginButton", class="button dark-grey") I already have a General...
+
+

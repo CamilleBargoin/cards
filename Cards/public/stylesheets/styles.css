@@ -1,13 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Playfair+Display);
 @import url(https://fonts.googleapis.com/css?family=Milonga);
-html, body, div {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; }
-
 h1, h2, h3, h4 {
   margin: 0;
   padding: 0; }
+
+h1 {
+  text-align: center; }
 
 html, body {
   overflow: hidden; }
@@ -35,47 +33,172 @@ html, body {
   width: 100%;
   height: 210px; }
 
-#endTurn-button {
-  background: #8f0404;
-  background: #8f0404;
-  /* Old browsers */
-  background: -moz-linear-gradient(top, #8f0404 0%, #420803 100%);
-  /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #8f0404), color-stop(100%, #420803));
-  /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #8f0404 0%, #420803 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #8f0404 0%, #420803 100%);
-  /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #8f0404 0%, #420803 100%);
-  /* IE10+ */
-  background: linear-gradient(to bottom, #8f0404 0%, #420803 100%);
-  /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000',GradientType=0 );
-  /* IE6-9 */
-  -webkit-border-radius: 4;
-  -moz-border-radius: 4;
-  border-radius: 4px;
-  -webkit-box-shadow: 1px 2px 2px #000000;
-  -moz-box-shadow: 1px 2px 2px #000000;
-  box-shadow: 1px 2px 2px #000000;
-  font-family: Arial;
-  color: #ff9c00;
-  font-size: 20px;
-  width: 7.5em;
-  height: 4em;
-  left: 6em;
-  top: 45.83333%;
-  text-decoration: none;
-  position: absolute;
+.button {
+  padding: 8px 20px;
   cursor: pointer;
+  display: block;
+  margin: auto;
   font-family: 'Playfair Display', serif;
-  text-align: center;
-  letter-spacing: 0.1em; }
+  font-size: 1em;
+  border: 1px; }
 
-#board {
+.dark-grey {
+  background-color: #222; }
+
+.left {
+  float: left; }
+
+.right {
+  float: right; }
+
+#index, #board, #main {
   height: 100vh;
   background: url("../images/texture.jpg"); }
+
+#index .main-title {
+  color: white;
+  padding-top: 100px;
+  font-family: "Milonga";
+  letter-spacing: 0.12em;
+  font-size: 42px; }
+#index .intro-text {
+  color: white;
+  width: 50%;
+  display: block;
+  margin: 5% auto 0;
+  text-align: justify;
+  padding: 0 5%; }
+
+#loginContainer form {
+  width: 40%;
+  margin: 5% auto 0;
+  position: relative;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 2% 5%;
+  border: 2px solid #333; }
+#loginContainer form p {
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-size: 1em;
+  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif; }
+#loginContainer #registerForm {
+  display: none; }
+#loginContainer .inputTextfield {
+  font-size: 1.2em;
+  margin-bottom: 8px; }
+#loginContainer #loginSubmit, #loginContainer #registerSubmit {
+  margin: 0;
+  display: inline-block;
+  color: white; }
+#loginContainer #loginSubmit:hover, #loginContainer #registerSubmit:hover {
+  color: #222;
+  background-color: white; }
+#loginContainer #showRegisterButton, #loginContainer #showLoginButton {
+  display: inline-block;
+  float: right;
+  margin: 0;
+  color: white; }
+#loginContainer #showRegisterButton:hover, #loginContainer #showLoginButton:hover {
+  color: #222;
+  background-color: white; }
+
+#main {
+  font-family: "Milonga", cursive;
+  letter-spacing: 0.1em; }
+  #main h2 {
+    color: white;
+    font-family: "Milonga", cursive;
+    text-align: center; }
+  #main .left {
+    width: 30%;
+    height: 100%; }
+    #main .left .account {
+      width: 100%;
+      height: 60%;
+      padding-top: 50px; }
+      #main .left .account h1 {
+        color: white; }
+      #main .left .account h1 + div {
+        margin-top: 50px;
+        padding: 0 100px; }
+      #main .left .account .avatar {
+        width: 192px;
+        height: 269px;
+        background-color: rgba(255, 255, 255, 0.1);
+        float: left; }
+      #main .left .account .avatar + div {
+        margin: 0;
+        display: inline-block;
+        height: 100%;
+        padding: 5px 20px; }
+        #main .left .account .avatar + div p {
+          color: white;
+          font-family: arial; }
+    #main .left .scores {
+      width: 100%;
+      height: 40%; }
+      #main .left .scores ul {
+        width: 60%;
+        margin-left: 100px;
+        padding: 0; }
+      #main .left .scores ul li {
+        list-style: none;
+        width: 100%;
+        margin-top: 18px; }
+        #main .left .scores ul li .date {
+          margin: 0;
+          display: inline-block;
+          font-size: 0.6em;
+          width: 10%;
+          text-align: right; }
+        #main .left .scores ul li .result {
+          width: 80%;
+          margin: 0;
+          display: inline-block; }
+      #main .left .scores .score {
+        color: white; }
+      #main .left .scores .defeat {
+        color: #e20705; }
+  #main .right {
+    width: 70%;
+    height: 100%; }
+    #main .right h1 {
+      color: white;
+      margin: 0; }
+    #main .right .army-options {
+      margin: 0 auto;
+      width: 469px;
+      height: 60%;
+      padding-top: 50px; }
+      #main .right .army-options .army-option {
+        width: 192px;
+        height: 269px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid #333;
+        margin: 5% 20px;
+        display: inline-block; }
+      #main .right .army-options .army-option:hover {
+        background-color: rgba(255, 255, 255, 0.5); }
+      #main .right .army-options #playButton {
+        width: 230px;
+        height: 60px;
+        margin: 5% auto 0;
+        display: block;
+        color: white;
+        text-align: center;
+        line-height: 60px;
+        font-size: 1.5em;
+        font-family: "Milonga", cursive;
+        text-decoration: none; }
+      #main .right .army-options #playButton:hover {
+        background-color: white;
+        color: #222; }
+    #main .right .currentGames {
+      height: 40%;
+      width: 100%; }
 
 #board-left {
   width: 25%;

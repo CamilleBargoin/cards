@@ -1,0 +1,79 @@
+extends layout
+
+block content
+    // BOARD
+    #board
+      // BOARD LEFT
+      #board-left
+        .avatarContainer
+          p.player-name Player 2
+          .avatar-box
+          .resource-box
+        .button-container
+          button
+            | End Turn
+        .avatarContainer
+          p.player-name Player 1
+          .avatar-box
+          .resource-box
+      // BOARD RIGHT
+      #board-right
+        .container.table
+          // TOP (opponent hand)
+          .top-row
+            .hand
+              .card 1
+              .card 2
+              .card 3
+            .menu-bar
+              span Menu
+          // MIDDLE (played cards + decks)
+          .middle-row
+            .cards-row
+              .card-box
+              .card-box
+              .card-box
+              .card-box
+              .card-box
+              .deck-container
+                .deck-box
+                  p Discarded Pile
+                .deck-box
+                  p Deck Pile
+            .cards-row
+              .card-box
+              .card-box
+              .card-box
+              .card-box
+              .card-box
+              .deck-container
+                .deck-box
+                  p Discarded Pile
+                .deck-box
+                  p Deck Pile
+          // BOTTOM (player hand)
+          .bottom-row
+            #hand
+              .card(name='carte 1') 1
+              .card(name='carte 2') 2
+              .card(name='carte 3') 3
+              .card(name='carte 4') 4
+              .card(name='carte 5') 5
+              .card(name='carte 6') 6
+              .card(name='carte 7') 7
+              .card(name='carte 8') 8
+              .pwet(name='carte 9')
+            #info-container
+              h3 Nom de la carte
+              p
+                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                | tempor incididunt ut labore et dolore magna aliqua.
+              h4 Stats &amp; Effects
+              p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          // end table
+        // end board-right
+      // end board
+    //
+      End Document
+      ––––––––––––––––––––––––––––––––––––––––––––––––––
+    script(src="./javascripts/game.js")

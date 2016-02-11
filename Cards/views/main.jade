@@ -1,0 +1,38 @@
+extends layout
+
+block content
+    #main
+        .container
+            .left
+                .account
+                    h1 Mon Compte
+                    div
+                        .avatar
+                        div
+                            p Nom du Joueur
+                            p blablabla
+                            p blablabla
+                .scores
+                    h2 Derniers résultats
+                    ul
+                        li(class='score')
+                            p(class='result') Victoire !
+                            p(class='date') 10/02/2016
+                        li(class='score')
+                            p(class='result') Victoire !
+                            p(class='date') 10/02/2016
+                        li(class='score defeat')
+                            p(class='result') Défaite !
+                            p(class='date') 10/02/2016
+                        li(class='score')
+                            p(class='result') Victoire !
+                            p(class='date') 10/02/2016
+            .right
+                .army-options
+                    h1 Choose your Army:
+                    .army-option A
+                    .army-option B
+                    a(id="playButton", class="button dark-grey", href="/game") Fight!
+                .currentGames
+                    h2 Current Games
+

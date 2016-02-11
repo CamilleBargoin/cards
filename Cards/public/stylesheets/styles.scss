@@ -2,6 +2,7 @@ $dark-red: #880403;
 $dark-green: #323d2a;
 $dark-purple: #422b71;
 $dark-blue: #1b4f70;
+$dark-grey: #222;
 $yellow: #ffd40c;
 
 $card-width: 120px;
@@ -13,15 +14,14 @@ $smallCard-height: 139px;
 $bigCard-width: 135px;
 $bigCard-height: 195px;
 
-html, body, div {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 h1, h2, h3, h4 {
     margin: 0;
     padding: 0;
+}
+
+h1 {
+    text-align: center;
 }
 
 html, body {
@@ -59,6 +59,30 @@ html, body {
     height: $card-height + 40px;
 }
 
+.button {
+    padding: 8px 20px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    font-family: 'Playfair Display', serif;
+    font-size: 1em;
+    border: 1px;
+}
+
+
+
+.dark-grey {
+    background-color: $dark-grey;
+}
+
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
 
 
 
@@ -107,44 +131,246 @@ html, body {
 @import url(https://fonts.googleapis.com/css?family=Milonga);
 
 
-
-
-
-#endTurn-button {
-    background: #8f0404;
-    @include linearGradient(#8f0404, #420803);
-    -webkit-border-radius: 4;
-    -moz-border-radius: 4;
-    border-radius: 4px;
-    -webkit-box-shadow: 1px 2px 2px #000000;
-    -moz-box-shadow: 1px 2px 2px #000000;
-    box-shadow: 1px 2px 2px #000000;
-    font-family: Arial;
-    color: #ff9c00;
-    font-size: 20px;
-
-    width: 7.5em;
-
-    height: 4em;
-    left: 6em;
-
-    $height: 4em / 48em * 100%;
-
-    top: 50% - ($height / 2);
-    text-decoration: none;
-    position: absolute;
-
-    cursor: pointer;
-    font-family: 'Playfair Display', serif;
-    text-align: center;
-    letter-spacing: 0.1em;
-}
-
-
-#board {
+#index, #board, #main {
     height: 100vh;
     background: url("../images/texture.jpg");
 }
+
+
+
+#index {
+
+    .main-title {
+        color: white;
+        padding-top: 100px;
+        font-family: "Milonga";
+        letter-spacing: 0.12em;
+        font-size: 42px;
+    }
+
+    .intro-text {
+        color: white;
+        width: 50%;
+        display: block;
+        margin: 5% auto 0;
+        text-align: justify;
+        padding: 0 5%;
+    }
+
+
+}
+
+#loginContainer {
+
+    form {
+        width: 40%;
+        margin: 5% auto 0;
+        position: relative;
+        top: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 2% 5%;
+        border: 2px solid #333;
+
+    }
+
+    form p {
+        margin: 0;
+        padding: 0;
+        color: white;
+        font-size: 1em;
+        margin-bottom: 20px;
+        font-family: 'Playfair Display', serif;
+    }
+
+    #registerForm {
+        display: none;
+    }
+
+    .inputTextfield {
+        font-size: 1.2em;
+        margin-bottom: 8px;
+    }
+
+    #loginSubmit, #registerSubmit {
+        margin: 0;
+        display: inline-block;
+        color: white;
+    }
+
+    #loginSubmit:hover, #registerSubmit:hover {
+        color: $dark-grey;
+        background-color: white;
+    }
+
+    #showRegisterButton, #showLoginButton {
+        display: inline-block;
+        float: right;
+        margin: 0;
+        color: white;
+    }
+
+    #showRegisterButton:hover, #showLoginButton:hover {
+        color: $dark-grey;
+        background-color: white;
+    }
+}
+
+#main {
+    font-family: "Milonga", cursive;
+    letter-spacing: 0.1em;
+
+
+    h2 {
+        color: white;
+        font-family: "Milonga", cursive;
+        text-align: center;
+    }
+
+    .left {
+        width: 30%;
+        height: 100%;
+
+        .account {
+            width: 100%;
+            height: 60%;
+            padding-top: 50px;
+
+            h1 {
+                color: white;
+            }
+
+            h1+div {
+                margin-top: 50px;
+                padding: 0 100px;
+            }
+
+            .avatar {
+                width: 192px;
+                height: 269px;
+                background-color: rgba(255, 255, 255, 0.1);
+                float: left;
+            }
+
+            .avatar+div {
+                margin: 0;
+                display: inline-block;
+                height: 100%;
+                padding: 5px 20px;
+                p {
+                    color: white;
+                    font-family: arial;
+                }
+            }
+
+        }
+
+        .scores {
+
+            width: 100%;
+            height: 40%;
+
+            ul {
+
+                width: 60%;
+                margin-left: 100px;
+                padding: 0;
+            }
+
+            ul li{
+                list-style: none;
+                width: 100%;
+                margin-top: 18px;
+                //background-color: rgba(255, 255, 255, 0.5);
+
+                .date {
+                    margin: 0;
+                    display: inline-block;
+                    font-size: 0.6em;
+                    //padding-left: 15px;
+                    width: 10%;
+                    text-align: right;
+                }
+
+                .result {
+                    width: 80%;
+                    margin: 0;
+                    display: inline-block;
+                }
+            }
+
+            .score {
+                color: white;
+            }
+
+            .defeat {
+                color: lighten($dark-red, 18%);
+            }
+        }
+    }
+
+    .right {
+        width: 70%;
+        height: 100%;
+
+
+
+        h1 {
+            color: white;
+            //font-family: "Milonga", cursive;
+            margin: 0;
+        }
+
+        .army-options {
+            margin: 0 auto;
+            width: 192px + 192px + 85px;
+            height: 60%;
+            padding-top: 50px;
+
+            .army-option {
+                width: 192px;
+                height: 269px;
+                background-color: rgba(255, 255, 255, 0.1);
+                border: 1px solid #333;
+                margin: 5% 20px;
+                display: inline-block;
+            }
+
+            .army-option:hover {
+                background-color: rgba(255, 255, 255, 0.5);
+            }
+
+
+
+            #playButton {
+                width: 230px;
+                height: 60px;
+                margin: 5% auto 0;
+                display: block;
+                color: white;
+                text-align: center;
+                line-height: 60px;
+                font-size: 1.5em;
+                font-family: "Milonga", cursive;
+                text-decoration: none;
+            }
+
+            #playButton:hover {
+                background-color: white;
+                color: $dark-grey;
+            }
+        }
+
+
+
+        .currentGames {
+            height: 40%;
+            width: 100%;
+        }
+
+    }
+}
+
+
 
 #board-left {
     //background-color: rgba(255, 0, 0, 0.1);
