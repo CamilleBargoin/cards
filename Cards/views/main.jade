@@ -9,11 +9,13 @@ block content
                     div
                         .avatar
                         div
-                            p Nom du Joueur
-                            p blablabla
-                            p blablabla
+                            p= "Nom: " + login
+                            p= "Inscrit le: " + registrationDate
+                            p= "Parties jouees: " + games 
+                            p= "Victoires: " + victories + "%"
+                            
                 .scores
-                    h2 Derniers résultats
+                    h2 Derniers resultats
                     ul
                         li(class='score')
                             p(class='result') Victoire !
@@ -22,17 +24,19 @@ block content
                             p(class='result') Victoire !
                             p(class='date') 10/02/2016
                         li(class='score defeat')
-                            p(class='result') Défaite !
+                            p(class='result') Defaite !
                             p(class='date') 10/02/2016
                         li(class='score')
                             p(class='result') Victoire !
                             p(class='date') 10/02/2016
             .right
                 .army-options
-                    h1 Choose your Army:
+                    h1 Mon Armee
                     .army-option A
                     .army-option B
                     a(id="playButton", class="button dark-grey", href="/game") Fight!
-                .currentGames
-                    h2 Current Games
+
+    script(src="/javascripts/home.js")
+
+   
 
