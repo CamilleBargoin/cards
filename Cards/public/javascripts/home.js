@@ -36,6 +36,21 @@ Zepto(function($){
 
     });
 
+    $("#playButton").click(function() {
+        if (army)
+            alert("start game with " + army);
+
+    });
+
+/*
+    $(".logout").click(function() {
+
+        $.get("/users/logout", function(e) {
+            console.log(e);
+        });
+    });
+    */
+
 
 });
 

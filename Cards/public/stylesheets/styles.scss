@@ -276,12 +276,14 @@ div {
 #main {
     font-family: $optimus, $playfair, serif;
     letter-spacing: 0.1em;
+    background: url("/images/backgrounds/background3.jpg");
 
+    .container {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
 
     h2 {
         color: white;
-        //font-family: $optimus, cursive;
-
         text-align: center;
     }
 
@@ -342,6 +344,14 @@ div {
                 width: auto;
                 p {
                     color: white;
+                }
+
+                .logout {
+                    color: white;
+                }
+                .logout:hover {
+                    color: $dark-grey;
+                    background-color: white;
                 }
             }
 
@@ -497,10 +507,12 @@ div {
     }
 }
 
-
+#board {
+    background: url("/images/backgrounds/background5.jpg") no-repeat;
+}
 
 #board-left {
-    //background-color: rgba(255, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.6);
     //display: inline-block;
     width: 25%;
     height: 100%;
@@ -602,7 +614,7 @@ div {
     width: 50%;
     height: 100%;
     display: inline-block;
-
+background-color: rgba(0, 0, 0, 0.6);
 
 }
 
@@ -611,7 +623,7 @@ div {
     width: 75%;
     height: 100%;
     //background-color: rgba(0, 0, 255, 0.2);
-
+background-color: rgba(0, 0, 0, 0.6);
 
     .top-row {
 
@@ -670,7 +682,7 @@ div {
             .card-box {
                 width: $card-width;
                 height: $card-height;
-                border: 5px solid $dark-green;
+                border: 5px solid lighten($dark-green, 10%);
                 display: inline-block;
                 margin: 0 5px;
                 border-radius: 5px;
@@ -710,14 +722,14 @@ div {
         }
 
         .deck-box:nth-child(odd) {
-            border: 5px solid $dark-purple;
-            color: lighten( $dark-purple, 20% );
+            border: 5px solid  lighten($dark-purple, 15%);
+            color: lighten( $dark-purple, 30% );
 
         }
 
         .deck-box:nth-child(even) {
-            border: 5px solid $dark-blue;
-            color: lighten( $dark-blue, 20% );
+            border: 5px solid lighten($dark-blue, 12%);
+            color: lighten( $dark-blue, 30% );
         }
     }
 

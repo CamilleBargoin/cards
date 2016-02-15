@@ -10,21 +10,19 @@ var colors = require('colors');
 //
 // SESSIONS
 //
-var expressSession = require('express-session');
+
+var session = require('express-session');
 var sessionFileStore = require('session-file-store');
-var ExpressSessionFileStore = sessionFileStore(expressSession);
+var ExpressSessionFileStore = sessionFileStore(session);
 
 var fileStore = new ExpressSessionFileStore({
   ttl:3600,
   path:'./sessions'
 });
 
-var session = expressSession({
-  store: fileStore,
-  resave: true,
-  saveUninitialized: true,
-  secret:'1a9b829823448061ed5931380efc6c6a'
-});
+
+
+
 
 //
 // ROUTES
@@ -48,6 +46,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(session({
+  secret: '1a9b829823448061ed5931380efc6c6a',
+  resave: true,
+  saveUninitialized: true,
+  store: fileStore
+}));
 
 
 // DATABASE
@@ -77,7 +83,7 @@ var startServer = function() {
 
     console.log(database);
     req.db = database;
-    req.session = session;
+    //req.session = session;
     next();
   });
 

@@ -5,6 +5,7 @@ var appName = 'Cards';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+    console.log("> index");
     res.render('index', {
         title: appName,
         login: null
@@ -28,12 +29,15 @@ router.get('/game', function(req, res, next) {
 
 router.get('/home', function(req, res, next) {
 
-    if (req.session && req.session.id) {
+    if (req.session && req.session.userId) {
         var db = req.db.get();
         var collection = db.collection('users');
         var mongo = require('mongodb');
 
-        collection.findOne({_id: new mongo.ObjectId(req.session.id)}, function(err, doc) {
+        console.log(req.session);
+        console.log('___________');
+
+        collection.findOne({_id: new mongo.ObjectId(req.session.userId)}, function(err, doc) {
 
             if (!err) {
                 if (doc != null) {
@@ -55,6 +59,9 @@ router.get('/home', function(req, res, next) {
 
         });
 
+    } else {
+        // no session
+        res.redirect("/");
     }
 
 

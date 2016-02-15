@@ -1,10 +1,31 @@
 var express = require('express');
 var router = express.Router();
+var colors = require('colors');
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
+
+
+
+
+router.get("/logout", function(req, res, next) {
+	console.log("logging out".red);
+	if(req.session) {
+		req.session.destroy(function(err) {
+
+			if(!err)
+	      		res.redirect( "/");
+
+	 	});
+	}
+	else
+		res.redirect( "/");
+
+});
+
 
 
 
@@ -23,11 +44,12 @@ router.post('/login', function(req, res, next) {
 				}
 				else {
 
+					console.log(doc.magenta);
 					req.session.login = doc.login;
-					req.session.id = doc._id;
+					req.session.userId = doc._id;
 					req.session.avatar = doc.avatar;
 
-					res.redirect('/home/');
+					res.redirect('/home');
 				}
 			}
 			else {
@@ -59,7 +81,7 @@ router.post('/register', function(req, res, next) {
 							if (result.result.ok == 1) {
 
 								req.session.login = result.ops[0].login;
-								req.session.id = result.ops[0]._id;
+								req.session.userId = result.ops[0]._id;
 								res.redirect("/home");
 							}
 							console.log(result);
@@ -79,14 +101,14 @@ router.post('/register', function(req, res, next) {
 
 router.post('/update-avatar', function(req, res, next) {
 
-	if (req.body && req.body.avatar && req.session && req.session.id) {
+	if (req.body && req.body.avatar && req.session && req.session.userId) {
 
 		var db = req.db.get();
 		var collection = db.collection('users');
 		var mongo = require('mongodb');
 
 		collection.findOneAndUpdate({
-			_id: new mongo.ObjectId(req.session.id)
+			_id: new mongo.ObjectId(req.session.userId)
 		}, {
 			$set: {
 				avatar: req.body.avatar
@@ -104,9 +126,6 @@ router.post('/update-avatar', function(req, res, next) {
 		//user not connected
 	}
 });
-
-
-
 
 
 
