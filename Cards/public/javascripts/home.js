@@ -1,20 +1,27 @@
 Zepto(function($){
 
     var avatarFilename = null;
+    var army = null;
 
     $(".army-option").click(function() {
     	$(".army-option").removeClass("active");
     	$(this).addClass("active");
+        army = $(this).attr("army");
+
+        console.log("selected army: " + army);
     });
 
 
     $(".avatar").click(function() {
-        console.log("haha");
         $("#avatarPickerContainer").toggle();
     });
 
 
     $(".avatarContainer img").click(function() {
+
+        setTimeout(function() {
+            $("#avatarPickerContainer").toggle();
+        }, 200);
 
         avatarFilename = $(this).attr("src");
 
@@ -22,9 +29,13 @@ Zepto(function($){
             src: avatarFilename
         });
 
-        setTimeout(function() {
-            $("#avatarPickerContainer").toggle();
-        }, 200);
+
+        $.post('/users/update-avatar', {avatar: avatarFilename}, function(response) {
+            console.log(response);
+        });
+
     });
+
+
 });
 

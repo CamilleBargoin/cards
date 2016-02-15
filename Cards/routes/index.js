@@ -44,7 +44,8 @@ router.get('/home', function(req, res, next) {
                         login: doc.login,
                         registrationDate: new Date(doc.at).toLocaleDateString(),
                         games: doc.games,
-                        victories: (doc.victories / doc.games * 100).toFixed(2)
+                        victories: (doc.victories / doc.games * 100).toFixed(2),
+                        avatar: doc.avatar
                     });
                 }
                 else {

@@ -315,6 +315,7 @@ div {
                 border: 5px solid $dark-purple;
                 position: relative;
                 overflow: hidden;
+                cursor: pointer;
 
                 p {
                     color: white;
@@ -329,6 +330,10 @@ div {
                     top: -2.5px;
                     left: -2.5px;
                 }
+            }
+
+            .avatar:hover {
+                border: 5px solid darken($yellow, 13%);
             }
 
             .avatar+div {
@@ -404,17 +409,29 @@ div {
             padding-top: 50px;
 
             .army-option {
-                width: 192px;
-                height: 269px;
+                width: $avatar-width;
+                height: $avatar-height;
                 background-color: rgba(255, 255, 255, 0.1);
                 border: 1px solid #333;
                 margin: 5% 20px;
                 display: inline-block;
+                border-radius: 5px;
+                border: 5px solid $dark-purple;
+
             }
+
+            .army-option:nth-of-type(1) {
+                background: url("/images/armies/humans.jpg");
+            }
+
+            .army-option:nth-of-type(2) {
+                background: url("/images/armies/monsters.jpg");
+            }
+
 
             .active {
                    // border: 4px solid darken($dark-red, 10%);
-                    border: 4px solid darken($yellow, 10%);
+                    border: 5px solid darken($yellow, 10%);
                     border-radius: 5px;
             }
 
@@ -451,7 +468,7 @@ div {
     left: 10%;
     top: 20%;
     background-color: rgba(0, 0, 0, 0.8);
-    border: 5px solid black;
+    border: 6px solid lighten($dark-grey, 10%);
     display: none;
     color: white;
     text-align: center;
@@ -472,6 +489,7 @@ div {
                 display: inline-block;
                 border: 5px solid $dark-purple;
                 border-radius: 5px;
+                cursor: pointer;
             }
 
             img:hover {

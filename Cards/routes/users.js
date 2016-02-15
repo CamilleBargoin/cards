@@ -25,6 +25,7 @@ router.post('/login', function(req, res, next) {
 
 					req.session.login = doc.login;
 					req.session.id = doc._id;
+					req.session.avatar = doc.avatar;
 
 					res.redirect('/home/');
 				}
@@ -72,9 +73,35 @@ router.post('/register', function(req, res, next) {
 				}
 			}
 		});
+	}
+});
 
 
+router.post('/update-avatar', function(req, res, next) {
 
+	if (req.body && req.body.avatar && req.session && req.session.id) {
+
+		var db = req.db.get();
+		var collection = db.collection('users');
+		var mongo = require('mongodb');
+
+		collection.findOneAndUpdate({
+			_id: new mongo.ObjectId(req.session.id)
+		}, {
+			$set: {
+				avatar: req.body.avatar
+			}
+		}, {
+			returnNewDocument: true
+		}, function(e) {
+			console.log("update avatar".magenta);
+			console.log(e);
+			res.json({status: 1});
+		});
+
+	}
+	else {
+		//user not connected
 	}
 });
 

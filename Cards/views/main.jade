@@ -9,7 +9,7 @@ block content
                     div
                         .avatar
                             p Choisi ton avatar
-                            img
+                            img(src= avatar)
                         div
                             p= "Nom: " + login
                             p= "Inscrit le: " + registrationDate
@@ -34,8 +34,8 @@ block content
             .right
                 .army-options
                     h1 Mon Armee
-                    .army-option A
-                    .army-option B
+                    .army-option(army="humans")
+                    .army-option(army="monsters")
                     a(id="playButton", class="button dark-grey", href="/game") Fight!
     include avatarPicker.jade
 
