@@ -5,30 +5,39 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var database = require('./database.js');
+var colors = require('colors');
 
+//
+// SESSIONS
+//
 var expressSession = require('express-session');
 var sessionFileStore = require('session-file-store');
 var ExpressSessionFileStore = sessionFileStore(expressSession);
 
 var fileStore = new ExpressSessionFileStore({
-  ttl:3600, 
-  path:'./sessions' 
+  ttl:3600,
+  path:'./sessions'
 });
 
 var session = expressSession({
-  store: fileStore, 
-  resave: true, 
+  store: fileStore,
+  resave: true,
   saveUninitialized: true,
-  secret:'1a9b829823448061ed5931380efc6c6a' 
+  secret:'1a9b829823448061ed5931380efc6c6a'
 });
 
-
+//
+// ROUTES
+//
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+
 var app = express();
 
-// view engine setup
+//
+// JADE
+//
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -41,38 +50,33 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
-
-
-
-
+// DATABASE
 var urlDatabase = 'mongodb://localhost:27017/cards';
-
 
 var mongo = require('mongodb');
 var mongoClient = mongo.MongoClient;
 
-
-
-mongoClient.connect(urlDatabase, function(err, db) {
-  if (!err) {
-    console.log("Connected correctly to mongo server");
-    startServer(db);
-
+database.connect(urlDatabase, function(err) {
+  if (err) {
+    console.log('Impossible de se connecter à la base de données.'.red);
+    console.log(err);
+    process.exit(1);
   }
   else {
-    console.log(err);
+    console.log("Connected correctly to mongo server".green);
+    startServer();
   }
- 
 });
 
 
-var startServer = function(db) {
+var startServer = function() {
 
-  console.log("Node Server Start");
+  console.log("ExpressJS Server Waiting for Client Requests".green);
 
   app.use(function (req, res, next) {
-    req.db = db;
+
+    console.log(database);
+    req.db = database;
     req.session = session;
     next();
   });
@@ -80,10 +84,6 @@ var startServer = function(db) {
 
   app.use('/', routes);
   app.use('/users', users);
-
-
-      
-
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
@@ -115,7 +115,7 @@ var startServer = function(db) {
       error: {}
     });
   });
-  
+
 };
 
 

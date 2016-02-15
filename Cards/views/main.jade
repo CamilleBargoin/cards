@@ -8,12 +8,14 @@ block content
                     h1 Mon Compte
                     div
                         .avatar
+                            p Choisi ton avatar
+                            img
                         div
                             p= "Nom: " + login
                             p= "Inscrit le: " + registrationDate
-                            p= "Parties jouees: " + games 
+                            p= "Parties jouees: " + games
                             p= "Victoires: " + victories + "%"
-                            
+
                 .scores
                     h2 Derniers resultats
                     ul
@@ -35,8 +37,9 @@ block content
                     .army-option A
                     .army-option B
                     a(id="playButton", class="button dark-grey", href="/game") Fight!
+    include avatarPicker.jade
 
     script(src="/javascripts/home.js")
 
-   
+
 

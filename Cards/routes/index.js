@@ -29,13 +29,11 @@ router.get('/game', function(req, res, next) {
 router.get('/home', function(req, res, next) {
 
     if (req.session && req.session.id) {
-        var db = req.db;
+        var db = req.db.get();
         var collection = db.collection('users');
         var mongo = require('mongodb');
 
         collection.findOne({_id: new mongo.ObjectId(req.session.id)}, function(err, doc) {
-
-            console.log("ID DE CAMILLE: " + req.session.id);
 
             if (!err) {
                 if (doc != null) {
@@ -53,12 +51,12 @@ router.get('/home', function(req, res, next) {
                     // membre n'existe pas
                 }
             }
-            
+
         });
 
     }
 
-    
+
 });
 
 

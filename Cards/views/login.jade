@@ -11,7 +11,7 @@ else
             input(type="submit", id="loginSubmit", class="button dark-grey", value="Go !")
             span(id="showRegisterButton", class="button dark-grey") Creer un nouveau Compte
         if failAuth
-            p(class="failAuth") incorrect username / password
+            p(class="failAuth") Identifiant et/ou mot de passe incorrect(s)
 
         form(method="post", action="/users/register", id="registerForm")
             p Creez un nouveau Compte

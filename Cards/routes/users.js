@@ -13,7 +13,7 @@ router.post('/login', function(req, res, next) {
 
 	if (req.body && req.body.login && req.body.password) {
 
-		var db = req.db;
+		var db = req.db.get();
 		var collection = db.collection('users');
 
 		collection.findOne({login: req.body.login, password: req.body.password}, function(err, doc) {
@@ -22,10 +22,10 @@ router.post('/login', function(req, res, next) {
 					res.redirect("/fail-authenticate");
 				}
 				else {
-					
+
 					req.session.login = doc.login;
 					req.session.id = doc._id;
-					
+
 					res.redirect('/home/');
 				}
 			}
@@ -40,7 +40,7 @@ router.post('/register', function(req, res, next) {
 	if (req.body && req.body.login && req.body.password && req.body.email) {
 
 
-		var db = req.db;
+		var db = req.db.get();
 		var collection = db.collection('users');
 
 		collection.findOne({login: req.body.login}, function(err, doc) {
