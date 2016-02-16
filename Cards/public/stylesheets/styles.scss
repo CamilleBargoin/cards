@@ -24,8 +24,19 @@
          url('/fonts/optimusprincepssemibold-webfont.svg#optimusprincepssemiboldRg') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
+
+@font-face {
+    font-family:"Humanistic";
+    src: url('/fonts/Humanistic.ttf');
+}
+
+@font-face {
+    font-family:"Modern Serif Eroded";
+    src: url('/fonts/modern-serif.eroded.tff');
+}
+
+
 
 $optimus: "optimusprincepsregular";
 $optimusSemiBold: "optimusprincepssemiboldRg";
@@ -39,6 +50,7 @@ $dark-purple: #422b71;
 $dark-blue: #1b4f70;
 $dark-grey: #222;
 $yellow: #ffd40c;
+$orange: #ff9f3f;
 
 $card-width: 120px;
 $card-height: 170px;
@@ -69,6 +81,10 @@ html, body {
 }
 div {
     box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
 }
 
 .container {
@@ -198,7 +214,18 @@ div {
         font-family: serif;
     }
 
+    .info {
+        color: $orange;
 
+        display: block;
+        margin: 5% auto;
+        width: 30%;
+        font-size: 1.5em;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 1% 5%;
+        border: 2px solid #333;
+        text-align: center;
+    }
 }
 
 #loginContainer {
@@ -230,7 +257,7 @@ div {
     .inputTextfield {
         font-size: 1.2em;
         margin-bottom: 8px;
-        font-family: $optimusSemiBold, serif;
+        font-family: "Humanistic", serif;
         color: $dark-grey;
         background-color: rgba(255, 255, 255, 0.8);
         padding-left: 5px;
@@ -241,7 +268,7 @@ div {
         margin: 0;
         display: inline-block;
         color: white;
-        font-family: $optimusSemiBold, serif;
+        font-family: "Humanistic", serif;
     }
 
     #loginSubmit:hover, #registerSubmit:hover {
@@ -254,7 +281,7 @@ div {
         float: right;
         margin: 0;
         color: white;
-        font-family: $optimusSemiBold, serif;
+        font-family: "Humanistic", serif;
     }
 
     #showRegisterButton:hover, #showLoginButton:hover {
@@ -262,7 +289,7 @@ div {
         background-color: white;
     }
 
-
+/*
     .failAuth {
         color: lighten($dark-red, 16%);
         font-size: 1.2em;
@@ -270,12 +297,13 @@ div {
         display: block;
         width: 50%;
         letter-spacing: 0.08em;
-    }
+    }*/
 }
 
 #main {
     font-family: $optimus, $playfair, serif;
-    letter-spacing: 0.1em;
+    //font-family: "Humanistic", serif;
+    letter-spacing: 0.4em;
     background: url("/images/backgrounds/background3.jpg");
 
     .container {
@@ -344,11 +372,15 @@ div {
                 width: auto;
                 p {
                     color: white;
+                    font-family: "Humanistic", serif;
+                    letter-spacing: 0.1em;
                 }
 
                 .logout {
                     color: white;
+                    border: 1px solid lighten(grey, 20%);
                 }
+
                 .logout:hover {
                     color: $dark-grey;
                     background-color: white;
@@ -459,6 +491,7 @@ div {
                 font-size: 1.5em;
                 text-decoration: none;
                 font-weight: bold;
+                border: 1px solid lighten(grey, 20%);
             }
 
             #playButton:hover {

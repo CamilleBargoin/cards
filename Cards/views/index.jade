@@ -10,7 +10,10 @@ block content
         |consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
         |cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
         |proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
     include login.jade
+    if info
+        p(class="info")= info
     script(src="./javascripts/index.js")
 
 

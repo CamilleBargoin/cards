@@ -9,12 +9,10 @@ else
             input(type="password", placeholder="password", name="password", class="inputTextfield" required)
             br
             input(type="submit", id="loginSubmit", class="button dark-grey", value="Go !")
-            span(id="showRegisterButton", class="button dark-grey") Creer un nouveau Compte
-        if failAuth
-            p(class="failAuth") Identifiant et/ou mot de passe incorrect(s)
+            span(id="showRegisterButton", class="button dark-grey") Créer un nouveau Compte
 
         form(method="post", action="/users/register", id="registerForm")
-            p Creez un nouveau Compte
+            p Créer un nouveau Compte
             input(type="text", placeholder="username", name="login", class="inputTextfield" required)
             br
             input(type="password", placeholder="password", name="password", class="inputTextfield" required)
@@ -22,6 +20,6 @@ else
             input(type="text", placeholder="email", name="email", class="inputTextfield" required)
             br
             input(type="submit", id="registerSubmit", class="button dark-grey", value="Creer !")
-            span(id="showLoginButton", class="button dark-grey") J'ai deja un compte
+            span(id="showLoginButton", class="button dark-grey") J'ai déjà un compte
 
 

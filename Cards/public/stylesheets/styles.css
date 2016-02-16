@@ -12,6 +12,12 @@
   src: url("/fonts/optimusprincepssemibold-webfont.eot?#iefix") format("embedded-opentype"), url("/fonts/optimusprincepssemibold-webfont.woff2") format("woff2"), url("/fonts/optimusprincepssemibold-webfont.woff") format("woff"), url("/fonts/optimusprincepssemibold-webfont.ttf") format("truetype"), url("/fonts/optimusprincepssemibold-webfont.svg#optimusprincepssemiboldRg") format("svg");
   font-weight: normal;
   font-style: normal; }
+@font-face {
+  font-family: "Humanistic";
+  src: url("/fonts/Humanistic.ttf"); }
+@font-face {
+  font-family: "Modern Serif Eroded";
+  src: url("/fonts/modern-serif.eroded.tff"); }
 h1, h2, h3, h4 {
   margin: 0;
   padding: 0; }
@@ -24,6 +30,9 @@ html, body {
 
 div {
   box-sizing: border-box; }
+
+a {
+  text-decoration: none; }
 
 .container {
   width: 100%;
@@ -84,59 +93,72 @@ div {
   text-align: justify;
   padding: 0 5%;
   font-family: serif; }
-
-#loginContainer form {
-  width: 40%;
-  margin: 5% auto 0;
-  position: relative;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 2% 5%;
-  border: 2px solid #333; }
-#loginContainer form p {
-  margin: 0;
-  padding: 0;
-  color: white;
-  font-size: 1em;
-  margin-bottom: 20px;
-  font-family: "optimusprincepsregular", serif; }
-#loginContainer #registerForm {
-  display: none; }
-#loginContainer .inputTextfield {
-  font-size: 1.2em;
-  margin-bottom: 8px;
-  font-family: "optimusprincepssemiboldRg", serif;
-  color: #222;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding-left: 5px; }
-#loginContainer #loginSubmit, #loginContainer #registerSubmit {
-  margin: 0;
-  display: inline-block;
-  color: white;
-  font-family: "optimusprincepssemiboldRg", serif; }
-#loginContainer #loginSubmit:hover, #loginContainer #registerSubmit:hover {
-  color: #222;
-  background-color: white; }
-#loginContainer #showRegisterButton, #loginContainer #showLoginButton {
-  display: inline-block;
-  float: right;
-  margin: 0;
-  color: white;
-  font-family: "optimusprincepssemiboldRg", serif; }
-#loginContainer #showRegisterButton:hover, #loginContainer #showLoginButton:hover {
-  color: #222;
-  background-color: white; }
-#loginContainer .failAuth {
-  color: #d80605;
-  font-size: 1.2em;
-  margin: 35px auto;
+#index .info {
+  color: #ff9f3f;
   display: block;
-  width: 50%;
-  letter-spacing: 0.08em; }
+  margin: 5% auto;
+  width: 30%;
+  font-size: 1.5em;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 1% 5%;
+  border: 2px solid #333;
+  text-align: center; }
+
+#loginContainer {
+  /*
+      .failAuth {
+          color: lighten($dark-red, 16%);
+          font-size: 1.2em;
+          margin: 35px auto;
+          display: block;
+          width: 50%;
+          letter-spacing: 0.08em;
+      }*/ }
+  #loginContainer form {
+    width: 40%;
+    margin: 5% auto 0;
+    position: relative;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2% 5%;
+    border: 2px solid #333; }
+  #loginContainer form p {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 1em;
+    margin-bottom: 20px;
+    font-family: "optimusprincepsregular", serif; }
+  #loginContainer #registerForm {
+    display: none; }
+  #loginContainer .inputTextfield {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    font-family: "Humanistic", serif;
+    color: #222;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding-left: 5px; }
+  #loginContainer #loginSubmit, #loginContainer #registerSubmit {
+    margin: 0;
+    display: inline-block;
+    color: white;
+    font-family: "Humanistic", serif; }
+  #loginContainer #loginSubmit:hover, #loginContainer #registerSubmit:hover {
+    color: #222;
+    background-color: white; }
+  #loginContainer #showRegisterButton, #loginContainer #showLoginButton {
+    display: inline-block;
+    float: right;
+    margin: 0;
+    color: white;
+    font-family: "Humanistic", serif; }
+  #loginContainer #showRegisterButton:hover, #loginContainer #showLoginButton:hover {
+    color: #222;
+    background-color: white; }
 
 #main {
   font-family: "optimusprincepsregular", "Playfair Display", serif;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.4em;
   background: url("/images/backgrounds/background3.jpg"); }
   #main .container {
     background-color: rgba(0, 0, 0, 0.6); }
@@ -185,9 +207,12 @@ div {
         padding: 5px 0 5px 20px;
         width: auto; }
         #main .left .account .avatar + div p {
-          color: white; }
+          color: white;
+          font-family: "Humanistic", serif;
+          letter-spacing: 0.1em; }
         #main .left .account .avatar + div .logout {
-          color: white; }
+          color: white;
+          border: 1px solid #b3b3b3; }
         #main .left .account .avatar + div .logout:hover {
           color: #222;
           background-color: white; }
@@ -255,7 +280,8 @@ div {
         line-height: 60px;
         font-size: 1.5em;
         text-decoration: none;
-        font-weight: bold; }
+        font-weight: bold;
+        border: 1px solid #b3b3b3; }
       #main .right .army-options #playButton:hover {
         background-color: white;
         color: #222; }

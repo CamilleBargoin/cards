@@ -40,7 +40,8 @@ router.post('/login', function(req, res, next) {
 		collection.findOne({login: req.body.login, password: req.body.password}, function(err, doc) {
 			if (!err ) {
 				if (doc == null) {
-					res.redirect("/fail-authenticate");
+					req.session.customInfo = "Identifiant et/ou mot de passe incorrect(s)";
+					res.redirect("/");
 				}
 				else {
 

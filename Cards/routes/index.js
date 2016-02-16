@@ -5,10 +5,16 @@ var appName = 'Cards';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    console.log("> index");
+
+    console.log(req.session);
+
+    var info = (req.session.customInfo)? req.session.customInfo: null;
+    req.session.customInfo = null;
+
     res.render('index', {
         title: appName,
-        login: null
+        login: null,
+        info: info
     });
 });
 
@@ -54,6 +60,8 @@ router.get('/home', function(req, res, next) {
                 }
                 else {
                     // membre n'existe pas
+                    req.session.customInfo = "Accès refusé";
+                    res.redirect("/");
                 }
             }
 
@@ -61,6 +69,7 @@ router.get('/home', function(req, res, next) {
 
     } else {
         // no session
+        req.session.customInfo = "Accès refusé";
         res.redirect("/");
     }
 
