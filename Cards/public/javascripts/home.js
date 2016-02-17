@@ -37,8 +37,10 @@ Zepto(function($){
     });
 
     $("#playButton").click(function() {
-        if (army)
+        if (army) {
             alert("start game with " + army);
+
+        }
 
     });
 

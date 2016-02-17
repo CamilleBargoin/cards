@@ -451,7 +451,8 @@ a {
     height: 120px;
     width: 170px;
     margin-top: 25px;
-    margin-left: 20px; }
+    margin-left: 20px;
+    position: relative; }
     #board-right .middle-row .deck-box p {
       margin: 0;
       padding: 0;
@@ -461,6 +462,18 @@ a {
       font-family: "optimusprincepsregular", serif;
       font-size: 1.3em;
       text-align: center; }
+    #board-right .middle-row .deck-box .card {
+      width: 170px;
+      height: 120px;
+      margin: 0;
+      -webkit-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
+      -moz-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
+      -ms-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
+      box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
+      background-image: url("../images/card-back2.png");
+      position: absolute;
+      top: -5px;
+      left: 0px; }
   #board-right .middle-row .deck-box:nth-child(odd) {
     border: 5px solid #6240a8;
     color: #8b6dc8; }

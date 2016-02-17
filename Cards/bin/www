@@ -88,3 +88,13 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+
+
+//
+//  SERVER SOCKET.IO
+//
+
+var io = app.io;
+io.attach(server);
+

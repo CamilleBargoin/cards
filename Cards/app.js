@@ -7,6 +7,12 @@ var bodyParser = require('body-parser');
 var database = require('./database.js');
 var colors = require('colors');
 
+
+var socket_io = require("socket.io");
+
+
+
+
 //
 // SESSIONS
 //
@@ -21,7 +27,10 @@ var fileStore = new ExpressSessionFileStore({
 });
 
 
+var app = express();
 
+var io = socket_io();
+app.io = io;
 
 
 //
@@ -29,9 +38,9 @@ var fileStore = new ExpressSessionFileStore({
 //
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var game = require('./routes/game')(io);
 
 
-var app = express();
 
 //
 // JADE
@@ -90,6 +99,7 @@ var startServer = function() {
 
   app.use('/', routes);
   app.use('/users', users);
+  app.use('/game', game);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
@@ -127,3 +137,7 @@ var startServer = function() {
 
 
 module.exports = app;
+
+
+
+

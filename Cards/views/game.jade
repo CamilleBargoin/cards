@@ -13,7 +13,7 @@ block content
           button
             | End Turn
         .avatarContainer
-          p.player-name Player 1
+          p.player-name= playerName
           .avatar-box
           .resource-box
       // BOARD RIGHT
@@ -22,9 +22,9 @@ block content
           // TOP (opponent hand)
           .top-row
             .hand
-              .card 1
-              .card 2
-              .card 3
+              //.card 1
+              //.card 2
+              //.card 3
             .menu-bar
               span Menu
           // MIDDLE (played cards + decks)
@@ -38,7 +38,7 @@ block content
               .deck-container
                 .deck-box
                   p Discarded Pile
-                .deck-box
+                .deck-box#opponent-deck
                   p Deck Pile
             .cards-row
               .card-box
@@ -49,20 +49,20 @@ block content
               .deck-container
                 .deck-box
                   p Discarded Pile
-                .deck-box
+                .deck-box#player-deck
                   p Deck Pile
           // BOTTOM (player hand)
           .bottom-row
             #hand
-              .card(name='carte 1') 1
-              .card(name='carte 2') 2
-              .card(name='carte 3') 3
-              .card(name='carte 4') 4
-              .card(name='carte 5') 5
-              .card(name='carte 6') 6
-              .card(name='carte 7') 7
-              .card(name='carte 8') 8
-              .pwet(name='carte 9')
+              //.card(name='carte 1') 1
+              //.card(name='carte 2') 2
+              //.card(name='carte 3') 3
+              //.card(name='carte 4') 4
+              //.card(name='carte 5') 5
+              //.card(name='carte 6') 6
+              //.card(name='carte 7') 7
+              //.card(name='carte 8') 8
+              //.card(name='carte 9') 9
             #info-container
               h3 Nom de la carte
               p
@@ -77,3 +77,6 @@ block content
       End Document
       ––––––––––––––––––––––––––––––––––––––––––––––––––
     script(src="/javascripts/game.js")
+    script(src="https://cdn.socket.io/socket.io-1.4.5.js")
+    script.
+      var playerName="#{playerName}";

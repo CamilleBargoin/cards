@@ -27,11 +27,6 @@ router.get('/fail-authenticate', function(req, res, next) {
     });
 });
 
-router.get('/game', function(req, res, next) {
-    res.render('game', {
-        title: appName
-    });
-});
 
 router.get('/home', function(req, res, next) {
 
@@ -41,14 +36,11 @@ router.get('/home', function(req, res, next) {
         var mongo = require('mongodb');
 
         console.log(req.session);
-        console.log('___________');
 
         collection.findOne({_id: new mongo.ObjectId(req.session.userId)}, function(err, doc) {
 
             if (!err) {
                 if (doc != null) {
-                    console.log(doc);
-                    console.log(new Date(doc.at).toLocaleDateString());
                     res.render('main', {
                         title: appName,
                         login: doc.login,

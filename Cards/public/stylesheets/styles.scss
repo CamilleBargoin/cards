@@ -741,6 +741,7 @@ background-color: rgba(0, 0, 0, 0.6);
             width: $card-height;
             margin-top: 25px;
             margin-left: 20px;
+            position: relative;
 
             p {
                 margin: 0;
@@ -751,6 +752,20 @@ background-color: rgba(0, 0, 0, 0.6);
                 font-family: $optimus, serif;
                 font-size: 1.3em;
                 text-align: center;
+            }
+
+            .card {
+                width:  $card-height;
+                height: $card-width;
+                //background-color: black;
+                //border: 3px solid $dark-red;
+                margin: 0;
+                @include box-shadow(-3px 3px 2px 0px rgba(0, 0, 0, 0.5));
+                background-image: url("../images/card-back2.png");
+                position: absolute;
+                top: -5px;
+                left: 0px;
+
             }
         }
 
