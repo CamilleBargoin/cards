@@ -656,7 +656,7 @@ background-color: rgba(0, 0, 0, 0.6);
     width: 75%;
     height: 100%;
     //background-color: rgba(0, 0, 255, 0.2);
-background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.6);
 
     .top-row {
 
@@ -835,6 +835,48 @@ background-color: rgba(0, 0, 0, 0.6);
         h4 {
              letter-spacing: 0.1em;
             font-size: 1em;
+        }
+    }
+}
+
+#disconnectionContainer {
+
+    color: white;
+    font-family: 'Humanistic';
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    >div {
+
+        display: table-cell;
+        vertical-align: middle;
+        height: 100%;
+
+        >div {
+            width: 85%;
+            height: 50%;
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 20px solid rgba(255, 255, 255, 0.8);
+            margin: 0 auto;
+
+            p {
+                font-size: 3.5em;
+                text-align: center;
+                padding: 20px 100px;
+            }
+
+            a {
+                border: 1px solid #b3b3b3;
+                color: white;
+                font-size: 1.5em;
+                margin: 100px auto 0;
+                padding: 20px 80px;
+                text-align: center;
+                width: 360px;
+            }
         }
     }
 }

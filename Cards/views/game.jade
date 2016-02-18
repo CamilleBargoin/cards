@@ -22,9 +22,6 @@ block content
           // TOP (opponent hand)
           .top-row
             .hand
-              //.card 1
-              //.card 2
-              //.card 3
             .menu-bar
               span Menu
           // MIDDLE (played cards + decks)
@@ -54,15 +51,6 @@ block content
           // BOTTOM (player hand)
           .bottom-row
             #hand
-              //.card(name='carte 1') 1
-              //.card(name='carte 2') 2
-              //.card(name='carte 3') 3
-              //.card(name='carte 4') 4
-              //.card(name='carte 5') 5
-              //.card(name='carte 6') 6
-              //.card(name='carte 7') 7
-              //.card(name='carte 8') 8
-              //.card(name='carte 9') 9
             #info-container
               h3 Nom de la carte
               p
@@ -72,6 +60,11 @@ block content
               p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
           // end table
         // end board-right
+      #disconnectionContainer
+        div
+          div
+            p Votre adversaire s'est déconnecté !
+            a(href="/home").button.dark-grey Revenir à l'écran principal
       // end board
     //
       End Document

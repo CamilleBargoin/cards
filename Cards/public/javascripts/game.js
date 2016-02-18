@@ -17,9 +17,50 @@ Zepto(function($){
 
     var socket = io('http://192.168.104.174:3000');
 
+    var opponent = null;
+
 
     socket.on('connect', function(data) {
 
+
+        socket.on("joiningRoom", function(data) {
+            console.log("connected to room: " + data.room);
+
+            socket.emit("joinsGame", {playerName: playerName});
+
+
+
+
+            socket.on("gameReady", function(data) {
+
+                if (data.players) {
+                    if (data.players[0].name == playerName)
+                        opponent = data.players[1].name;
+                    else
+                        opponent = data.players[0].name;
+                }
+
+                $("#board-left .player-name").first().text(opponent);
+
+                alert("GO GO GO !!!");
+            });
+
+            socket.on("disconnected", function() {
+                //alert("disconnected :(");
+                $("#disconnectionContainer").css({
+                    display: "table"
+                });
+
+
+                socket.emit("wins");
+
+            });
+
+
+        });
+
+
+        /*
         socket.emit("joinsGame", {playerName: playerName});
 
         socket.emit("startGame");
@@ -37,10 +78,7 @@ Zepto(function($){
         });
 
 
-        socket.on("newOpponent", function(data) {
-            $("#board-left .player-name").first().text(data.playerName);
 
-        });
 
         socket.on("startingCards", function(data) {
 
@@ -58,6 +96,7 @@ Zepto(function($){
                 }
             }
         });
+        */
     });
 
 
