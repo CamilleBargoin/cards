@@ -17,8 +17,6 @@ module.exports = function() {
         var io = currentIo;
         that.checkForDisconnectionInterval = setInterval(function() {
 
-            console.log("check");
-
             for (index in that.players) {
 
                 if (!io.sockets.connected[that.players[index].socketId]) {

@@ -62,6 +62,27 @@ module.exports = function(io) {
         var selectedRoom = null;
 
 
+        var deck = [{
+            name: "carte 1"
+        },{
+            name: "carte 2"
+        }, {
+            name: "carte 3"
+        }, {
+            name: "carte 4"
+        }, {
+            name: "carte 5"
+        },{
+            name: "carte 6"
+        }, {
+            name: "carte 7"
+        }, {
+            name: "carte 8"
+        }, {
+            name: "carte 9"
+        }, {
+            name: "carte 10"
+        }];
 
 
 
@@ -115,18 +136,9 @@ module.exports = function(io) {
 
 
             // If the current room is full (2 players), we can start the game
-            var cards = [{
-                name: "carte 1"
-            },{
-                name: "carte 2"
-            }, {
-                name: "carte 3"
-            }, {
-                name: "carte 4"
-            }];
+
 
             if (selectedRoom.players.length == 2) {
-                console.log(selectedRoom);
 
                 var playersName = [{
                     name:  selectedRoom.players[0].name
@@ -143,6 +155,35 @@ module.exports = function(io) {
 
 
 
+        socket.on("getStartingCards", function(data, callback) {
+            var startingHand = [];
+            for (var i = 0; i < 4; i++) {
+                var index = Math.floor(Math.random() * deck.length);
+                startingHand.push(deck[index]);
+                deck.splice(index, 1);
+
+            }
+            console.log(player.name.magenta + "'s starting cards".yellow);
+            console.log(startingHand);
+            console.log("_________________________".yellow);
+
+            callback({
+                startingHand: startingHand,
+                deck: deck.length
+            });
+        });
+
+        socket.on("drawsCard", function(data, callback) {
+            var index = Math.floor(Math.random() * deck.length);
+            var card = deck[index];
+            deck.splice(index, 1);
+
+            callback({
+                newCard: card,
+                deck: deck.length
+            });
+
+        });
 
 
 
@@ -190,13 +231,15 @@ module.exports = function(io) {
             var db = database.get();
 
             var collection = db.collection("users");
+
             collection.findOneAndUpdate({
                 login: player.name
             }, {
-                $inc: {
-                    games: 1, victories: 1
+                $push: {games: {
+                    at: new Date().getTime(),
+                    victory: true
                 }
-            }, function(err, doc) {
+            }
             });
         });
 
@@ -209,13 +252,6 @@ module.exports = function(io) {
 
 
     });
-
-/*
-    var checkForDisconnecion = function(){
-        setInterval(function() {
-        }, 1000);
-    };
-*/
 
 
     return router;

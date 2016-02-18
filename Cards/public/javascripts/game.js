@@ -32,6 +32,7 @@ Zepto(function($){
 
 
             socket.on("gameReady", function(data) {
+                console.log("The game has started !");
 
                 if (data.players) {
                     if (data.players[0].name == playerName)
@@ -42,7 +43,34 @@ Zepto(function($){
 
                 $("#board-left .player-name").first().text(opponent);
 
-                alert("GO GO GO !!!");
+                socket.emit("getStartingCards", {}, function(data) {
+
+                   //console.log(data.deck);
+
+                    if (data && data.startingHand && data.deck) {
+                        for (var i = 0; i < data.startingHand.length; i++) {
+                            addCardToHand(data.startingHand[i]);
+                            addCardToOpponent();
+                        }
+
+                        for (var i = 0; i < data.deck; i++) {
+                            addCardToDeck($("#opponent-deck"));
+                            addCardToDeck($("#player-deck"));
+                        }
+                    }
+                });
+
+
+
+                $("#player-deck").click(function() {
+                    socket.emit("drawsCard", {}, function(data) {
+                        if (data && data.newCard && deck) {
+                            addCardToHand(data.newCard);
+                        }
+                    });
+                });
+
+
             });
 
             socket.on("disconnected", function() {
@@ -69,33 +97,13 @@ Zepto(function($){
             socket.emit("endsTurn", "");
         });
 
-        $("#player-deck").click(function() {
-            socket.emit("drawsCard", "");
-        });
+
 
         $("#hand .card").click(function() {
             socket.emit("selectsCard", {name: $(this).attr("name")});
         });
 
 
-
-
-        socket.on("startingCards", function(data) {
-
-            console.log(data.deck);
-
-            if (data && data.cards) {
-                for (var i = 0; i < data.cards.length; i++) {
-                    addCardToHand(data.cards[i]);
-                    addCardToOpponent();
-                }
-
-                for (var i = 0; i < data.deck; i++) {
-                    addCardToDeck($("#opponent-deck"));
-                    addCardToDeck($("#player-deck"));
-                }
-            }
-        });
         */
     });
 

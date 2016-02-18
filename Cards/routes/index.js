@@ -41,12 +41,11 @@ router.get('/home', function(req, res, next) {
 
             if (!err) {
                 if (doc != null) {
-                    res.render('main', {
+                    res.render('home', {
                         title: appName,
                         login: doc.login,
                         registrationDate: new Date(doc.at).toLocaleDateString(),
                         games: doc.games,
-                        victories: (doc.victories / doc.games * 100).toFixed(2),
                         avatar: doc.avatar
                     });
                 }

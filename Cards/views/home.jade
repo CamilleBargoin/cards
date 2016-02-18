@@ -13,25 +13,16 @@ block content
                         div
                             p= "Nom: " + login
                             p= "Inscrit le: " + registrationDate
-                            p= "Parties jouées: " + games
-                            p= "Victoires: " + victories + "%"
+                            if games
+                                p= "Parties jouées: " + games.length
+                            else
+                                p=  "Parties jouées: 0"
+                            p(id="accountVictories")= "Victoires: " + victories + "%"
                             a(class="logout button dark-grey" href="/users/logout") Deconnexion
 
                 .scores
                     h2 Derniers resultats
                     ul
-                        li(class='score')
-                            p(class='result') Victoire !
-                            p(class='date') 10/02/2016
-                        li(class='score')
-                            p(class='result') Victoire !
-                            p(class='date') 10/02/2016
-                        li(class='score defeat')
-                            p(class='result') Defaite !
-                            p(class='date') 10/02/2016
-                        li(class='score')
-                            p(class='result') Victoire !
-                            p(class='date') 10/02/2016
             .right
                 .army-options
                     h1 Mon Armee
@@ -41,6 +32,8 @@ block content
     include avatarPicker.jade
 
     script(src="/javascripts/home.js")
+    script.
+        var games =  !{JSON.stringify(games)};
 
 
 
