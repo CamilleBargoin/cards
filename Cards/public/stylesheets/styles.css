@@ -361,7 +361,21 @@ a {
       border: 2px solid #222;
       background-color: rgba(255, 255, 255, 0.03);
       position: absolute;
-      left: 300px; }
+      left: 300px;
+      /*
+      .resource {
+          width: 38px;
+          height: 50px;
+          background-color: $orange;
+          display: inline-block;
+          margin: 0;
+          padding: 0;
+      }
+      */ }
+      #board-left .avatarContainer .resource-box p {
+        color: white;
+        font-size: 2em;
+        text-align: center; }
   #board-left .avatarContainer:first-child .player-name {
     color: red;
     top: 40px; }
@@ -496,7 +510,7 @@ a {
     -moz-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
     -ms-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
     box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5); }
-    #board-right .bottom-row .card:nth-last-child(n + 5):first-child, #board-right .bottom-row .card:nth-last-child(n + 5):first-child ~ * {
+    #board-right .bottom-row .card:nth-last-child(n + 8):first-child, #board-right .bottom-row .card:nth-last-child(n + 8):first-child ~ * {
       margin: 0 2px 0 -40px; }
     #board-right .bottom-row .card:hover {
       border: 5px solid #880403;

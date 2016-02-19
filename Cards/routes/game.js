@@ -56,8 +56,9 @@ module.exports = function(io) {
             name: null,
             address: socket.handshake.address,
             socketId: socket.id,
-            checkForDisconnection: null,
-            playerIndex: null
+            //checkForDisconnection: null,
+            index: 0,
+            resource: 2
         };
         var selectedRoom = null;
 
@@ -150,7 +151,6 @@ module.exports = function(io) {
                 io.sockets.in(selectedRoom.name).emit("gameReady", {players: playersName});
             }
 
-
         });
 
 
@@ -167,21 +167,45 @@ module.exports = function(io) {
             console.log(startingHand);
             console.log("_________________________".yellow);
 
+            var firstPlayer = selectedRoom.players[selectedRoom.firstPlayer];
+
+
             callback({
                 startingHand: startingHand,
-                deck: deck.length
+                deck: deck.length,
+                first: (player.name == firstPlayer.name)
             });
         });
 
-        socket.on("drawsCard", function(data, callback) {
+
+
+        socket.on("drawsOneCard", function(data, callback) {
             var index = Math.floor(Math.random() * deck.length);
             var card = deck[index];
             deck.splice(index, 1);
 
+            socket.in(selectedRoom.name).broadcast.emit("oppDrewOneCard", {});
+
             callback({
-                newCard: card,
-                deck: deck.length
+                newCard: card
             });
+        });
+
+
+        socket.on("endsTurn", function(data) {
+            console.log("--> ".yellow + player.name.magenta + " ends his turn".yellow);
+
+            selectedRoom.changeTurn();
+
+            socket.in(selectedRoom.name).broadcast.emit("newTurn", {});
+
+
+
+            var response = {};
+            response[selectedRoom.players[0].name] = selectedRoom.players[0].resource;
+            response[selectedRoom.players[1].name] = selectedRoom.players[1].resource;
+
+            io.sockets.in(selectedRoom.name).emit("updatePlayersResources", response);
 
         });
 
@@ -193,23 +217,12 @@ module.exports = function(io) {
 
 /*
 
-        socket.on("startGame", function(data) {
-
-
-
-        });
 
         socket.on("quitsGame", function(data) {
             console.log("--> Quit Game".magenta);
         });
 
-        socket.on("endsTurn", function(data) {
-            console.log("--> ".yellow + playerName.magenta + " ends his turn".yellow);
-        });
 
-        socket.on("drawsCard", function(data) {
-            console.log("--> ".yellow + playerName.magenta + " draws a new Card".yellow);
-        });
 
         socket.on("selectsCard", function(data) {
             console.log("--> ".yellow + playerName.magenta + " selects ".yellow + data.name.magenta);

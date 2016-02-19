@@ -3,6 +3,8 @@ module.exports = function() {
     this.name = Math.floor(Math.random() * 99999);
     this.players = [];
 
+    this.firstPlayer = Math.floor( Math.random() * 2);
+    this.isPlaying = this.firstPlayer;
     // maybe
     this.turn = 0;
 
@@ -34,6 +36,16 @@ module.exports = function() {
         }, 1000);
 
     };
+
+    this.changeTurn = function() {
+        this.isPlaying = 1 - this.isPlaying;
+        this.turn ++;
+
+        this.players[this.isPlaying].resource ++;
+
+    };
+
+
 
 
 };

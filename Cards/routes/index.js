@@ -37,7 +37,17 @@ router.get('/home', function(req, res, next) {
 
         console.log(req.session);
 
-        collection.findOne({_id: new mongo.ObjectId(req.session.userId)}, function(err, doc) {
+        collection.findOne({
+            _id: new mongo.ObjectId(req.session.userId)
+        }, {
+            $fields: {
+                login: 1,
+                at: 1,
+                games: 1,
+                avatar: 1,
+
+            }
+        }, function(err, doc) {
 
             if (!err) {
                 if (doc != null) {

@@ -1,23 +1,16 @@
 Zepto(function($){
 
-    $("#hand .card").mouseenter(function() {
 
-        $("#info-container").css({
-            bottom: "0px"
-        });
-
-        $("#info-container h3").html($(this).attr("name").toUpperCase());
-
-    }).mouseleave(function(event) {
-        $("#info-container").css({
-            bottom: "-500px"
-        });
-    });
 
 
     var socket = io('http://192.168.104.174:3000');
 
     var opponent = null;
+
+    var isMyTurn = false;
+    var hadDrawnCard = false;
+
+    var resource = 2;
 
 
     socket.on('connect', function(data) {
@@ -45,7 +38,7 @@ Zepto(function($){
 
                 socket.emit("getStartingCards", {}, function(data) {
 
-                   //console.log(data.deck);
+
 
                     if (data && data.startingHand && data.deck) {
                         for (var i = 0; i < data.startingHand.length; i++) {
@@ -57,31 +50,140 @@ Zepto(function($){
                             addCardToDeck($("#opponent-deck"));
                             addCardToDeck($("#player-deck"));
                         }
+
+
+                        isMyTurn = data.first;
+
+                        if (isMyTurn) {
+                            $(".avatarContainer:last-of-type .avatar-box").css({
+                                border: "5px solid red"
+                            });
+                        }
+                        else {
+                            $(".avatarContainer:first-of-type .avatar-box").css({
+                                border: "5px solid red"
+                            });
+                        }
+
+
+                        toggleCardInfo();
+
+
+
+
+
+
+                    }
+
+
+                });
+
+
+
+
+
+
+
+
+
+
+                /**
+                 *
+                 *  CLICK ON DECK TO DRAW A NEW CARD
+                 *  ONCE PER TURN ONLY
+                 *
+                 **/
+
+
+                $("#player-deck").click(function() {
+
+                    if (isMyTurn && !hadDrawnCard) {
+                        socket.emit("drawsOneCard", {}, function(data) {
+                            if (data && data.newCard) {
+
+                                hadDrawnCard = true;
+                                addCardToHand(data.newCard);
+
+                                $("#player-deck .card:last-of-type ").remove();
+                            }
+                        });
                     }
                 });
 
 
 
-                $("#player-deck").click(function() {
-                    socket.emit("drawsCard", {}, function(data) {
-                        if (data && data.newCard && deck) {
-                            addCardToHand(data.newCard);
-                        }
-                    });
+
+                /**
+                 *
+                 *  CLICK ON END TURN BUTTON
+                 *
+                 ***/
+
+                $("#board-left button").click(function() {
+
+                    if (isMyTurn) {
+                        socket.emit("endsTurn", "");
+                        isMyTurn = false;
+                        $(".avatarContainer:last-of-type .avatar-box").css({
+                            border: "none"
+                        });
+                        $(".avatarContainer:first-of-type .avatar-box").css({
+                            border: "5px solid red"
+                        });
+                    }
+
                 });
+
+
+                socket.on("newTurn", function() {
+                    isMyTurn = true;
+                    hadDrawnCard = false;
+                    $(".avatarContainer:last-of-type .avatar-box").css({
+                        border: "5px solid red"
+                    });
+                    $(".avatarContainer:first-of-type .avatar-box").css({
+                        border: "none"
+                    });
+
+
+
+
+                });
+
+                socket.on("oppDrewOneCard", function() {
+                    addCardToOpponent();
+                });
+
+
+                socket.on("updatePlayersResources",  function(data) {
+
+                    if (data) {
+                        console.log(data);
+
+                        if (data[playerName]) {
+                            resource = data[playerName];
+                            $(".avatarContainer:last-of-type .resource-box p").text(resource);
+                        }
+                        if (data[opponent]) {
+                            $(".avatarContainer:first-of-type .resource-box p").text(data[opponent]);
+                        }
+                    }
+
+                });
+
+
 
 
             });
 
             socket.on("disconnected", function() {
-                //alert("disconnected :(");
+
                 $("#disconnectionContainer").css({
                     display: "table"
                 });
 
 
                 socket.emit("wins");
-
             });
 
 
@@ -119,9 +221,28 @@ Zepto(function($){
     };
 
     var addCardToDeck = function(deck) {
-        console.log("1");
         $card = $("<div class='card'></div>");
         deck.append($card);
+    };
+
+
+    var toggleCardInfo = function() {
+
+
+
+         $("#hand .card").mouseenter(function() {
+            $("#info-container").css({
+                bottom: "0px"
+            });
+
+            $("#info-container h3").html($(this).attr("name").toUpperCase());
+
+        }).mouseleave(function(event) {
+            $("#info-container").css({
+                bottom: "-500px"
+            });
+        });
+
     };
 
 
