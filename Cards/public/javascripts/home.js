@@ -1,14 +1,19 @@
 Zepto(function($){
 
     var avatarFilename = null;
-    var army = null;
+    var deckName = null;
 
     $(".army-option").click(function() {
     	$(".army-option").removeClass("active");
     	$(this).addClass("active");
-        army = $(this).attr("army");
+        deckName = $(this).attr("deckName");
 
-        console.log("selected army: " + army);
+        console.log("selected deck: " + deckName);
+
+        $.post('/users/choose-deck', {
+            deckName: deckName
+        } );
+
     });
 
 
@@ -36,11 +41,13 @@ Zepto(function($){
 
     });
 
-    $("#playButton").click(function() {
-        if (army) {
+    $("#playButton").click(function(e) {
+        e.preventDefault();
+        if (deckName) {
             alert("start game with " + army);
-        }
 
+            window.open("/game", "_self");
+        }
     });
 
 
@@ -55,26 +62,29 @@ Zepto(function($){
         if (games[i].victory) {
 
             $gameLi = $("<li class='score'></li>");
-            $gameResult = $("<p class='result'>Victoire !</p>");
+            $gameResult = $("<p class='result'>Victoire</p>");
 
             victories++;
         }
         else {
-            gameLi = $("<li class='score defeat'></li>");
-            $gameResult = $("<p class='result'>Défaite !</p>");
+            $gameLi = $("<li class='score defeat'></li>");
+            $gameResult = $("<p class='result'>Défaite</p>");
         }
 
         $gameDate = $("<p class='date'>" + new Date(games[i].at).toLocaleDateString() + "</p>");
 
 
-        $gameLi.append($gameResult);
+
         $gameLi.append($gameDate);
+        $gameLi.append($gameResult);
 
 
         $(".scores ul").append($gameLi);
     }
 
-    $("#accountVictories").text("Victoires: " + victories / games.length * 100 + "%");
+    var ratio = victories / games.length * 100;
+
+    $("#accountVictories").text("Victoires: " + Math.round(ratio*100)/100+ "%");
 
 });
 

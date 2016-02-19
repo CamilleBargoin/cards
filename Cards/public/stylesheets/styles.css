@@ -217,24 +217,26 @@ a {
           color: #222;
           background-color: white; }
     #main .left .scores {
+      position: absolute;
+      bottom: 0;
       width: 100%;
-      height: 40%; }
+      height: 30%; }
       #main .left .scores ul {
-        width: 60%;
-        margin-left: 100px;
-        padding: 0; }
+        width: 80%;
+        padding: 0;
+        margin: 30px auto 15px; }
       #main .left .scores ul li {
         list-style: none;
-        width: 100%;
-        margin-top: 18px; }
+        width: 25%;
+        margin-top: 18px;
+        display: inline-block; }
         #main .left .scores ul li .date {
           margin: 0;
           display: inline-block;
           font-size: 0.6em;
-          width: 10%;
-          text-align: right; }
+          width: 30%; }
         #main .left .scores ul li .result {
-          width: 80%;
+          width: 70%;
           margin: 0;
           display: inline-block; }
       #main .left .scores .score {
@@ -260,7 +262,8 @@ a {
         margin: 5% 20px;
         display: inline-block;
         border-radius: 5px;
-        border: 5px solid #422b71; }
+        border: 5px solid #422b71;
+        cursor: pointer; }
       #main .right .army-options .army-option:nth-of-type(1) {
         background: url("/images/armies/humans.jpg"); }
       #main .right .army-options .army-option:nth-of-type(2) {

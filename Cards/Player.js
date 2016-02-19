@@ -1,12 +1,32 @@
-module.exports = function() {
+module.exports = function(login) {
 
-    var database = require('database.js');
+    var database = require('./database.js');
 
 
-    this.name = null;
+    this.name = (login)? login : null;
     var resource = null;
     this.army = null;
-    this.deck = [];
+    this.deck = [{
+            name: "carte 1"
+        },{
+            name: "carte 2"
+        }, {
+            name: "carte 3"
+        }, {
+            name: "carte 4"
+        }, {
+            name: "carte 5"
+        },{
+            name: "carte 6"
+        }, {
+            name: "carte 7"
+        }, {
+            name: "carte 8"
+        }, {
+            name: "carte 9"
+        }, {
+            name: "carte 10"
+        }];
     this.isPlaying = false; // true if its the player's turn to play
 
 
@@ -42,7 +62,7 @@ module.exports = function() {
     };
 
 
-    this.getPlayer = function(callback) {
+    this.get = function(callback) {
         var db = database.get();
         var collection = db.collection("users");
 

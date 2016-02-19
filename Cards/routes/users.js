@@ -10,7 +10,6 @@ router.get('/', function(req, res, next) {
 
 
 
-
 router.get("/logout", function(req, res, next) {
 	console.log("logging out".red);
 	if(req.session) {
@@ -25,8 +24,6 @@ router.get("/logout", function(req, res, next) {
 		res.redirect( "/");
 
 });
-
-
 
 
 
@@ -118,16 +115,47 @@ router.post('/update-avatar', function(req, res, next) {
 			returnNewDocument: true
 		}, function(e) {
 			console.log("update avatar".magenta);
-			console.log(e);
 			res.json({status: 1});
 		});
 
 	}
 	else {
 		//user not connected
+		req.session.customInfo = "Accès refusé";
+        res.redirect("/");
 	}
 });
 
+router.post('/choose-deck', function(req, res, next) {
+	if (req.session && req.session.userId) {
+
+		if (req.body && req.body.deckName) {
+
+			var db = req.db.get();
+			var collection = db.collection('users');
+			var mongo = require('mongodb');
+
+
+			collection.findOneAndUpdate({
+				_id: new mongo.ObjectId(req.session.userId)
+			}, {
+				$set: {
+					deckName: req.body.deckName
+				}
+			}, {
+				returnNewDocument: true
+			}, function(e) {
+				console.log("change deck".magenta);
+				res.json({status: 1});
+			});
+		}
+	}
+	else {
+		// user not connected
+		req.session.customInfo = "Accès refusé";
+        res.redirect("/");
+	}
+});
 
 
 

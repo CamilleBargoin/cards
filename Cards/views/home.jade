@@ -17,7 +17,7 @@ block content
                                 p= "Parties jouées: " + games.length
                             else
                                 p=  "Parties jouées: 0"
-                            p(id="accountVictories")= "Victoires: " + victories + "%"
+                            p(id="accountVictories") Victoires:
                             a(class="logout button dark-grey" href="/users/logout") Deconnexion
 
                 .scores
@@ -26,8 +26,8 @@ block content
             .right
                 .army-options
                     h1 Mon Armee
-                    .army-option(army="humans")
-                    .army-option(army="monsters")
+                    .army-option(deckName="humans")
+                    .army-option(deckName="monsters")
                     a(id="playButton", class="button dark-grey", href="/game") Fight!
     include avatarPicker.jade
 

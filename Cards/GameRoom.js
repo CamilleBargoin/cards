@@ -9,7 +9,7 @@ module.exports = function() {
     this.turn = 0;
 
     var that = this;
-    // Methods
+
 
 
     this.checkForDisconnectionInterval = null;
@@ -25,6 +25,8 @@ module.exports = function() {
                     io.in(that.name).emit("disconnected");
 
                     //TODO -> disconnected player loses
+                    //
+                    that.players[index].saveGameResult(false);
 
                     clearInterval(that.checkForDisconnectionInterval);
                     that.players.splice(index, 1);

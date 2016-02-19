@@ -36,7 +36,7 @@ app.io = io;
 //
 // ROUTES
 //
-var routes = require('./routes/index');
+var routes = require('./routes/home');
 var users = require('./routes/users');
 var game = require('./routes/game')(io);
 

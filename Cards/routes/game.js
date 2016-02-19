@@ -5,32 +5,33 @@ module.exports = function(io) {
     var colors = require('colors');
     var router = app.Router();
     var GameRoom = require('../GameRoom');
+    var Player = require('../Player');
 
-
-    var database = require('../database.js');
+    var rooms = [];
+    var player = null;
 
 
     router.get('/', function(req, res, next) {
-        if (req.session && req.session.userId) {
+        if (req.session && req.session.login) {
 
-            var db = req.db.get();
-            var collection = db.collection('users');
-            var mongo = require('mongodb');
+            player = new Player(req.session.login);
 
-            collection.findOne({_id: new mongo.ObjectId(req.session.userId)}, function(err, doc) {
+            player.get(function(user) {
 
-                if (!err) {
-                    if (doc!= null) {
-                        res.render('game', {
-                            title: 'Cards',
-                            playerName: doc.login
-                        });
-                    }
-                    else {
-                        // member doesn't exist
-                        req.session.customInfo = "Accès refusé";
-                        res.redirect("/");
-                    }
+                if (user) {
+                   res.render('game', {
+                        title: 'Cards',
+                        playerName: user.login
+                    });
+
+
+
+
+                }
+                else {
+                    // member doesn't exist
+                    req.session.customInfo = "Accès refusé";
+                    res.redirect("/");
                 }
             });
         }
@@ -43,51 +44,23 @@ module.exports = function(io) {
 
 
 
-    var rooms = [];
+
+
 
 
     io.on('connection', function(socket) {
 
-        console.log("New connection do game server".cyan);
 
 
+        console.log("New connection to game server".cyan);
 
-        var player = {
-            name: null,
-            address: socket.handshake.address,
-            socketId: socket.id,
-            //checkForDisconnection: null,
-            index: 0,
-            resource: 2
-        };
+
+        player.address = socket.handshake.address;
+        player.socketId = socket.id;
+        player.index = 0;
+        player.resource = 2;
+
         var selectedRoom = null;
-
-
-        var deck = [{
-            name: "carte 1"
-        },{
-            name: "carte 2"
-        }, {
-            name: "carte 3"
-        }, {
-            name: "carte 4"
-        }, {
-            name: "carte 5"
-        },{
-            name: "carte 6"
-        }, {
-            name: "carte 7"
-        }, {
-            name: "carte 8"
-        }, {
-            name: "carte 9"
-        }, {
-            name: "carte 10"
-        }];
-
-
-
-
 
 
 
@@ -118,19 +91,18 @@ module.exports = function(io) {
 
 
 
-
-
         socket.on("joinsGame", function(data) {
 
-            player.name = data.playerName;
+            //player.name = data.playerName;
             player.index = selectedRoom.players.length;
+            socket.index = player.index;
 
             selectedRoom.players.push(player);
 
 
 
 
-            console.log("--> ".yellow + player.name.magenta + " joins  the Game in room ".yellow + selectedRoom.name);
+            console.log("--> ".yellow + data.playerName.magenta + " joins  the Game in room ".yellow + selectedRoom.name);
 
 
 
@@ -154,16 +126,13 @@ module.exports = function(io) {
         });
 
 
-
         socket.on("getStartingCards", function(data, callback) {
             var startingHand = [];
-            for (var i = 0; i < 4; i++) {
-                var index = Math.floor(Math.random() * deck.length);
-                startingHand.push(deck[index]);
-                deck.splice(index, 1);
 
-            }
-            console.log(player.name.magenta + "'s starting cards".yellow);
+            var currentPlayer = selectedRoom.players[socket.index];
+            startingHand = currentPlayer.drawCards(4);
+
+            console.log(currentPlayer.name.magenta + "'s starting cards".yellow);
             console.log(startingHand);
             console.log("_________________________".yellow);
 
@@ -172,17 +141,16 @@ module.exports = function(io) {
 
             callback({
                 startingHand: startingHand,
-                deck: deck.length,
-                first: (player.name == firstPlayer.name)
+                deck: currentPlayer.deck.length,
+                first: (currentPlayer.name == firstPlayer.name)
             });
         });
 
 
-
         socket.on("drawsOneCard", function(data, callback) {
-            var index = Math.floor(Math.random() * deck.length);
-            var card = deck[index];
-            deck.splice(index, 1);
+
+            var currentPlayer = selectedRoom.players[socket.index];
+            var card = currentPlayer.drawCards(1)[0];
 
             socket.in(selectedRoom.name).broadcast.emit("oppDrewOneCard", {});
 
@@ -193,13 +161,13 @@ module.exports = function(io) {
 
 
         socket.on("endsTurn", function(data) {
-            console.log("--> ".yellow + player.name.magenta + " ends his turn".yellow);
+
+            var currentPlayer = selectedRoom.players[socket.index];
+            console.log("--> ".yellow + currentPlayer.name.magenta + " ends his turn".yellow);
 
             selectedRoom.changeTurn();
 
             socket.in(selectedRoom.name).broadcast.emit("newTurn", {});
-
-
 
             var response = {};
             response[selectedRoom.players[0].name] = selectedRoom.players[0].resource;
@@ -212,6 +180,19 @@ module.exports = function(io) {
 
 
 
+         socket.on("wins", function() {
+
+            var currentPlayer = selectedRoom.players[socket.index];
+            currentPlayer.saveGameResult(true);
+        });
+
+
+        // If it's not already launched, we launch the GameRoom setInterval
+        // that will check for a disconnected player during the game;
+        if (!selectedRoom.checkForDisconnectionInterval)
+            selectedRoom.checkForDisconnection(io);
+
+    });
 
 
 
@@ -236,36 +217,6 @@ module.exports = function(io) {
             console.log("--> ".yellow + playerName.magenta + " wins !".yellow);
         });
         */
-
-
-
-        socket.on("wins", function() {
-
-            var db = database.get();
-
-            var collection = db.collection("users");
-
-            collection.findOneAndUpdate({
-                login: player.name
-            }, {
-                $push: {games: {
-                    at: new Date().getTime(),
-                    victory: true
-                }
-            }
-            });
-        });
-
-
-        // If it's not already launched, we launch the GameRoom setInterval
-        // that will check for a disconnected player during the game;
-        if (!selectedRoom.checkForDisconnectionInterval)
-            selectedRoom.checkForDisconnection(io);
-
-
-
-    });
-
 
     return router;
 };
