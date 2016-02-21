@@ -43,8 +43,10 @@ Zepto(function($){
 
     $("#playButton").click(function(e) {
         e.preventDefault();
+
         if (deckName) {
-            alert("start game with " + army);
+
+            console.log("start game with " + deckName);
 
             window.open("/game", "_self");
         }
