@@ -6,6 +6,7 @@ module.exports = function(io) {
     var router = app.Router();
     var GameRoom = require('../GameRoom');
     var Player = require('../Player');
+    var Card = require('../Card');
 
     var rooms = [];
     var player = null;
@@ -184,6 +185,23 @@ module.exports = function(io) {
         });
 
 
+
+        socket.on("playsCard", function(data, callback) {
+            var currentPlayer = selectedRoom.players[socket.index];
+
+            console.log("--> ".yellow + currentPlayer.name.magenta + " plays ".yellow + data.name.magenta);
+
+            var card = new Card({name: data.name});
+
+            currentPlayer.cardLayout[data.position] = card;
+
+            var response = {
+
+            };
+            callback(response);
+        });
+
+
         socket.on("endsTurn", function(data) {
 
             var currentPlayer = selectedRoom.players[socket.index];
@@ -202,8 +220,6 @@ module.exports = function(io) {
         });
 
 
-
-
          socket.on("wins", function() {
 
             var currentPlayer = selectedRoom.players[socket.index];
@@ -220,16 +236,10 @@ module.exports = function(io) {
 
 
 
-/*
-
-
+    /*
         socket.on("quitsGame", function(data) {
             console.log("--> Quit Game".magenta);
         });
-
-
-
-
 
         socket.on("playsCard", function(data) {
             console.log("--> ".yellow + playerName.magenta + " plays ".yellow + data.name.magenta);
@@ -238,7 +248,7 @@ module.exports = function(io) {
         socket.on("wins", function(data) {
             console.log("--> ".yellow + playerName.magenta + " wins !".yellow);
         });
-        */
+    */
 
     return router;
 };

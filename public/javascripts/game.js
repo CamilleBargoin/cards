@@ -15,7 +15,9 @@ Zepto(function($){
 
 
     var $playerSide = $("#board-right .middle-row .cards-row").last();
+    var $opponentSide = $("#board-right .middle-row .cards-row").first();
     var playerCardPositions = $playerSide.find(".card-box");
+    var opponentCardPositions = $opponentSide.find(".card-box");
     var $selectedCard = null;
 
 
@@ -232,26 +234,50 @@ Zepto(function($){
 
 
     var addCardToHand = function(card) {
-        $card = $("<div class='card' name='" + card.name + "'>" + card.name + "</div>");
+        var $card = $("<div class='card' name='" + card.name + "'>" + card.name + "</div>");
         $("#hand").append($card);
+
+        toggleCardInfo();
+        toggleCardSelection();
     };
 
     var addCardToOpponent = function() {
-        $card = $("<div class='card'></div>");
+        var $card = $("<div class='card'></div>");
         $(".top-row .hand").append($card);
     };
 
     var addCardToDeck = function(deck) {
-        $card = $("<div class='card'></div>");
+        var $card = $("<div class='card'></div>");
         deck.append($card);
+    };
+
+    var addCardToMyBoard = function(index, card) {
+        var $card = $("<div class='card'>" + card.name + "</div>");
+        $(playerCardPositions[index]).append($card);
+    };
+
+    var addCardToOpponentBoard = function(index, card) {
+        var $card = $("<div class='card'>" + card.name + "</div>");
+        $(opponentCardPositions[index]).append($card);
+    };
+
+    var removeCardFromHand = function(card) {
+
+        card.remove();
+
+        for(var i=0; i < cardsInHand.length; i++) {
+            if (cardsInHand[i].name == $selectedCard.attr("name"))
+                cardsInHand.splice(i, 1);
+        }
+
+
+        console.log(cardsInHand);
     };
 
 
     var toggleCardInfo = function() {
 
-
-
-         $("#hand .card").mouseenter(function() {
+        $("#hand .card").mouseenter(function() {
             $("#info-container").css({
                 bottom: "0px"
             });
@@ -325,17 +351,41 @@ Zepto(function($){
 
             $currentPosition.addClass("available");
             $currentPosition.on("click", playCard);
-
-
         }
 
     };
 
     var playCard = function() {
 
-        alert($selectedCard.attr("name"));
 
-        // emit("playCard", {position, card}
+        if(isMyTurn) {
+
+            var chosenPosition = $.inArray(this, playerCardPositions);
+
+            socket.emit("playsCard", {
+                name: $selectedCard.attr("name"),
+                position: chosenPosition
+            }, function(data) {
+                if (data.error) {
+
+                }
+                else {
+                    addCardToMyBoard(chosenPosition, {name: $selectedCard.attr("name")});
+                    removeCardFromHand($selectedCard);
+
+                    $(playerCardPositions);
+
+                    $.each(playerCardPositions, function(index, item) {
+                        $(item).removeClass('available');
+                        $(item).off("click");
+                    });
+
+                    toggleCardSelection();
+
+                }
+            });
+        }
+
 
     };
 
