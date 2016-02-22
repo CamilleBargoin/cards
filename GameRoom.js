@@ -8,6 +8,7 @@ module.exports = function() {
     // maybe
     this.turn = 0;
 
+
     var that = this;
 
 
@@ -44,10 +45,6 @@ module.exports = function() {
         this.turn ++;
 
         this.players[this.isPlaying].resource ++;
-
     };
-
-
-
 
 };

@@ -8,14 +8,17 @@ block content
         .avatarContainer
           p.player-name Player 2
           .avatar-box
+            img
+
           .resource-box
             p 2
         .button-container
           button
             | End Turn
         .avatarContainer
-          p.player-name= playerName
+          p.player-name= player.login
           .avatar-box
+            img(src= player.avatar)
           .resource-box
             p 2
       // BOARD RIGHT
@@ -56,10 +59,7 @@ block content
             #info-container
               h3 Nom de la carte
               p
-                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                | tempor incididunt ut labore et dolore magna aliqua.
-              h4 Stats &amp; Effects
-              p Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+
           // end table
         // end board-right
       #disconnectionContainer
@@ -75,4 +75,4 @@ block content
     script(src="/javascripts/game.js")
     script(src="https://cdn.socket.io/socket.io-1.4.5.js")
     script.
-      var playerName="#{playerName}";
+      var player=!{JSON.stringify(player)};

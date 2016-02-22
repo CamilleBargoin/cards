@@ -12,16 +12,23 @@ module.exports = function(io) {
 
 
     router.get('/', function(req, res, next) {
+
         if (req.session && req.session.login) {
 
-            player = new Player(req.session.login);
+            player = new Player(req.session.player);
+
+            player.generateDeck();
 
             player.get(function(user) {
 
                 if (user) {
                    res.render('game', {
-                        title: 'Cards',
-                        playerName: user.login
+                        player: {
+                            login: user.login,
+                            deckName: user.deckName,
+                            avatar: user.avatar
+                        },
+                        title: 'Cards'
                     });
 
 
@@ -99,13 +106,11 @@ module.exports = function(io) {
 
             selectedRoom.players.push(player);
 
+            console.log(data);
+            console.log("_________".red);
 
 
-
-            console.log("--> ".yellow + data.playerName.magenta + " joins  the Game in room ".yellow + selectedRoom.name);
-
-
-
+            console.log("--> ".yellow + data.player.login.magenta + " joins  the Game in room ".yellow + selectedRoom.name);
 
 
             // If the current room is full (2 players), we can start the game
@@ -113,14 +118,16 @@ module.exports = function(io) {
 
             if (selectedRoom.players.length == 2) {
 
-                var playersName = [{
-                    name:  selectedRoom.players[0].name
+                var playersAvatar = [{
+                    name:  selectedRoom.players[0].name,
+                    avatar: selectedRoom.players[0].avatar
                 },
                 {
-                    name:  selectedRoom.players[1].name
+                    name:  selectedRoom.players[1].name,
+                    avatar: selectedRoom.players[1].avatar
                 }];
 
-                io.sockets.in(selectedRoom.name).emit("gameReady", {players: playersName});
+                io.sockets.in(selectedRoom.name).emit("gameReady", {players: playersAvatar});
             }
 
         });
@@ -157,6 +164,23 @@ module.exports = function(io) {
             callback({
                 newCard: card
             });
+        });
+
+
+        socket.on("selectsCard", function(data, callback) {
+
+            var currentPlayer = selectedRoom.players[socket.index];
+
+            console.log("--> ".yellow + currentPlayer.name.magenta + " selects ".yellow + data.name.magenta);
+
+
+            var openPositions = currentPlayer.getOpenCardPositions();
+
+
+            callback({
+                openPositions: openPositions
+            });
+
         });
 
 
@@ -205,9 +229,7 @@ module.exports = function(io) {
 
 
 
-        socket.on("selectsCard", function(data) {
-            console.log("--> ".yellow + playerName.magenta + " selects ".yellow + data.name.magenta);
-        });
+
 
         socket.on("playsCard", function(data) {
             console.log("--> ".yellow + playerName.magenta + " plays ".yellow + data.name.magenta);

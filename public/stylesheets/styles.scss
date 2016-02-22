@@ -583,6 +583,7 @@ a {
             height: 269px;
             left: 100px;
             background-color: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
         }
 
         .player-name {
@@ -729,11 +730,15 @@ background-color: rgba(0, 0, 0, 0.6);
             .card-box {
                 width: $card-width;
                 height: $card-height;
-                border: 5px solid lighten($dark-green, 10%);
+                //border: 5px solid lighten($dark-green, 10%);
                 display: inline-block;
                 margin: 0 5px;
                 border-radius: 5px;
                 background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .available {
+                border: 5px solid lighten($dark-green, 30%);
             }
         }
 
@@ -816,13 +821,21 @@ background-color: rgba(0, 0, 0, 0.6);
                 margin: 0 2px 0 -40px;
             }
 
-            &:hover {
-                border: 5px solid $dark-red;
-                position: absolute;
-                z-index: 2;
-                transform: scale(1.25);
-            }
+            // &:hover {
+            //     border: 5px solid $dark-red;
+            //     position: absolute;
+            //     z-index: 2;
+            //     transform: scale(1.25);
+            // }
+
         }
+
+        .selected {
+                 border: 5px solid $dark-red;
+                 position: absolute;
+                 z-index: 2;
+                 transform: scale(1.25);
+            }
     }
 
 
@@ -830,11 +843,11 @@ background-color: rgba(0, 0, 0, 0.6);
         width: 400px;
         background-color: rgba(255, 255, 255, 0.3);
         position: absolute;
-        bottom: -500px;
+        bottom: -300px;
         border-radius: 5px;
         border: 5px solid $dark-red;
         border-bottom: none;
-        height: 300px;
+        height: 200px;
         padding: 10px 20px;
         font-family: $optimus, serif;
         color: white;

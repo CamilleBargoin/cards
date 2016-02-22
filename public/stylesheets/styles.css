@@ -349,7 +349,8 @@ a {
       width: 192px;
       height: 269px;
       left: 100px;
-      background-color: rgba(255, 255, 255, 0.1); }
+      background-color: rgba(255, 255, 255, 0.1);
+      overflow: hidden; }
     #board-left .avatarContainer .player-name {
       font-family: "optimusprincepssemiboldRg", cursive;
       text-align: center;
@@ -450,11 +451,12 @@ a {
   #board-right .middle-row .cards-row .card-box {
     width: 120px;
     height: 170px;
-    border: 5px solid #4b5b3f;
     display: inline-block;
     margin: 0 5px;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.1); }
+  #board-right .middle-row .cards-row .available {
+    border: 5px solid #7c9769; }
   #board-right .middle-row .deck-container {
     width: 30%;
     display: inline-block;
@@ -515,20 +517,20 @@ a {
     box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5); }
     #board-right .bottom-row .card:nth-last-child(n + 8):first-child, #board-right .bottom-row .card:nth-last-child(n + 8):first-child ~ * {
       margin: 0 2px 0 -40px; }
-    #board-right .bottom-row .card:hover {
-      border: 5px solid #880403;
-      position: absolute;
-      z-index: 2;
-      transform: scale(1.25); }
+  #board-right .bottom-row .selected {
+    border: 5px solid #880403;
+    position: absolute;
+    z-index: 2;
+    transform: scale(1.25); }
   #board-right #info-container {
     width: 400px;
     background-color: rgba(255, 255, 255, 0.3);
     position: absolute;
-    bottom: -500px;
+    bottom: -300px;
     border-radius: 5px;
     border: 5px solid #880403;
     border-bottom: none;
-    height: 300px;
+    height: 200px;
     padding: 10px 20px;
     font-family: "optimusprincepsregular", serif;
     color: white;

@@ -33,22 +33,21 @@ router.get('/home', function(req, res, next) {
 
     if (req.session && req.session.userId) {
 
-        var currentPlayer = new Player(req.session.login);
+        console.log("blablablabalbla");
+
+        var currentPlayer = new Player({login: req.session.login});
 
 
         currentPlayer.get(function(user) {
 
             if (user != null) {
 
-                console.log(user);
+                req.session.player = user;
 
                 res.render('home', {
                     title: appName,
-                    login: user.login,
-                    registrationDate: new Date(user.at).toLocaleDateString(),
-                    games: user.games,
-                    avatar: user.avatar,
-                    deckName: user.deckName
+                    player: user,
+                    registrationDate: new Date(user.at).toLocaleDateString()
                 });
             }
             else {

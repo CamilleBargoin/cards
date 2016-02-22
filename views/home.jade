@@ -9,12 +9,12 @@ block content
                     div
                         .avatar
                             p Choisi ton avatar
-                            img(src= avatar)
+                            img(src= player.avatar)
                         div
-                            p= "Nom: " + login
+                            p= "Nom: " + player.login
                             p= "Inscrit le: " + registrationDate
-                            if games
-                                p= "Parties jouées: " + games.length
+                            if player.games
+                                p= "Parties jouées: " + player.games.length
                             else
                                 p=  "Parties jouées: 0"
                             p(id="accountVictories") Victoires:
@@ -33,7 +33,7 @@ block content
 
     script(src="/javascripts/home.js")
     script.
-        var games =  !{JSON.stringify(games)};
+        var games =  !{JSON.stringify(player.games)};
 
 
 
