@@ -23,7 +23,6 @@ module.exports = function(playerData) {
     this.cardLayout = [null, null, null, null, null];
 
 
-
     this.addTotalMoney = function(number) {
         totalMoney += number;
     };
@@ -69,25 +68,23 @@ module.exports = function(playerData) {
         if ( this.deck.length > 0) {
             var cards = [];
 
-            if (currentMoney >= 1) {
+            for (var i = 0; i < number; i++) {
 
-                for (var i = 0; i < number; i++) {
-
+                if (currentMoney >= 1) {
                     var index = Math.floor(Math.random() * this.deck.length);
 
                     currentMoney --;
                     cards.push(this.deck[index]);
                     this.deck.splice(index, 1);
                 }
-
-                this.hand = this.hand.concat(cards);
-
-                return cards;
-
+                else {
+                   return {error: "not enough money"};
+                }
             }
-            else {
-               return {error: "not enough money"};
-            }
+
+            this.hand = this.hand.concat(cards);
+
+            return cards;
         }
         else {
             return {error: "empty deck"};
@@ -103,7 +100,6 @@ module.exports = function(playerData) {
             login: this.name
         }, function(err, doc) {
             if (!err) {
-
 
                 if (callback)
                     callback(doc);
@@ -178,52 +174,52 @@ module.exports = function(playerData) {
         if (this.deckName == "humans") {
 
             this.deck = [
-                new Card({name: "Archer", cost: 2}),
-                new Card({name: "Archer", cost: 2}),
-                new Card({name: "Archer", cost: 2}),
-                new Card({name: "Archer", cost: 2}),
-                new Card({name: "Fantassin", cost: 2}),
-                new Card({name: "Fantassin", cost: 2}),
-                new Card({name: "Fantassin", cost: 2}),
-                new Card({name: "Fantassin", cost: 2}),
-                new Card({name: "Chevalier", cost: 3}),
-                new Card({name: "Chevalier", cost: 3}),
-                new Card({name: "Chevalier", cost: 3}),
-                new Card({name: "Mercenaire", cost: 4}),
-                new Card({name: "Mercenaire", cost: 4}),
-                new Card({name: "Mercenaire", cost: 4}),
-                new Card({name: "Sorcier", cost: 5}),
-                new Card({name: "Sorcier", cost: 5}),
-                new Card({name: "Commandant", cost: 5}),
-                new Card({name: "Commandant", cost: 5}),
-                new Card({name: "Héro", cost: 6}),
-                new Card({name: "Héro", cost: 6})
+                new Card({name: "Archer", cost: 2, health: 1, attack: 2}),
+                new Card({name: "Archer", cost: 2, health: 1, attack: 2}),
+                new Card({name: "Archer", cost: 2, health: 1, attack: 2}),
+                new Card({name: "Archer", cost: 2, health: 1, attack: 2}),
+                new Card({name: "Fantassin", cost: 2, health: 2, attack: 1}),
+                new Card({name: "Fantassin", cost: 2, health: 2, attack: 1}),
+                new Card({name: "Fantassin", cost: 2, health: 2, attack: 1}),
+                new Card({name: "Fantassin", cost: 2, health: 2, attack: 1}),
+                new Card({name: "Chevalier", cost: 3, health: 3, attack: 2}),
+                new Card({name: "Chevalier", cost: 3, health: 3, attack: 2}),
+                new Card({name: "Chevalier", cost: 3, health: 3, attack: 2}),
+                new Card({name: "Mercenaire", cost: 4, health: 3, attack: 3}),
+                new Card({name: "Mercenaire", cost: 4, health: 3, attack: 3}),
+                new Card({name: "Mercenaire", cost: 4, health: 3, attack: 3}),
+                new Card({name: "Sorcier", cost: 5, health: 2, attack: 5}),
+                new Card({name: "Sorcier", cost: 5, health: 2, attack: 5}),
+                new Card({name: "Commandant", cost: 5, health: 4, attack: 4}),
+                new Card({name: "Commandant", cost: 5, health: 4, attack: 4}),
+                new Card({name: "Héro", cost: 6, health: 5, attack: 6}),
+                new Card({name: "Héro", cost: 6, health: 5, attack: 6})
             ];
         }
         else if (this.deckName == "monsters") {
 
 
              this.deck = [
-                new Card({name: "Goule", cost: 1}),
-                new Card({name: "Goule", cost: 1}),
-                new Card({name: "Goule", cost: 1}),
-                new Card({name: "Goule", cost: 1}),
-                new Card({name: "Squelette", cost: 2}),
-                new Card({name: "Squelette", cost: 2}),
-                new Card({name: "Squelette", cost: 2}),
-                new Card({name: "Squelette", cost: 2}),
-                new Card({name: "Troll", cost: 3}),
-                new Card({name: "Troll", cost: 3}),
-                new Card({name: "Troll", cost: 3}),
-                new Card({name: "Possédé", cost: 4}),
-                new Card({name: "Possédé", cost: 4}),
-                new Card({name: "Possédé", cost: 4}),
-                new Card({name: "Spectre", cost: 5}),
-                new Card({name: "Spectre", cost: 5}),
-                new Card({name: "Dragon", cost: 5}),
-                new Card({name: "Dragon", cost: 5}),
-                new Card({name: "Démon", cost: 6}),
-                new Card({name: "Démon", cost: 6})
+                new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
+                new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
+                new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
+                new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
+                new Card({name: "Squelette", cost: 2, health: 1, attack: 2}),
+                new Card({name: "Squelette", cost: 2, health: 1, attack: 2}),
+                new Card({name: "Squelette", cost: 2, health: 1, attack: 2}),
+                new Card({name: "Squelette", cost: 2, health: 1, attack: 2}),
+                new Card({name: "Troll", cost: 3, health: 3, attack: 2}),
+                new Card({name: "Troll", cost: 3, health: 3, attack: 2}),
+                new Card({name: "Troll", cost: 3, health: 3, attack: 2}),
+                new Card({name: "Possédé", cost: 4, health: 2, attack: 3}),
+                new Card({name: "Possédé", cost: 4, health: 2, attack: 3}),
+                new Card({name: "Possédé", cost: 4, health: 2, attack: 3}),
+                new Card({name: "Spectre", cost: 5, health: 3, attack: 4}),
+                new Card({name: "Spectre", cost: 5, health: 3, attack: 4}),
+                new Card({name: "Dragon", cost: 6, health: 5, attack: 5}),
+                new Card({name: "Dragon", cost: 6, health: 5, attack: 5}),
+                new Card({name: "Démon", cost: 7, health: 5, attack: 7}),
+                new Card({name: "Démon", cost: 7, health: 5, attack: 7})
             ];
         }
 
@@ -232,6 +228,8 @@ module.exports = function(playerData) {
 
     this.getOpenCardPositions = function() {
         var result = [];
+
+
         for (var i =0; i < this.cardLayout.length; i++) {
             if ( !this.cardLayout[i]) {
                 result.push(i);
@@ -244,10 +242,8 @@ module.exports = function(playerData) {
     this.playCard = function(cardId, position) {
         var cardToPlay = null;
 
-        console.log(this.hand);
         for (var i = 0; i < this.hand.length; i++) {
 
-            console.log(cardId + " : " +this.hand[i].name );
 
             // TODO: change check on name to ID
             if (cardId == this.hand[i].name) {
@@ -258,7 +254,7 @@ module.exports = function(playerData) {
                     this.hand.splice(i, 1);
                     currentMoney -= cardToPlay.cost;
 
-                    this.cardLayout[position] = cardToPlay;
+                    this.cardLayout[parseInt(position)] = cardToPlay;
 
                 }
                 else {
@@ -268,9 +264,6 @@ module.exports = function(playerData) {
 
                     break;
             }
-
-
-
         }
         // END FOR
 

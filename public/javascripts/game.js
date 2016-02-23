@@ -1,8 +1,6 @@
 Zepto(function($){
 
 
-
-
     var socket = io('http://192.168.104.174:3000');
 
     var opponent = null;
@@ -29,9 +27,7 @@ Zepto(function($){
         socket.on("joiningRoom", function(data) {
             console.log("connected to room: " + data.room);
 
-
             socket.emit("joinsGame", {player: player});
-
 
             socket.on("gameReady", function(data) {
                 console.log("The game has started !");
@@ -83,21 +79,10 @@ Zepto(function($){
                             });
                         }
 
-
                         toggleCardInfo();
                         toggleCardSelection();
-
-
-
                     }
-
-
                 });
-
-
-
-
-
 
 
 
@@ -107,9 +92,9 @@ Zepto(function($){
                  *
                  *  CLICK ON DECK TO DRAW A NEW CARD
                  *  ONCE PER TURN ONLY
+                 *  COST 1
                  *
                  **/
-
 
                 $("#player-deck").click(function() {
 
@@ -130,10 +115,6 @@ Zepto(function($){
                         });
                     }
                 });
-
-
-
-
 
 
 
@@ -170,13 +151,27 @@ Zepto(function($){
                         border: "none"
                     });
 
-
-
-
-
+                    getFreeCards(1);
                 });
 
+
+                var getFreeCards = function(number) {
+                    socket.emit("getFreeCards", {number: number}, function(cards) {
+                        if (cards.error) {
+                            alert(cards.error);
+                        }
+                        else {
+                            for (var i = 0; i < cards.length; i++) {
+                                addCardToHand(cards[i]);
+                                cardsInHand.push(cards[i]);
+                            }
+                        }
+                    });
+                };
+
+
                 socket.on("oppDrewOneCard", function() {
+                    alert("l'autre gagne une carte au debut de son tour");
                     addCardToOpponent();
                 });
 
@@ -208,12 +203,7 @@ Zepto(function($){
                             $(".avatarContainer:first-of-type .resource-box p").text(oppCurrent + "/" + oppTotal);
                         }
                     }
-
                 });
-
-
-
-
             });
 
             socket.on("disconnected", function() {
@@ -226,8 +216,6 @@ Zepto(function($){
                 socket.emit("wins");
             });
         });
-
-
 
     });
 
@@ -280,7 +268,6 @@ Zepto(function($){
                 cardsInHand.splice(i, 1);
         }
 
-
         console.log(cardsInHand);
     };
 
@@ -308,13 +295,12 @@ Zepto(function($){
 
     var toggleCardSelection = function() {
 
+
         /**
          *
          *  CLICK ON CARD IN HAND IN ORDER TO PLAY IT
          *
          **/
-
-
         var onclickCard  = function() {
              if ($(this).hasClass("selected")) {
                 $(this).removeClass("selected");

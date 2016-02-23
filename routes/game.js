@@ -150,11 +150,6 @@ module.exports = function(io) {
             var result = currentPlayer.drawCardsForMoney(1);
 
 
-
-            // callback({
-            //     newCard: card
-            // });
-
             callback(result);
 
             if (!result.error) {
@@ -177,6 +172,7 @@ module.exports = function(io) {
 
             var openPositions = currentPlayer.getOpenCardPositions();
 
+            console.log(openPositions);
 
             callback({
                 openPositions: openPositions
@@ -189,7 +185,7 @@ module.exports = function(io) {
         socket.on("playsCard", function(data, callback) {
 
             var currentPlayer = selectedRoom.players[socket.index];
-            var result = currentPlayer.playCard(data.name);
+            var result = currentPlayer.playCard(data.name, data.position);
 
             callback(result);
 
@@ -205,7 +201,7 @@ module.exports = function(io) {
                 displayPlayersMoney();
             }
             else {
-                console.log(result.error);
+                console.log(result.error.red);
             }
 
 
@@ -246,6 +242,25 @@ module.exports = function(io) {
 
             io.sockets.in(selectedRoom.name).emit("updatePlayersMoney", response);
          };
+
+
+         socket.on("getFreeCards", function(data, callback) {
+            var currentPlayer = selectedRoom.players[socket.index];
+            var result = currentPlayer.drawCards(1);
+
+            console.log("RESULT: ");
+            console.log(result);
+
+            callback(result);
+            if (!result.error) {
+                // TODO: add event for multiple cards
+                socket.in(selectedRoom.name).broadcast.emit("oppDrewOneCard", {});
+
+            }
+            else {
+                console.log(result.error);
+            }
+         });
 
 
         // If it's not already launched, we launch the GameRoom setInterval
