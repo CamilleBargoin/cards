@@ -56,7 +56,7 @@ module.exports = function(io) {
         player.address = socket.handshake.address;
         player.socketId = socket.id;
         player.index = 0;
-        player.addTotalMoney(2);
+        player.addTotalMoney(20);
         player.resetCurrentMoney();
 
         var selectedRoom = null;
@@ -213,13 +213,45 @@ module.exports = function(io) {
             var currentPlayer = selectedRoom.players[socket.index];
             console.log("--> ".yellow + currentPlayer.name.magenta + " ends his turn".yellow);
 
-            selectedRoom.changeTurn();
-
-            socket.in(selectedRoom.name).broadcast.emit("newTurn", {});
 
 
-            displayPlayersMoney();
+
+            launchAttacks(function() {
+                selectedRoom.changeTurn();
+                socket.in(selectedRoom.name).broadcast.emit("newTurn", {});
+                displayPlayersMoney();
+            });
+
         });
+
+        var launchAttacks = function(callback) {
+            var currentPlayer = selectedRoom.players[socket.index];
+
+            var currentCardIndex = 0;
+            var attackInterval = setInterval(function() {
+
+                if (currentCardIndex < currentPlayer.cardLayout.length) {
+                    if (currentPlayer.cardLayout[currentCardIndex]) {
+                        console.log(currentPlayer.cardLayout[currentCardIndex].name + " attacks !".yellow);
+
+                        socket.emit("attackAnimation", {
+                            index: currentCardIndex
+                        });
+
+                        socket.in(selectedRoom.name).broadcast.emit("oppAttackAnimation", {
+                            index: currentCardIndex
+                        });
+                    }
+                    currentCardIndex ++;
+                } else {
+                    clearInterval(attackInterval);
+                    if (callback)
+                        callback();
+                }
+
+            }, 300);
+
+        };
 
 
          socket.on("wins", function() {
@@ -247,9 +279,6 @@ module.exports = function(io) {
          socket.on("getFreeCards", function(data, callback) {
             var currentPlayer = selectedRoom.players[socket.index];
             var result = currentPlayer.drawCards(1);
-
-            console.log("RESULT: ");
-            console.log(result);
 
             callback(result);
             if (!result.error) {

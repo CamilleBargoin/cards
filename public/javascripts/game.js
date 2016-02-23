@@ -212,9 +212,62 @@ Zepto(function($){
                     display: "table"
                 });
 
-
                 socket.emit("wins");
             });
+
+
+            socket.on("attackAnimation", function(data) {
+                attackAnimation(true, data.index);
+            });
+
+
+            socket.on("oppAttackAnimation", function(data) {
+                attackAnimation(false, data.index);
+            });
+
+
+            var attackAnimation = function(self, index) {
+
+                var $side = null;
+                var top = null;
+                if (self) {
+                    $side = $(playerCardPositions[index]);
+                    top = "-100px";
+                }
+                else {
+                    $side = $(opponentCardPositions[index]);
+                    top = "100px";
+                }
+
+                $side.css({
+                    overflow: "visible"
+                });
+
+                var $attackingCard = $($side.children()[0]);
+                console.log($attackingCard);
+
+                $attackingCard.animate({
+                    backgroundColor: "red",
+                    "top": top
+                }, 400, 'ease-out', function() {
+
+                    $attackingCard.animate({
+                        backgroundColor: "white",
+                        "top": "0px"
+                    }, 400, 'ease-out', function() {
+                        $side.css({
+                            overflow: "hidden"
+                        });
+                    });
+                });
+
+            };
+
+
+
+
+
+
         });
 
     });
