@@ -56,7 +56,8 @@ module.exports = function(io) {
         player.address = socket.handshake.address;
         player.socketId = socket.id;
         player.index = 0;
-        player.resource = 2;
+        player.addTotalMoney(2);
+        player.resetCurrentMoney();
 
         var selectedRoom = null;
 
@@ -115,6 +116,7 @@ module.exports = function(io) {
                 }];
 
                 io.sockets.in(selectedRoom.name).emit("gameReady", {players: playersAvatar});
+                displayPlayersMoney();
             }
         });
 
@@ -174,21 +176,35 @@ module.exports = function(io) {
         socket.on("playsCard", function(data, callback) {
             var currentPlayer = selectedRoom.players[socket.index];
 
-            console.log("--> ".yellow + currentPlayer.name.magenta + " plays ".yellow + data.name.magenta);
 
-            var card = new Card({name: data.name});
 
-            currentPlayer.cardLayout[data.position] = card;
 
-            var response = {
+            var result = currentPlayer.playCard(data.name);
 
-            };
-            callback(response);
 
-            socket.in(selectedRoom.name).broadcast.emit("oppPlayedOneCard", {
-                name: card.name,
-                position: data.position
-            });
+            //var card = new Card({name: data.name});
+
+            //currentPlayer.cardLayout[data.position] = card;
+
+
+            callback(result);
+
+            if (!result.error) {
+
+                console.log("--> ".yellow + currentPlayer.name.magenta + " plays ".yellow + data.name.magenta);
+
+                socket.in(selectedRoom.name).broadcast.emit("oppPlayedOneCard", {
+                    name: result.name,
+                    position: data.position
+                });
+
+                displayPlayersMoney();
+            }
+            else {
+                console.log(result.error);
+            }
+
+
         });
 
 
@@ -201,11 +217,8 @@ module.exports = function(io) {
 
             socket.in(selectedRoom.name).broadcast.emit("newTurn", {});
 
-            var response = {};
-            response[selectedRoom.players[0].name] = selectedRoom.players[0].resource;
-            response[selectedRoom.players[1].name] = selectedRoom.players[1].resource;
 
-            io.sockets.in(selectedRoom.name).emit("updatePlayersResources", response);
+            displayPlayersMoney();
 
         });
 
@@ -215,6 +228,21 @@ module.exports = function(io) {
             var currentPlayer = selectedRoom.players[socket.index];
             currentPlayer.saveGameResult(true);
         });
+
+
+         var displayPlayersMoney = function() {
+            var response = {};
+            response[selectedRoom.players[0].name] = {
+                current: selectedRoom.players[0].getCurrentMoney() + "",
+                total: selectedRoom.players[0].getTotalMoney()
+            };
+            response[selectedRoom.players[1].name] = {
+                current: selectedRoom.players[1].getCurrentMoney() + "",
+                total: selectedRoom.players[1].getTotalMoney()
+            };
+
+            io.sockets.in(selectedRoom.name).emit("updatePlayersMoney", response);
+         };
 
 
         // If it's not already launched, we launch the GameRoom setInterval

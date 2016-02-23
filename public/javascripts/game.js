@@ -10,7 +10,9 @@ Zepto(function($){
     var isMyTurn = false;
     var hadDrawnCard = false;
 
-    var resource = 2;
+    var currentMoney = 0;
+    var totalMoney = 0;
+
     var cardsInHand = [];
 
 
@@ -54,6 +56,8 @@ Zepto(function($){
                     if (data && data.startingHand && data.deck) {
 
                         cardsInHand = data.startingHand;
+
+                        console.log(cardsInHand);
 
                         for (var i = 0; i < data.startingHand.length; i++) {
                             addCardToHand(data.startingHand[i]);
@@ -181,18 +185,23 @@ Zepto(function($){
                 });
 
 
-                socket.on("updatePlayersResources",  function(data) {
+                socket.on("updatePlayersMoney",  function(data) {
 
                     if (data) {
-                        console.log("updatePlayerResource: ");
+                        console.log("updatePlayersMoney: ");
                         console.log(data);
 
-                        if (data[playerName]) {
-                            resource = data[playerName];
-                            $(".avatarContainer:last-of-type .resource-box p").text(resource);
+                        if (data[player.login]) {
+                            currentMoney = parseInt(data[player.login].current);
+                            totalMoney = data[player.login].total;
+
+                            $(".avatarContainer:last-of-type .resource-box p").text(currentMoney + "/" + totalMoney);
                         }
-                        if (data[opponent]) {
-                            $(".avatarContainer:first-of-type .resource-box p").text(data[opponent]);
+
+                        if (data[opponent.name]) {
+                            var oppCurrent = data[opponent.name].current;
+                            var oppTotal = data[opponent.name].total;
+                            $(".avatarContainer:first-of-type .resource-box p").text(oppCurrent + "/" + oppTotal);
                         }
                     }
 
@@ -222,7 +231,12 @@ Zepto(function($){
 
 
     var addCardToHand = function(card) {
-        var $card = $("<div class='card' name='" + card.name + "'>" + card.name + "</div>");
+        var $card = $("<div class='card' name='" + card.name + "'>" +
+            card.name +
+            "<br/>coût: " + card.cost +
+            "<br/>force: " + card.attack +
+            "<br/>pv: " + card.health +
+            "</div>");
         $("#hand").append($card);
 
         toggleCardInfo();
@@ -359,7 +373,7 @@ Zepto(function($){
                 position: chosenPosition
             }, function(data) {
                 if (data.error) {
-
+                    alert(data.error);
                 }
                 else {
                     addCardToMyBoard(chosenPosition, {name: $selectedCard.attr("name")});

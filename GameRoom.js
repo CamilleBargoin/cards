@@ -44,7 +44,8 @@ module.exports = function() {
         this.isPlaying = 1 - this.isPlaying;
         this.turn ++;
 
-        this.players[this.isPlaying].resource ++;
+        this.players[this.isPlaying].addTotalMoney(1);
+         this.players[this.isPlaying].resetCurrentMoney();
     };
 
 };

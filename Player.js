@@ -7,9 +7,11 @@ module.exports = function(playerData) {
     this.name = (playerData.login)? playerData.login : null;
     this.registrationDate = (playerData.at)? playerData.at : null;
 
-    var resource = null;
+    var totalMoney = null;
+    var currentMoney = null;
     this.deckName = (playerData.deckName)? playerData.deckName : null;
     this.deck = [];
+    this.hand = [];
     this.avatar = (playerData.avatar)? playerData.avatar : null;
     this.isPlaying = false; // true if its the player's turn to play
 
@@ -22,12 +24,24 @@ module.exports = function(playerData) {
 
 
 
-    this.addResource = function(number) {
-        resource += number;
+    this.addTotalMoney = function(number) {
+        totalMoney += number;
     };
 
-    this.getResource = function() {
-        return resource;
+    this.getTotalMoney = function() {
+        return totalMoney;
+    };
+
+    this.addCurrentMoney = function(number) {
+        currentMoney += number;
+    };
+
+    this.getCurrentMoney = function() {
+        return currentMoney;
+    };
+
+    this.resetCurrentMoney = function() {
+        currentMoney = totalMoney;
     };
 
     this.drawCards = function(number) {
@@ -42,6 +56,8 @@ module.exports = function(playerData) {
                 cards.push(this.deck[index]);
                 this.deck.splice(index, 1);
             }
+
+            this.hand = this.hand.concat(cards);
 
             return cards;
         }
@@ -131,52 +147,52 @@ module.exports = function(playerData) {
         if (this.deckName == "humans") {
 
             this.deck = [
-                new Card({name: "Archer"}),
-                new Card({name: "Archer"}),
-                new Card({name: "Archer"}),
-                new Card({name: "Archer"}),
-                new Card({name: "Fantassin"}),
-                new Card({name: "Fantassin"}),
-                new Card({name: "Fantassin"}),
-                new Card({name: "Fantassin"}),
-                new Card({name: "Chevalier"}),
-                new Card({name: "Chevalier"}),
-                new Card({name: "Chevalier"}),
-                new Card({name: "Mercenaire"}),
-                new Card({name: "Mercenaire"}),
-                new Card({name: "Mercenaire"}),
-                new Card({name: "Sorcier"}),
-                new Card({name: "Sorcier"}),
-                new Card({name: "Commandant"}),
-                new Card({name: "Commandant"}),
-                new Card({name: "Héro"}),
-                new Card({name: "Héro"})
+                new Card({name: "Archer", cost: 2}),
+                new Card({name: "Archer", cost: 2}),
+                new Card({name: "Archer", cost: 2}),
+                new Card({name: "Archer", cost: 2}),
+                new Card({name: "Fantassin", cost: 2}),
+                new Card({name: "Fantassin", cost: 2}),
+                new Card({name: "Fantassin", cost: 2}),
+                new Card({name: "Fantassin", cost: 2}),
+                new Card({name: "Chevalier", cost: 3}),
+                new Card({name: "Chevalier", cost: 3}),
+                new Card({name: "Chevalier", cost: 3}),
+                new Card({name: "Mercenaire", cost: 4}),
+                new Card({name: "Mercenaire", cost: 4}),
+                new Card({name: "Mercenaire", cost: 4}),
+                new Card({name: "Sorcier", cost: 5}),
+                new Card({name: "Sorcier", cost: 5}),
+                new Card({name: "Commandant", cost: 5}),
+                new Card({name: "Commandant", cost: 5}),
+                new Card({name: "Héro", cost: 6}),
+                new Card({name: "Héro", cost: 6})
             ];
         }
         else if (this.deckName == "monsters") {
 
 
              this.deck = [
-                new Card({name: "Goule"}),
-                new Card({name: "Goule"}),
-                new Card({name: "Goule"}),
-                new Card({name: "Goule"}),
-                new Card({name: "Squelette"}),
-                new Card({name: "Squelette"}),
-                new Card({name: "Squelette"}),
-                new Card({name: "Squelette"}),
-                new Card({name: "Troll"}),
-                new Card({name: "Troll"}),
-                new Card({name: "Troll"}),
-                new Card({name: "Possédé"}),
-                new Card({name: "Possédé"}),
-                new Card({name: "Possédé"}),
-                new Card({name: "Spectre"}),
-                new Card({name: "Spectre"}),
-                new Card({name: "Dragon"}),
-                new Card({name: "Dragon"}),
-                new Card({name: "Démon"}),
-                new Card({name: "Démon"})
+                new Card({name: "Goule", cost: 1}),
+                new Card({name: "Goule", cost: 1}),
+                new Card({name: "Goule", cost: 1}),
+                new Card({name: "Goule", cost: 1}),
+                new Card({name: "Squelette", cost: 2}),
+                new Card({name: "Squelette", cost: 2}),
+                new Card({name: "Squelette", cost: 2}),
+                new Card({name: "Squelette", cost: 2}),
+                new Card({name: "Troll", cost: 3}),
+                new Card({name: "Troll", cost: 3}),
+                new Card({name: "Troll", cost: 3}),
+                new Card({name: "Possédé", cost: 4}),
+                new Card({name: "Possédé", cost: 4}),
+                new Card({name: "Possédé", cost: 4}),
+                new Card({name: "Spectre", cost: 5}),
+                new Card({name: "Spectre", cost: 5}),
+                new Card({name: "Dragon", cost: 5}),
+                new Card({name: "Dragon", cost: 5}),
+                new Card({name: "Démon", cost: 6}),
+                new Card({name: "Démon", cost: 6})
             ];
         }
 
@@ -192,6 +208,49 @@ module.exports = function(playerData) {
         }
 
         return result;
+    };
+
+    this.playCard = function(cardId, position) {
+        var cardToPlay = null;
+
+        console.log(this.hand);
+        for (var i = 0; i < this.hand.length; i++) {
+
+            console.log(cardId + " : " +this.hand[i].name );
+
+            // TODO: change check on name to ID
+            if (cardId == this.hand[i].name) {
+
+                cardToPlay = this.hand[i];
+
+                if (currentMoney >= cardToPlay.cost) {
+                    this.hand.splice(i, 1);
+                    currentMoney -= cardToPlay.cost;
+
+                    this.cardLayout[position] = cardToPlay;
+
+                }
+                else {
+                    // ERROR: not enough money
+                    return {error: "not enough money"};
+                }
+
+                    break;
+            }
+
+
+
+        }
+        // END FOR
+
+        if (!cardToPlay) {
+            // ERROR: card is not in hand
+            return {error: "card is not in hand"};
+        }
+
+        return cardToPlay;
+
+
     };
 
 };
