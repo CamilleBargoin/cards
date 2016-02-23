@@ -144,14 +144,27 @@ module.exports = function(io) {
 
         socket.on("drawsOneCard", function(data, callback) {
 
+
+
             var currentPlayer = selectedRoom.players[socket.index];
-            var card = currentPlayer.drawCards(1)[0];
+            var result = currentPlayer.drawCardsForMoney(1);
 
-            socket.in(selectedRoom.name).broadcast.emit("oppDrewOneCard", {});
 
-            callback({
-                newCard: card
-            });
+
+            // callback({
+            //     newCard: card
+            // });
+
+            callback(result);
+
+            if (!result.error) {
+                socket.in(selectedRoom.name).broadcast.emit("oppDrewOneCard", {});
+
+                displayPlayersMoney();
+            }
+            else {
+                console.log(result.error);
+            }
         });
 
 
@@ -174,18 +187,9 @@ module.exports = function(io) {
 
 
         socket.on("playsCard", function(data, callback) {
+
             var currentPlayer = selectedRoom.players[socket.index];
-
-
-
-
             var result = currentPlayer.playCard(data.name);
-
-
-            //var card = new Card({name: data.name});
-
-            //currentPlayer.cardLayout[data.position] = card;
-
 
             callback(result);
 
@@ -219,7 +223,6 @@ module.exports = function(io) {
 
 
             displayPlayersMoney();
-
         });
 
 

@@ -64,6 +64,37 @@ module.exports = function(playerData) {
     };
 
 
+    this.drawCardsForMoney = function(number) {
+
+        if ( this.deck.length > 0) {
+            var cards = [];
+
+            if (currentMoney >= 1) {
+
+                for (var i = 0; i < number; i++) {
+
+                    var index = Math.floor(Math.random() * this.deck.length);
+
+                    currentMoney --;
+                    cards.push(this.deck[index]);
+                    this.deck.splice(index, 1);
+                }
+
+                this.hand = this.hand.concat(cards);
+
+                return cards;
+
+            }
+            else {
+               return {error: "not enough money"};
+            }
+        }
+        else {
+            return {error: "empty deck"};
+        }
+    };
+
+
     this.get = function(callback) {
         var db = database.get();
         var collection = db.collection("users");

@@ -114,12 +114,16 @@ Zepto(function($){
                 $("#player-deck").click(function() {
 
                     if (isMyTurn && !hadDrawnCard) {
-                        socket.emit("drawsOneCard", {}, function(data) {
-                            if (data && data.newCard) {
+                        socket.emit("drawsOneCard", {}, function(cards) {
+
+                            if (cards.error) {
+                                alert(cards.error);
+                            }
+                            else {
 
                                 hadDrawnCard = true;
-                                addCardToHand(data.newCard);
-                                cardsInHand.push(data.newCard);
+                                addCardToHand(cards[0]);
+                                cardsInHand.push(cards[0]);
 
                                 $("#player-deck .card:last-of-type ").remove();
                             }
