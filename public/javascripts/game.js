@@ -81,11 +81,6 @@ Zepto(function($){
 
 
                         toggleCardInfo();
-
-
-
-
-
                         toggleCardSelection();
 
 
@@ -170,10 +165,19 @@ Zepto(function($){
 
 
 
+
                 });
 
                 socket.on("oppDrewOneCard", function() {
                     addCardToOpponent();
+                });
+
+
+                socket.on("oppPlayedOneCard", function(card) {
+                    console.log("adversaire a joué " + card.name + " en position " + card.position);
+                    addCardToOpponentBoard(card.position, card);
+                    removeCardToOpponent();
+
                 });
 
 
@@ -208,26 +212,10 @@ Zepto(function($){
 
                 socket.emit("wins");
             });
-
-
-        });
-
-
-        /*
-        socket.emit("joinsGame", {playerName: playerName});
-
-        socket.emit("startGame");
-
-        $("#board-left button").click(function() {
-            socket.emit("endsTurn", "");
         });
 
 
 
-
-
-
-        */
     });
 
 
@@ -244,6 +232,10 @@ Zepto(function($){
     var addCardToOpponent = function() {
         var $card = $("<div class='card'></div>");
         $(".top-row .hand").append($card);
+    };
+
+    var removeCardToOpponent = function() {
+         $(".top-row .hand .card").last().remove();
     };
 
     var addCardToDeck = function(deck) {

@@ -32,9 +32,6 @@ module.exports = function(io) {
                         title: 'Cards'
                     });
 
-
-
-
                 }
                 else {
                     // member doesn't exist
@@ -51,17 +48,10 @@ module.exports = function(io) {
     });
 
 
-
-
-
-
-
     io.on('connection', function(socket) {
 
 
-
         console.log("New connection to game server".cyan);
-
 
         player.address = socket.handshake.address;
         player.socketId = socket.id;
@@ -69,7 +59,6 @@ module.exports = function(io) {
         player.resource = 2;
 
         var selectedRoom = null;
-
 
 
         // Looking for a room with less than 2 players
@@ -95,9 +84,6 @@ module.exports = function(io) {
 
         // Indicate the client which rooms he is affected to
         socket.emit("joiningRoom", {room: selectedRoom.name});
-
-
-
 
         socket.on("joinsGame", function(data) {
 
@@ -130,7 +116,6 @@ module.exports = function(io) {
 
                 io.sockets.in(selectedRoom.name).emit("gameReady", {players: playersAvatar});
             }
-
         });
 
 
@@ -199,6 +184,11 @@ module.exports = function(io) {
 
             };
             callback(response);
+
+            socket.in(selectedRoom.name).broadcast.emit("oppPlayedOneCard", {
+                name: card.name,
+                position: data.position
+            });
         });
 
 
