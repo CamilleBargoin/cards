@@ -85,7 +85,6 @@ router.post('/register', function(req, res, next) {
 							console.log(result);
 						}
 					});
-
 				}
 				else {
 					// Login already exists in DB

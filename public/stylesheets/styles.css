@@ -351,6 +351,15 @@ a {
       left: 100px;
       background-color: rgba(255, 255, 255, 0.1);
       overflow: hidden; }
+      #board-left .avatarContainer .avatar-box p {
+        color: white;
+        font-size: 1.6em;
+        text-align: right;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 5px; }
     #board-left .avatarContainer .player-name {
       font-family: "optimusprincepssemiboldRg", cursive;
       text-align: center;

@@ -33,16 +33,24 @@ Zepto(function($){
                 console.log("The game has started !");
 
                 if (data.players) {
-                    if (data.players[0].name == player.login)
+                    if (data.players[0].name == player.login) {
                         opponent = data.players[1];
-                    else
+                        player.health = data.players[0].health;
+                    }
+                    else {
                         opponent = data.players[0];
+                        player.health = data.players[1].health;
+                    }
                 }
 
                 $("#board-left .player-name").first().text(opponent.name);
                 $("#board-left .avatar-box img").first().attr({
                     src: opponent.avatar
                 });
+
+                $("#board-left .player-health").first().text(opponent.health);
+                console.log($("#board-left .player-health").last());
+                $("#board-left .player-health").last().text(player.health);
 
                 socket.emit("getStartingCards", {}, function(data) {
 
@@ -245,6 +253,7 @@ Zepto(function($){
 
                 var $attackingCard = $($side.children()[0]);
 
+
                 $attackingCard.animate({
                     backgroundColor: "red",
                     "top": top
@@ -297,8 +306,6 @@ Zepto(function($){
                             $side = $(playerCardPositions[i]);
                         }
 
-
-
                         if (!data.cardLayout[i] ) {
 
                             var $deadCard = $($side.children()[0]);
@@ -312,6 +319,21 @@ Zepto(function($){
 
                     }
 
+                }
+            });
+
+
+            socket.on("attackedHero", function(data) {
+                if (data) {
+
+                    if (data.playerName == opponent.name) {
+                        $("#board-left .player-health").first().text(data.health);
+                        console.log("l'adversaire a " + data.health + " pv");
+                    }
+                    else {
+                        $("#board-left .player-health").last().text(data.health);
+                        console.log("il me reste " + data.health+ " pv");
+                    }
                 }
             });
 

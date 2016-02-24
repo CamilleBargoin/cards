@@ -9,6 +9,7 @@ module.exports = function(playerData) {
 
     var totalMoney = null;
     var currentMoney = null;
+    var health = (playerData.health)? playerData.health : 0;
     this.deckName = (playerData.deckName)? playerData.deckName : null;
     this.deck = [];
     this.hand = [];
@@ -25,6 +26,7 @@ module.exports = function(playerData) {
 
     this.addTotalMoney = function(number) {
         totalMoney += number;
+        return totalMoney;
     };
 
     this.getTotalMoney = function() {
@@ -33,6 +35,7 @@ module.exports = function(playerData) {
 
     this.addCurrentMoney = function(number) {
         currentMoney += number;
+        return currentMoney;
     };
 
     this.getCurrentMoney = function() {
@@ -41,7 +44,18 @@ module.exports = function(playerData) {
 
     this.resetCurrentMoney = function() {
         currentMoney = totalMoney;
+        return currentMoney;
     };
+
+    this.getHealth = function() {
+        return health;
+    };
+
+
+    this.updateHealth = function(number) {
+        health += number;
+        return health;
+    }
 
     this.drawCards = function(number) {
 

@@ -57,6 +57,7 @@ module.exports = function(io) {
         player.socketId = socket.id;
         player.index = 0;
         player.addTotalMoney(20);
+        player.updateHealth(20);
         player.resetCurrentMoney();
 
         var selectedRoom = null;
@@ -106,16 +107,18 @@ module.exports = function(io) {
 
             if (selectedRoom.players.length == 2) {
 
-                var playersAvatar = [{
+                var playersData = [{
                     name:  selectedRoom.players[0].name,
-                    avatar: selectedRoom.players[0].avatar
+                    avatar: selectedRoom.players[0].avatar,
+                    health: selectedRoom.players[0].getHealth()
                 },
                 {
                     name:  selectedRoom.players[1].name,
-                    avatar: selectedRoom.players[1].avatar
+                    avatar: selectedRoom.players[1].avatar,
+                    health: selectedRoom.players[1].getHealth()
                 }];
 
-                io.sockets.in(selectedRoom.name).emit("gameReady", {players: playersAvatar});
+                io.sockets.in(selectedRoom.name).emit("gameReady", {players: playersData});
                 displayPlayersMoney();
             }
         });
@@ -260,6 +263,17 @@ module.exports = function(io) {
                                 card: targetCard,
                                 playerName: opponent.name
                             });
+                        }
+                        else {
+
+
+                            opponent.updateHealth(-attackingCard.attack);
+
+                            io.sockets.in(selectedRoom.name).emit("attackedHero", {
+                                playerName: opponent.name,
+                                health: opponent.getHealth()
+                            });
+
                         }
 
                     }
