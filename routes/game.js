@@ -194,7 +194,7 @@ module.exports = function(io) {
                 console.log("--> ".yellow + currentPlayer.name.magenta + " plays ".yellow + data.name.magenta);
 
                 socket.in(selectedRoom.name).broadcast.emit("oppPlayedOneCard", {
-                    name: result.name,
+                    card: result,
                     position: data.position
                 });
 
@@ -214,8 +214,6 @@ module.exports = function(io) {
             console.log("--> ".yellow + currentPlayer.name.magenta + " ends his turn".yellow);
 
 
-
-
             launchAttacks(function() {
                 selectedRoom.changeTurn();
                 socket.in(selectedRoom.name).broadcast.emit("newTurn", {});
@@ -226,14 +224,19 @@ module.exports = function(io) {
 
         var launchAttacks = function(callback) {
             var currentPlayer = selectedRoom.players[socket.index];
+            var opponent = selectedRoom.players[1 - socket.index];
 
             var currentCardIndex = 0;
             var attackInterval = setInterval(function() {
 
                 if (currentCardIndex < currentPlayer.cardLayout.length) {
+
                     if (currentPlayer.cardLayout[currentCardIndex]) {
                         console.log(currentPlayer.cardLayout[currentCardIndex].name + " attacks !".yellow);
 
+
+
+                        // ANIMATION
                         socket.emit("attackAnimation", {
                             index: currentCardIndex
                         });
@@ -241,10 +244,38 @@ module.exports = function(io) {
                         socket.in(selectedRoom.name).broadcast.emit("oppAttackAnimation", {
                             index: currentCardIndex
                         });
+
+
+                        // DEALING DAMAGES
+                        var attackingCard = currentPlayer.cardLayout[currentCardIndex];
+                        var targetCard = opponent.cardLayout[currentCardIndex];
+
+                        if (targetCard) {
+                            targetCard.updateHealth(-attackingCard.attack);
+
+
+                            // UPDATE OPPONENT CARDS HEALTH ON BOTH SCREENS
+                            io.sockets.in(selectedRoom.name).emit("updateHealth", {
+                                index: currentCardIndex,
+                                card: targetCard,
+                                playerName: opponent.name
+                            });
+                        }
+
                     }
                     currentCardIndex ++;
                 } else {
                     clearInterval(attackInterval);
+
+                    opponent.removeDeadCards();
+
+                    // REMOVE DEAD CARDS ON BOTH SCREENS
+
+                    io.sockets.in(selectedRoom.name).emit("removeDeadCards", {
+                        cardLayout: opponent.cardLayout,
+                        playerName: opponent.name
+                    });
+
                     if (callback)
                         callback();
                 }
@@ -284,7 +315,6 @@ module.exports = function(io) {
             if (!result.error) {
                 // TODO: add event for multiple cards
                 socket.in(selectedRoom.name).broadcast.emit("oppDrewOneCard", {});
-
             }
             else {
                 console.log(result.error);
@@ -299,21 +329,6 @@ module.exports = function(io) {
 
     });
 
-
-
-    /*
-        socket.on("quitsGame", function(data) {
-            console.log("--> Quit Game".magenta);
-        });
-
-        socket.on("playsCard", function(data) {
-            console.log("--> ".yellow + playerName.magenta + " plays ".yellow + data.name.magenta);
-        });
-
-        socket.on("wins", function(data) {
-            console.log("--> ".yellow + playerName.magenta + " wins !".yellow);
-        });
-    */
 
     return router;
 };

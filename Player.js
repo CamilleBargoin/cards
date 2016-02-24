@@ -273,8 +273,14 @@ module.exports = function(playerData) {
         }
 
         return cardToPlay;
+    };
 
+    this.removeDeadCards = function() {
 
+        for (var i = 0; i < this.cardLayout.length; i++) {
+            if (this.cardLayout[i] && this.cardLayout[i].health <= 0)
+                this.cardLayout[i] = null;
+        }
     };
 
 };

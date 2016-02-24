@@ -31,7 +31,6 @@ Zepto(function($){
 
             socket.on("gameReady", function(data) {
                 console.log("The game has started !");
-                console.log(data);
 
                 if (data.players) {
                     if (data.players[0].name == player.login)
@@ -52,8 +51,6 @@ Zepto(function($){
                     if (data && data.startingHand && data.deck) {
 
                         cardsInHand = data.startingHand;
-
-                        console.log(cardsInHand);
 
                         for (var i = 0; i < data.startingHand.length; i++) {
                             addCardToHand(data.startingHand[i]);
@@ -171,15 +168,20 @@ Zepto(function($){
 
 
                 socket.on("oppDrewOneCard", function() {
-                    alert("l'autre gagne une carte au debut de son tour");
                     addCardToOpponent();
                 });
 
 
-                socket.on("oppPlayedOneCard", function(card) {
-                    console.log("adversaire a joué " + card.name + " en position " + card.position);
-                    addCardToOpponentBoard(card.position, card);
-                    removeCardToOpponent();
+                socket.on("oppPlayedOneCard", function(result) {
+
+                    if (result) {
+                        var card = result.card;
+
+                        addCardToOpponentBoard(result.position, card);
+                        removeCardToOpponent();
+
+                    }
+
 
                 });
 
@@ -187,8 +189,6 @@ Zepto(function($){
                 socket.on("updatePlayersMoney",  function(data) {
 
                     if (data) {
-                        console.log("updatePlayersMoney: ");
-                        console.log(data);
 
                         if (data[player.login]) {
                             currentMoney = parseInt(data[player.login].current);
@@ -244,7 +244,6 @@ Zepto(function($){
                 });
 
                 var $attackingCard = $($side.children()[0]);
-                console.log($attackingCard);
 
                 $attackingCard.animate({
                     backgroundColor: "red",
@@ -263,10 +262,58 @@ Zepto(function($){
 
             };
 
+            socket.on("updateHealth", function(data) {
+                if (data) {
+
+                    var $side = null;
+                    var card = data.card;
+
+                    if (data.playerName == opponent.name) {
+                        $side = $(opponentCardPositions[data.index]);
+                    }
+                    else {
+                        $side = $(playerCardPositions[data.index]);
+                    }
+
+                    var $attackedCard = $($side.children()[0]);
+                    $attackedCard.find("span").text(card.health);
+                }
+            });
+
+
+            socket.on("removeDeadCards", function(data) {
+
+                if(data) {
+
+                    var $side = null;
+
+                    for (var i = 0; i < data.cardLayout.length; i++) {
+
+
+                        if (data.playerName == opponent.name) {
+                            $side = $(opponentCardPositions[i]);
+                        }
+                        else {
+                            $side = $(playerCardPositions[i]);
+                        }
 
 
 
+                        if (!data.cardLayout[i] ) {
 
+                            var $deadCard = $($side.children()[0]);
+                            if ($deadCard) {
+                                $deadCard.fadeOut(200, function() {
+                                    $(this).remove();
+                                });
+                            }
+
+                        }
+
+                    }
+
+                }
+            });
 
         });
 
@@ -303,12 +350,20 @@ Zepto(function($){
     };
 
     var addCardToMyBoard = function(index, card) {
-        var $card = $("<div class='card'>" + card.name + "</div>");
+        var $card = $("<div class='card'>" + card.name +
+            "<br/>coût: " + card.cost +
+            "<br/>force: " + card.attack +
+            "<br/>pv: <span class='card-health'>" + card.health + "</span>" +
+            "</div>");
         $(playerCardPositions[index]).append($card);
     };
 
     var addCardToOpponentBoard = function(index, card) {
-        var $card = $("<div class='card'>" + card.name + "</div>");
+        var $card = $("<div class='card'>" + card.name +
+            "<br/>coût: " + card.cost +
+            "<br/>force: " + card.attack +
+            "<br/>pv:  <span class='card-health'>" + card.health + "</span>" +
+            "</div>");
         $(opponentCardPositions[index]).append($card);
     };
 
@@ -321,7 +376,7 @@ Zepto(function($){
                 cardsInHand.splice(i, 1);
         }
 
-        console.log(cardsInHand);
+        //console.log(cardsInHand);
     };
 
 
@@ -419,10 +474,9 @@ Zepto(function($){
                     alert(data.error);
                 }
                 else {
-                    addCardToMyBoard(chosenPosition, {name: $selectedCard.attr("name")});
-                    removeCardFromHand($selectedCard);
 
-                    $(playerCardPositions);
+                    addCardToMyBoard(chosenPosition, data);
+                    removeCardFromHand($selectedCard);
 
                     $.each(playerCardPositions, function(index, item) {
                         $(item).removeClass('available');
@@ -430,7 +484,6 @@ Zepto(function($){
                     });
 
                     toggleCardSelection();
-
                 }
             });
         }
