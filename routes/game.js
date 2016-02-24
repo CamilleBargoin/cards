@@ -274,6 +274,8 @@ module.exports = function(io) {
                                 health: opponent.getHealth()
                             });
 
+
+
                         }
 
                     }
@@ -290,13 +292,41 @@ module.exports = function(io) {
                         playerName: opponent.name
                     });
 
-                    if (callback)
-                        callback();
+
+
+                    if (opponent.getHealth() <= 0) {
+
+                        console.log("YOU WIN !!!!!!!".cyan);
+
+                        io.sockets.in(selectedRoom.name).emit("endGame", {
+                            winner: player.name
+                        });
+
+                    }
+                    else {
+
+                        if (callback)
+                            callback();
+                    }
+
+
+
                 }
 
             }, 300);
 
         };
+
+        socket.on("quitGame", function() {
+            var currentPlayer = selectedRoom.players[socket.index];
+            console.log(currentPlayer.name + " has quit");
+
+            selectedRoom.players[socket.index] = null;
+            selectedRoom.players.splice(socket.index, 1);
+            socket.leave(selectedRoom.name);
+            socket.disconnect();
+            console.log(io.sockets.in(selectedRoom.name).clients());
+        });
 
 
          socket.on("wins", function() {

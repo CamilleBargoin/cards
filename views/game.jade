@@ -9,6 +9,7 @@ block content
           p.player-name Player 2
           .avatar-box
             p.player-health
+            .screen
             img
 
           .resource-box
@@ -20,6 +21,7 @@ block content
           p.player-name= player.login
           .avatar-box
             p.player-health
+            .screen
             img(src= player.avatar)
           .resource-box
             p
@@ -64,11 +66,11 @@ block content
 
           // end table
         // end board-right
-      #disconnectionContainer
+      #endGameContainer
         div
           div
-            p Votre adversaire s'est déconnecté !
-            p Cette partie sera comptée comme une victoire!
+            h1
+            p
             a(href="/home").button.dark-grey Revenir à l'écran principal
       // end board
     //

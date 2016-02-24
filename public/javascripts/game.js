@@ -328,11 +328,56 @@ Zepto(function($){
 
                     if (data.playerName == opponent.name) {
                         $("#board-left .player-health").first().text(data.health);
+
+                        $(".avatar-box .screen").first().animate({
+                            backgroundColor: "#BA1B1B",
+                            opacity: 1
+                        }, 300, function() {
+                            $(this).animate({
+                                opacity: 0
+                            }, 600);
+                        });
+
                         console.log("l'adversaire a " + data.health + " pv");
                     }
                     else {
                         $("#board-left .player-health").last().text(data.health);
                         console.log("il me reste " + data.health+ " pv");
+
+                        $(".avatar-box .screen").last().animate({
+                            backgroundColor: "#BA1B1B",
+                            opacity: 1
+                        }, 300, function() {
+                            $(this).animate({
+                                opacity: 0
+                            }, 600);
+                        });
+                    }
+                }
+            });
+
+
+            socket.on("endGame", function(data) {
+                if (data) {
+                    socket.emit("quitGame", {});
+
+                    if (data.winner == player.login) {
+
+
+                        $("#endGameContainer h1").text("Vous avez gagné !");
+                        $("#endGameContainer p").text("Du texte pour vous féliciter...");
+                        $("#endGameContainer").css({
+                            display: "table"
+                        });
+
+
+                    }
+                    else {
+                        $("#endGameContainer h1").text("Vous avez perdu !");
+                        ("#endGameContainer p").text("Du texte pour vous encourager...");
+                        $("#endGameContainer").css({
+                            display: "table"
+                        });
                     }
                 }
             });
@@ -411,9 +456,12 @@ Zepto(function($){
 
             var currentCard = getCardData($(this).attr("name"));
 
-            $("#info-container h3").html(currentCard.name.toUpperCase());
+            if (currentCard) {
+                $("#info-container h3").html(currentCard.name.toUpperCase());
+                $("#info-container p").last().html(currentCard.description);
+            }
 
-            $("#info-container p").last().html(currentCard.description);
+
 
         }).mouseleave(function(event) {
             $("#info-container").css({
@@ -466,6 +514,7 @@ Zepto(function($){
             if (cardsInHand[i].name == cardName)
                 return cardsInHand[i];
         }
+        return null;
     };
 
 
@@ -512,6 +561,18 @@ Zepto(function($){
 
 
     };
+
+
+/*
+    $("#endGameContainer a").click(function(event) {
+        event.preventDefault();
+
+
+        socket.emit("quitGame", {});
+
+
+
+    });*/
 
 
 });

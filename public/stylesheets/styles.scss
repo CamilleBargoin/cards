@@ -595,6 +595,16 @@ a {
                 margin: 0;
                 padding: 5px;
             }
+
+            .screen {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 2;
+                opacity: 0;
+            }
         }
 
         .player-name {
@@ -890,7 +900,7 @@ background-color: rgba(0, 0, 0, 0.6);
     }
 }
 
-#disconnectionContainer {
+#endGameContainer {
 
     color: white;
     font-family: 'Humanistic';
@@ -912,6 +922,11 @@ background-color: rgba(0, 0, 0, 0.6);
             background-color: rgba(0, 0, 0, 0.8);
             border: 20px solid rgba(255, 255, 255, 0.8);
             margin: 0 auto;
+
+            h1 {
+                font-size: 4em;
+                padding: 20px;
+            }
 
             p {
                 font-size: 3.5em;
