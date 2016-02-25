@@ -53,18 +53,18 @@ module.exports = function(io) {
 
         console.log("New connection to game server".cyan);
 
-        player.address = socket.handshake.address;
-        player.socketId = socket.id;
-        player.index = 0;
-        player.addTotalMoney(20);
-        player.updateHealth(20);
-        player.resetCurrentMoney();
+        // player.address = socket.handshake.address;
+        // player.socketId = socket.id;
+        // player.index = 0;
+        // player.currentMoney = 20;
+        // player.totalMoney = 20;
+        // player.health = 20;
 
         var selectedRoom = null;
 
 
         // Looking for a room with less than 2 players
-        // If on is found, we select it
+        // If one is found, we select it
         for(var i = 0; i < rooms.length; i++) {
 
             if (rooms[i] && rooms[i].players.length < 2) {
@@ -89,18 +89,20 @@ module.exports = function(io) {
 
         socket.on("joinsGame", function(data) {
 
+            player.address = socket.handshake.address;
+            player.socketId = socket.id;
+            player.currentMoney = 20;
+            player.totalMoney = 20;
+            player.health = 20;
+
+
             //player.name = data.playerName;
             player.index = selectedRoom.players.length;
             socket.index = player.index;
 
             selectedRoom.players.push(player);
 
-            console.log(data);
-            console.log("_________".red);
-
-
-            console.log("--> ".yellow + data.player.login.magenta + " joins  the Game in room ".yellow + selectedRoom.name);
-
+            console.log("--> ".yellow + player.name.magenta + " joins  the Game in room ".yellow + selectedRoom.name);
 
             // If the current room is full (2 players), we can start the game
 
@@ -110,15 +112,14 @@ module.exports = function(io) {
                 var playersData = [{
                     name:  selectedRoom.players[0].name,
                     avatar: selectedRoom.players[0].avatar,
-                    health: selectedRoom.players[0].getHealth()
+                    health: selectedRoom.players[0].health
                 },
                 {
                     name:  selectedRoom.players[1].name,
                     avatar: selectedRoom.players[1].avatar,
-                    health: selectedRoom.players[1].getHealth()
+                    health: selectedRoom.players[1].health
                 }];
 
-                console.log(playersData);
 
                 io.sockets.in(selectedRoom.name).emit("gameReady", {players: playersData});
                 displayPlayersMoney();
@@ -133,7 +134,7 @@ module.exports = function(io) {
             startingHand = currentPlayer.drawCards(4);
 
             console.log(currentPlayer.name.magenta + "'s starting cards".yellow);
-            console.log(startingHand);
+            //console.log(startingHand);
             console.log("_________________________".yellow);
 
             var firstPlayer = selectedRoom.players[selectedRoom.firstPlayer];
@@ -269,11 +270,11 @@ module.exports = function(io) {
                         else {
 
 
-                            opponent.updateHealth(-attackingCard.attack);
+                            opponent.health -= attackingCard.attack;
 
                             io.sockets.in(selectedRoom.name).emit("attackedHero", {
                                 playerName: opponent.name,
-                                health: opponent.getHealth()
+                                health: opponent.health
                             });
 
 
@@ -296,7 +297,7 @@ module.exports = function(io) {
 
 
 
-                    if (opponent.getHealth() <= 0) {
+                    if (opponent.health <= 0) {
 
                         console.log("YOU WIN !!!!!!!".cyan);
 
@@ -321,6 +322,8 @@ module.exports = function(io) {
 
         socket.on("quitGame", function() {
             var currentPlayer = selectedRoom.players[socket.index];
+
+            console.log(currentPlayer);
             console.log(currentPlayer.name + " has quit");
 
             selectedRoom.players[socket.index] = null;
@@ -330,24 +333,26 @@ module.exports = function(io) {
             console.log(io.sockets.in(selectedRoom.name).clients());
         });
 
-
+/*
          socket.on("wins", function() {
 console.log("blablabla".red);
             var currentPlayer = selectedRoom.players[socket.index];
             currentPlayer.saveGameResult(true);
         });
 
-
+*/
          var displayPlayersMoney = function() {
+
             var response = {};
             response[selectedRoom.players[0].name] = {
-                current: selectedRoom.players[0].getCurrentMoney() + "",
-                total: selectedRoom.players[0].getTotalMoney()
+                current: selectedRoom.players[0].currentMoney + "",
+                total: selectedRoom.players[0].totalMoney
             };
             response[selectedRoom.players[1].name] = {
-                current: selectedRoom.players[1].getCurrentMoney() + "",
-                total: selectedRoom.players[1].getTotalMoney()
+                current: selectedRoom.players[1].currentMoney + "",
+                total: selectedRoom.players[1].totalMoney
             };
+
 
             io.sockets.in(selectedRoom.name).emit("updatePlayersMoney", response);
          };
@@ -366,6 +371,7 @@ console.log("blablabla".red);
                 console.log(result.error);
             }
          });
+        
 
 
         // If it's not already launched, we launch the GameRoom setInterval

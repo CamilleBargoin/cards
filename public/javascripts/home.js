@@ -1,17 +1,21 @@
 Zepto(function($){
 
     var avatarFilename = null;
-    var deckName = null;
+    var chosenDeck = null;
 
     $(".army-option").click(function() {
     	$(".army-option").removeClass("active");
     	$(this).addClass("active");
-        deckName = $(this).attr("deckName");
-
-        console.log("selected deck: " + deckName);
+        
+        var deck = $(this).attr("deckName");
+        //console.log("selected deck: " + deckName);
+       
 
         $.post('/users/choose-deck', {
-            deckName: deckName
+            deck: deck
+        }, function(e) {
+                chosenDeck = e.deck;
+                console.log(e);
         } );
 
     });
@@ -41,14 +45,19 @@ Zepto(function($){
 
     });
 
+
+
     $("#playButton").click(function(e) {
         e.preventDefault();
 
-        if (deckName) {
+        if (chosenDeck) {
 
-            console.log("start game with " + deckName);
+            console.log("start game with " + chosenDeck);
 
             window.open("/game", "_self");
+        }
+        else {
+            alert("Vous devez d'abord choisir une armée !");
         }
     });
 

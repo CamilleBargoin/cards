@@ -126,26 +126,26 @@ router.post('/update-avatar', function(req, res, next) {
 });
 
 router.post('/choose-deck', function(req, res, next) {
+
 	if (req.session && req.session.userId) {
 
-		if (req.body && req.body.deckName) {
+		if (req.body && req.body.deck) {
 
 			var db = req.db.get();
 			var collection = db.collection('users');
 			var mongo = require('mongodb');
 
-
 			collection.findOneAndUpdate({
 				_id: new mongo.ObjectId(req.session.userId)
 			}, {
 				$set: {
-					deckName: req.body.deckName
+					deckName: req.body.deck
 				}
 			}, {
 				returnNewDocument: true
 			}, function(e) {
-				console.log("change deck".magenta);
-				res.json({status: 1});
+				console.log("change deck to ".magenta + req.body.deck.magenta );
+				res.json({deck: req.body.deck});
 			});
 		}
 	}

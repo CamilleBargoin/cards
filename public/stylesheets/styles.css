@@ -265,9 +265,9 @@ a {
         border: 5px solid #422b71;
         cursor: pointer; }
       #main .right .army-options .army-option:nth-of-type(1) {
-        background: url("/images/armies/humans.jpg"); }
+        background: url("/images/armies/humans1.jpg"); }
       #main .right .army-options .army-option:nth-of-type(2) {
-        background: url("/images/armies/monsters.jpg"); }
+        background: url("/images/armies/monsters1.jpg"); }
       #main .right .army-options .active {
         border: 5px solid #d8b200;
         border-radius: 5px; }
@@ -303,7 +303,7 @@ a {
   #avatarPickerContainer > div .avatarContainer {
     display: table-cell;
     height: 100%;
-    width: 33.33%;
+    width: 14.66%;
     text-align: center;
     line-height: 369px; }
     #avatarPickerContainer > div .avatarContainer img {

@@ -7,9 +7,9 @@ module.exports = function(playerData) {
     this.name = (playerData.login)? playerData.login : null;
     this.registrationDate = (playerData.at)? playerData.at : null;
 
-    var totalMoney = 0;
-    var currentMoney = totalMoney;
-    var health = (playerData.health)? playerData.health : 0;
+    this.totalMoney = 0;
+    this.currentMoney = 0;
+    this.health = 20;
     this.deckName = (playerData.deckName)? playerData.deckName : null;
     this.deck = [];
     this.hand = [];
@@ -24,38 +24,11 @@ module.exports = function(playerData) {
     this.cardLayout = [null, null, null, null, null];
 
 
-    this.addTotalMoney = function(number) {
-        totalMoney += number;
-        return totalMoney;
-    };
-
-    this.getTotalMoney = function() {
-        return totalMoney;
-    };
-
-    this.addCurrentMoney = function(number) {
-        currentMoney += number;
-        return currentMoney;
-    };
-
-    this.getCurrentMoney = function() {
-        return currentMoney;
-    };
-
     this.resetCurrentMoney = function() {
-        currentMoney = totalMoney;
-        return currentMoney;
+        this.currentMoney = this.totalMoney;
+        return this.currentMoney;
     };
 
-    this.getHealth = function() {
-        return health;
-    };
-
-
-    this.updateHealth = function(number) {
-        health += number;
-        return health;
-    };
 
     this.drawCards = function(number) {
 
@@ -84,10 +57,10 @@ module.exports = function(playerData) {
 
             for (var i = 0; i < number; i++) {
 
-                if (currentMoney >= 1) {
+                if (this.currentMoney >= 1) {
                     var index = Math.floor(Math.random() * this.deck.length);
 
-                    currentMoney --;
+                    this.currentMoney --;
                     cards.push(this.deck[index]);
                     this.deck.splice(index, 1);
                 }
@@ -214,8 +187,10 @@ module.exports = function(playerData) {
                 new Card({name: "Mercenaire", cost: 4, health: 3, attack: 3, src: "/armies/humans/mercenaire.jpg"}),
                 new Card({name: "Mercenaire", cost: 4, health: 3, attack: 3, src: "/armies/humans/mercenaire.jpg"}),
 
-                new Card({name: "Mage", cost: 5, health: 2, attack: 5, src: "/armies/humans/mage.jpg"}),
-                new Card({name: "Mage", cost: 5, health: 2, attack: 5, src: "/armies/humans/mage2.jpg"}),
+                new Card({name: "Mage", cost: 5, health: 2, attack: 5, src: "/armies/humans/oracle.jpg"}),
+                new Card({name: "Mage", cost: 5, health: 2, attack: 5, src: "/armies/humans/oracle.jpg"}),
+                new Card({name: "Mage", cost: 5, health: 2, attack: 5, src: "/armies/humans/sorcier.jpg"}),
+                new Card({name: "Mage", cost: 5, health: 2, attack: 5, src: "/armies/humans/sorcier.jpg"}),
 
                 new Card({name: "Paladin", cost: 5, health: 4, attack: 4, src: "/armies/humans/paladin.jpg"}),
                 new Card({name: "Paladin", cost: 5, health: 4, attack: 4, src: "/armies/humans/paladin.jpg"}),
@@ -236,6 +211,12 @@ module.exports = function(playerData) {
                 new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette.jpg"}),
                 new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette.jpg"}),
                 new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette.jpg"}),
+/*
+                new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette2.jpg"}),
+                new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette2.jpg"}),
+                new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette2.jpg"}),
+                new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette2.jpg"}),
+                */
 
                 new Card({name: "Mort-vivant", cost: 2, health: 1, attack: 2, src:"/armies/monsters/mort-vivant.jpg"}),
                 new Card({name: "Mort-vivant", cost: 2, health: 1, attack: 2, src:"/armies/monsters/mort-vivant.jpg"}),
@@ -298,9 +279,9 @@ module.exports = function(playerData) {
 
                 cardToPlay = this.hand[i];
 
-                if (currentMoney >= cardToPlay.cost) {
+                if (this.currentMoney >= cardToPlay.cost) {
                     this.hand.splice(i, 1);
-                    currentMoney -= cardToPlay.cost;
+                    this.currentMoney -= cardToPlay.cost;
 
                     this.cardLayout[parseInt(position)] = cardToPlay;
 
