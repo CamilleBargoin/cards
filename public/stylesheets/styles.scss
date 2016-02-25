@@ -759,6 +759,16 @@ background-color: rgba(0, 0, 0, 0.6);
                 position: relative;
                 overflow: hidden;
 
+                p {
+                    z-index: 2;
+                    font-size: 1.3em;
+                    margin: 0;
+                    padding: 0;
+                    color: white;
+                    text-align: center;
+                    font-family: $optimus, serif;
+                }
+
                 .card {
                     width: 100%;
                     height: 100%;
@@ -766,8 +776,41 @@ background-color: rgba(0, 0, 0, 0.6);
                     top: 0;
                     left: 0;
                     background-color: white;
-                    border: 5px solid black;
+                    //border: 5px solid black;
                     border-radius: 5px;
+
+                    .card-health { 
+                        position: absolute;
+                        left: 5px;         
+                        top: 17px;
+                        width: 18px;
+                    }
+
+                    .card-cost {
+                        position: absolute;
+                        right: 0px;
+                        top: 5px;
+                        width: 24px;
+                    }
+
+                    .card-attack {
+                        position: absolute;
+                        right: 0px;
+                        top: 31px;
+                        width: 24px;
+                    }
+
+                    .card-image {
+
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: inherit;
+                        height: inherit;
+                        margin: 0;
+                        padding: 0;
+                        z-index: 1;
+                    }
                 }
             }
 
@@ -819,6 +862,8 @@ background-color: rgba(0, 0, 0, 0.6);
                 top: -5px;
                 left: 0px;
 
+
+
             }
         }
 
@@ -835,7 +880,7 @@ background-color: rgba(0, 0, 0, 0.6);
     }
 
     .bottom-row {
-
+        font-family: $optimus, serif;
         #hand {
             width: 100%;
             height: 100%;
@@ -846,14 +891,61 @@ background-color: rgba(0, 0, 0, 0.6);
             height: $bigCard-height;
             background-color: white;
             border-radius: 5px;
-            border: 5px solid black;
+            background-size: cover;                 
+            background-repeat: no-repeat;
+            //border: 5px solid black;
             margin: 0 2px;
             display: inline-block;
             cursor: pointer;
             @include box-shadow(-3px 3px 2px 0px rgba(0, 0, 0, 0.5));
             @include quantity-query(8, greater) {
                 margin: 0 2px 0 -40px;
+            };
+            position: relative;
+
+            p {
+                z-index: 2;
+                font-size: 1.5em;
+                margin: 0;
+                padding: 0;
+                color: white;
+                text-align: center;
             }
+
+
+            .card-health { 
+                    position: absolute;
+                    left: 6px;         
+                    top: 19px;
+                    width: 19px;
+                }
+
+                .card-cost {
+                    position: absolute;
+                    right: 2px;
+                    top: 5px;
+                    width: 24px;
+                }
+
+                .card-attack {
+                    position: absolute;
+                    right: 1px;
+                    top: 34px;
+                    width: 24px;
+                }
+
+                .card-image {
+
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: inherit;
+                    height: inherit;
+                    margin: 0;
+                    padding: 0;
+                    z-index: 1;
+                }
+
 
             // &:hover {
             //     border: 5px solid $dark-red;
@@ -865,9 +957,9 @@ background-color: rgba(0, 0, 0, 0.6);
         }
 
         .selected {
-                 border: 5px solid $dark-red;
+                 //border: 5px solid $dark-red;
                  position: absolute;
-                 z-index: 2;
+                 z-index: 3;
                  transform: scale(1.25);
             }
     }

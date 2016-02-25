@@ -474,6 +474,14 @@ a {
     background-color: rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden; }
+    #board-right .middle-row .cards-row .card-box p {
+      z-index: 2;
+      font-size: 1.3em;
+      margin: 0;
+      padding: 0;
+      color: white;
+      text-align: center;
+      font-family: "optimusprincepsregular", serif; }
     #board-right .middle-row .cards-row .card-box .card {
       width: 100%;
       height: 100%;
@@ -481,8 +489,31 @@ a {
       top: 0;
       left: 0;
       background-color: white;
-      border: 5px solid black;
       border-radius: 5px; }
+      #board-right .middle-row .cards-row .card-box .card .card-health {
+        position: absolute;
+        left: 5px;
+        top: 17px;
+        width: 18px; }
+      #board-right .middle-row .cards-row .card-box .card .card-cost {
+        position: absolute;
+        right: 0px;
+        top: 5px;
+        width: 24px; }
+      #board-right .middle-row .cards-row .card-box .card .card-attack {
+        position: absolute;
+        right: 0px;
+        top: 31px;
+        width: 24px; }
+      #board-right .middle-row .cards-row .card-box .card .card-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: inherit;
+        height: inherit;
+        margin: 0;
+        padding: 0;
+        z-index: 1; }
   #board-right .middle-row .cards-row .available {
     border: 5px solid #7c9769; }
   #board-right .middle-row .deck-container {
@@ -527,29 +558,63 @@ a {
   #board-right .middle-row .deck-box:nth-child(even) {
     border: 5px solid #2772a1;
     color: #4fa1d5; }
-  #board-right .bottom-row #hand {
-    width: 100%;
-    height: 100%; }
-  #board-right .bottom-row .card {
-    width: 135px;
-    height: 195px;
-    background-color: white;
-    border-radius: 5px;
-    border: 5px solid black;
-    margin: 0 2px;
-    display: inline-block;
-    cursor: pointer;
-    -webkit-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
-    -ms-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
-    box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5); }
-    #board-right .bottom-row .card:nth-last-child(n + 8):first-child, #board-right .bottom-row .card:nth-last-child(n + 8):first-child ~ * {
-      margin: 0 2px 0 -40px; }
-  #board-right .bottom-row .selected {
-    border: 5px solid #880403;
-    position: absolute;
-    z-index: 2;
-    transform: scale(1.25); }
+  #board-right .bottom-row {
+    font-family: "optimusprincepsregular", serif; }
+    #board-right .bottom-row #hand {
+      width: 100%;
+      height: 100%; }
+    #board-right .bottom-row .card {
+      width: 135px;
+      height: 195px;
+      background-color: white;
+      border-radius: 5px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin: 0 2px;
+      display: inline-block;
+      cursor: pointer;
+      -webkit-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
+      -moz-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
+      -ms-box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
+      box-shadow: -3px 3px 2px 0px rgba(0, 0, 0, 0.5);
+      position: relative; }
+      #board-right .bottom-row .card:nth-last-child(n + 8):first-child, #board-right .bottom-row .card:nth-last-child(n + 8):first-child ~ * {
+        margin: 0 2px 0 -40px; }
+      #board-right .bottom-row .card p {
+        z-index: 2;
+        font-size: 1.5em;
+        margin: 0;
+        padding: 0;
+        color: white;
+        text-align: center; }
+      #board-right .bottom-row .card .card-health {
+        position: absolute;
+        left: 6px;
+        top: 19px;
+        width: 19px; }
+      #board-right .bottom-row .card .card-cost {
+        position: absolute;
+        right: 2px;
+        top: 5px;
+        width: 24px; }
+      #board-right .bottom-row .card .card-attack {
+        position: absolute;
+        right: 1px;
+        top: 34px;
+        width: 24px; }
+      #board-right .bottom-row .card .card-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: inherit;
+        height: inherit;
+        margin: 0;
+        padding: 0;
+        z-index: 1; }
+    #board-right .bottom-row .selected {
+      position: absolute;
+      z-index: 3;
+      transform: scale(1.25); }
   #board-right #info-container {
     width: 400px;
     background-color: rgba(255, 255, 255, 0.3);

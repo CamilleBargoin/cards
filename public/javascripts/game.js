@@ -1,7 +1,8 @@
 Zepto(function($){
 
 
-    var socket = io('http://192.168.104.174:3000');
+    //var socket = io('http://192.168.104.174:3000');
+    var socket = io('http://192.168.1.93:3000');
 
     var opponent = null;
 
@@ -139,7 +140,7 @@ Zepto(function($){
                             border: "none"
                         });
                         $(".avatarContainer:first-of-type .avatar-box").css({
-                            border: "5px solid red"
+                            border: "5px solid #880403"
                         });
                     }
 
@@ -215,7 +216,7 @@ Zepto(function($){
             });
 
             socket.on("disconnected", function() {
-
+                alert("deconnect");
                 $("#disconnectionContainer").css({
                     display: "table"
                 });
@@ -390,12 +391,17 @@ Zepto(function($){
 
 
     var addCardToHand = function(card) {
-        var $card = $("<div class='card' name='" + card.name + "'>" +
-            card.name +
-            "<br/>coût: " + card.cost +
-            "<br/>force: " + card.attack +
-            "<br/>pv: " + card.health +
+        
+        var $card = $("<div class='card' name='" + card.name + "'>" + 
+            "<p class='card-health'>" + card.health + "</p>" + 
+            "<p class='card-cost'>" + card.cost + "</p>" + 
+            "<p class='card-attack'>" + card.attack + "</p>" + 
             "</div>");
+
+        var $image = $("<img class='card-image' src='/images" + card.src + "'>");
+
+        $card.append($image);
+
         $("#hand").append($card);
 
         toggleCardInfo();
@@ -417,20 +423,35 @@ Zepto(function($){
     };
 
     var addCardToMyBoard = function(index, card) {
-        var $card = $("<div class='card'>" + card.name +
-            "<br/>coût: " + card.cost +
-            "<br/>force: " + card.attack +
-            "<br/>pv: <span class='card-health'>" + card.health + "</span>" +
+
+        var $card = $("<div class='card' name='" + card.name + "'>" + 
+            "<p class='card-health'>" + card.health + "</p>" + 
+            "<p class='card-cost'>" + card.cost + "</p>" + 
+            "<p class='card-attack'>" + card.attack + "</p>" + 
             "</div>");
+
+        var $image = $("<img class='card-image' src='/images" + card.src + "'>");
+
+        $card.append($image);
         $(playerCardPositions[index]).append($card);
     };
 
     var addCardToOpponentBoard = function(index, card) {
-        var $card = $("<div class='card'>" + card.name +
-            "<br/>coût: " + card.cost +
-            "<br/>force: " + card.attack +
-            "<br/>pv:  <span class='card-health'>" + card.health + "</span>" +
+        // var $card = $("<div class='card'>" + card.name +
+        //     "<br/>coût: " + card.cost +
+        //     "<br/>force: " + card.attack +
+        //     "<br/>pv:  <span class='card-health'>" + card.health + "</span>" +
+        //     "</div>");
+             
+        var $card = $("<div class='card' name='" + card.name + "'>" + 
+            "<p class='card-health'>" + card.health + "</p>" + 
+            "<p class='card-cost'>" + card.cost + "</p>" + 
+            "<p class='card-attack'>" + card.attack + "</p>" + 
             "</div>");
+
+        var $image = $("<img class='card-image' src='/images" + card.src + "'>");
+        $card.append($image);
+
         $(opponentCardPositions[index]).append($card);
     };
 

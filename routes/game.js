@@ -118,6 +118,8 @@ module.exports = function(io) {
                     health: selectedRoom.players[1].getHealth()
                 }];
 
+                console.log(playersData);
+
                 io.sockets.in(selectedRoom.name).emit("gameReady", {players: playersData});
                 displayPlayersMoney();
             }
@@ -330,7 +332,7 @@ module.exports = function(io) {
 
 
          socket.on("wins", function() {
-
+console.log("blablabla".red);
             var currentPlayer = selectedRoom.players[socket.index];
             currentPlayer.saveGameResult(true);
         });
@@ -368,8 +370,8 @@ module.exports = function(io) {
 
         // If it's not already launched, we launch the GameRoom setInterval
         // that will check for a disconnected player during the game;
-        if (!selectedRoom.checkForDisconnectionInterval)
-            selectedRoom.checkForDisconnection(io);
+        // if (!selectedRoom.checkForDisconnectionInterval)
+        //     selectedRoom.checkForDisconnection(io);
 
     });
 

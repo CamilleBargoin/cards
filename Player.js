@@ -7,8 +7,8 @@ module.exports = function(playerData) {
     this.name = (playerData.login)? playerData.login : null;
     this.registrationDate = (playerData.at)? playerData.at : null;
 
-    var totalMoney = null;
-    var currentMoney = null;
+    var totalMoney = 0;
+    var currentMoney = totalMoney;
     var health = (playerData.health)? playerData.health : 0;
     this.deckName = (playerData.deckName)? playerData.deckName : null;
     this.deck = [];
@@ -55,7 +55,7 @@ module.exports = function(playerData) {
     this.updateHealth = function(number) {
         health += number;
         return health;
-    }
+    };
 
     this.drawCards = function(number) {
 
@@ -188,52 +188,86 @@ module.exports = function(playerData) {
         if (this.deckName == "humans") {
 
             this.deck = [
-                new Card({name: "Archer", cost: 2, health: 1, attack: 2}),
-                new Card({name: "Archer", cost: 2, health: 1, attack: 2}),
-                new Card({name: "Archer", cost: 2, health: 1, attack: 2}),
-                new Card({name: "Archer", cost: 2, health: 1, attack: 2}),
-                new Card({name: "Fantassin", cost: 2, health: 2, attack: 1}),
-                new Card({name: "Fantassin", cost: 2, health: 2, attack: 1}),
-                new Card({name: "Fantassin", cost: 2, health: 2, attack: 1}),
-                new Card({name: "Fantassin", cost: 2, health: 2, attack: 1}),
-                new Card({name: "Chevalier", cost: 3, health: 3, attack: 2}),
-                new Card({name: "Chevalier", cost: 3, health: 3, attack: 2}),
-                new Card({name: "Chevalier", cost: 3, health: 3, attack: 2}),
-                new Card({name: "Mercenaire", cost: 4, health: 3, attack: 3}),
-                new Card({name: "Mercenaire", cost: 4, health: 3, attack: 3}),
-                new Card({name: "Mercenaire", cost: 4, health: 3, attack: 3}),
-                new Card({name: "Sorcier", cost: 5, health: 2, attack: 5}),
-                new Card({name: "Sorcier", cost: 5, health: 2, attack: 5}),
-                new Card({name: "Commandant", cost: 5, health: 4, attack: 4}),
-                new Card({name: "Commandant", cost: 5, health: 4, attack: 4}),
-                new Card({name: "Héro", cost: 6, health: 5, attack: 6}),
-                new Card({name: "Héro", cost: 6, health: 5, attack: 6})
+                new Card({name: "Écuyer", cost: 1, health: 1, attack: 1, src: "/armies/humans/ecuyer.jpg"}),
+                new Card({name: "Écuyer", cost: 1, health: 1, attack: 1, src: "/armies/humans/ecuyer.jpg"}),
+                new Card({name: "Écuyer", cost: 1, health: 1, attack: 1, src: "/armies/humans/ecuyer.jpg"}),
+
+                new Card({name: "Archer", cost: 2, health: 1, attack: 2, src: "/armies/humans/archer.jpg"}),
+                new Card({name: "Archer", cost: 2, health: 1, attack: 2, src: "/armies/humans/archer.jpg"}),
+                new Card({name: "Archer", cost: 2, health: 1, attack: 2, src: "/armies/humans/archer.jpg"}),
+                
+                new Card({name: "Légionnaires", cost: 2, health: 2, attack: 1, src: "/armies/humans/legionnaires.jpg"}),
+                new Card({name: "Légionnaires", cost: 2, health: 2, attack: 1, src: "/armies/humans/legionnaires.jpg"}),
+                new Card({name: "Légionnaires", cost: 2, health: 2, attack: 1, src: "/armies/humans/legionnaires.jpg"}),
+
+                new Card({name: "Fanatique", cost: 2, health: 1, attack: 3, src: "/armies/humans/fanatique.jpg"}),
+                new Card({name: "Fanatique", cost: 2, health: 1, attack: 3, src: "/armies/humans/fanatique.jpg"}),
+
+                new Card({name: "Vétéran", cost: 3, health: 3, attack: 2, src: "/armies/humans/veteran.jpg"}),
+                new Card({name: "Vétéran", cost: 3, health: 3, attack: 2, src: "/armies/humans/veteran.jpg"}),
+
+                new Card({name: "Chevalier", cost: 3, health: 3, attack: 2, src: "/armies/humans/chevalier.jpg"}),
+                new Card({name: "Chevalier", cost: 3, health: 3, attack: 2, src: "/armies/humans/chevalier.jpg"}),
+                new Card({name: "Chevalier", cost: 3, health: 3, attack: 2, src: "/armies/humans/chevalier.jpg"}),
+
+                new Card({name: "Mercenaire", cost: 4, health: 3, attack: 3, src: "/armies/humans/mercenaire.jpg"}),
+                new Card({name: "Mercenaire", cost: 4, health: 3, attack: 3, src: "/armies/humans/mercenaire.jpg"}),
+                new Card({name: "Mercenaire", cost: 4, health: 3, attack: 3, src: "/armies/humans/mercenaire.jpg"}),
+
+                new Card({name: "Mage", cost: 5, health: 2, attack: 5, src: "/armies/humans/mage.jpg"}),
+                new Card({name: "Mage", cost: 5, health: 2, attack: 5, src: "/armies/humans/mage2.jpg"}),
+
+                new Card({name: "Paladin", cost: 5, health: 4, attack: 4, src: "/armies/humans/paladin.jpg"}),
+                new Card({name: "Paladin", cost: 5, health: 4, attack: 4, src: "/armies/humans/paladin.jpg"}),
+
+                new Card({name: "Champion", cost: 6, health: 5, attack: 6, src: "/armies/humans/champion.jpg"}),
+                new Card({name: "Champion", cost: 6, health: 5, attack: 6, src: "/armies/humans/champion.jpg"})
             ];
         }
         else if (this.deckName == "monsters") {
 
 
              this.deck = [
-                new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
-                new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
-                new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
-                new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
-                new Card({name: "Squelette", cost: 2, health: 1, attack: 2}),
-                new Card({name: "Squelette", cost: 2, health: 1, attack: 2}),
-                new Card({name: "Squelette", cost: 2, health: 1, attack: 2}),
-                new Card({name: "Squelette", cost: 2, health: 1, attack: 2}),
-                new Card({name: "Troll", cost: 3, health: 3, attack: 2}),
-                new Card({name: "Troll", cost: 3, health: 3, attack: 2}),
-                new Card({name: "Troll", cost: 3, health: 3, attack: 2}),
-                new Card({name: "Possédé", cost: 4, health: 2, attack: 3}),
-                new Card({name: "Possédé", cost: 4, health: 2, attack: 3}),
-                new Card({name: "Possédé", cost: 4, health: 2, attack: 3}),
-                new Card({name: "Spectre", cost: 5, health: 3, attack: 4}),
-                new Card({name: "Spectre", cost: 5, health: 3, attack: 4}),
-                new Card({name: "Dragon", cost: 6, health: 5, attack: 5}),
-                new Card({name: "Dragon", cost: 6, health: 5, attack: 5}),
-                new Card({name: "Démon", cost: 7, health: 5, attack: 7}),
-                new Card({name: "Démon", cost: 7, health: 5, attack: 7})
+                // new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
+                // new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
+                // new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
+                // new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
+                new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette.jpg"}),
+                new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette.jpg"}),
+                new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette.jpg"}),
+                new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette.jpg"}),
+
+                new Card({name: "Mort-vivant", cost: 2, health: 1, attack: 2, src:"/armies/monsters/mort-vivant.jpg"}),
+                new Card({name: "Mort-vivant", cost: 2, health: 1, attack: 2, src:"/armies/monsters/mort-vivant.jpg"}),
+                new Card({name: "Mort-vivant", cost: 2, health: 1, attack: 2, src:"/armies/monsters/mort-vivant.jpg"}),
+                new Card({name: "Mort-vivant", cost: 2, health: 1, attack: 2, src:"/armies/monsters/mort-vivant.jpg"}),
+
+                new Card({name: "Mommie", cost: 3, health: 3, attack: 2, src:"/armies/monsters/mommie.jpg"}),
+                new Card({name: "Mommie", cost: 3, health: 3, attack: 2, src:"/armies/monsters/mommie.jpg"}),
+                new Card({name: "Mommie", cost: 3, health: 3, attack: 2, src:"/armies/monsters/mommie.jpg"}),
+
+                new Card({name: "Corrompu", cost: 3, health: 3, attack: 2, src:"/armies/monsters/corrompu.jpg"}),
+                new Card({name: "Corrompu", cost: 3, health: 3, attack: 2, src:"/armies/monsters/corrompu.jpg"}),
+                new Card({name: "Corrompu", cost: 3, health: 3, attack: 2, src:"/armies/monsters/corrompu.jpg"}),
+
+                new Card({name: "Possédé", cost: 4, health: 2, attack: 3, src:"/armies/monsters/possede.jpg"}),
+                new Card({name: "Possédé", cost: 4, health: 2, attack: 3, src:"/armies/monsters/possede.jpg"}),
+                new Card({name: "Possédé", cost: 4, health: 2, attack: 3, src:"/armies/monsters/possede.jpg"}),
+
+                new Card({name: "Dévoreur", cost: 5, health: 3, attack: 4, src:"/armies/monsters/devoreur.jpg"}),
+                new Card({name: "Dévoreur", cost: 5, health: 3, attack: 4, src:"/armies/monsters/devoreur.jpg"}),
+
+                new Card({name: "Éxécuteur", cost: 5, health: 3, attack: 4, src:"/armies/monsters/executeur.jpg"}),
+                new Card({name: "Éxécuteur", cost: 5, health: 3, attack: 4, src:"/armies/monsters/executeur.jpg"}),
+
+                new Card({name: "Champion", cost: 5, health: 3, attack: 4, src:"/armies/monsters/champion.jpg"}),
+                new Card({name: "Champion", cost: 5, health: 3, attack: 4, src:"/armies/monsters/champion.jpg"}),
+
+                new Card({name: "Abbobination", cost: 6, health: 5, attack: 5, src:"/armies/monsters/abbobination.jpg"}),
+                new Card({name: "Abbobination", cost: 6, health: 5, attack: 5, src:"/armies/monsters/abbobination.jpg"}),
+
+                new Card({name: "Prince Démon", cost: 7, health: 5, attack: 7, src:"/armies/monsters/prince-demon.jpg"}),
+                new Card({name: "Prince Démon", cost: 7, health: 5, attack: 7, src:"/armies/monsters/prince-demon.jpg"})
             ];
         }
 
