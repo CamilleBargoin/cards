@@ -226,6 +226,80 @@ a {
         border: 2px solid #333;
         text-align: center;
     }
+
+    #credit-container {
+        position: absolute;
+        bottom: -200px;
+        height: 240px;
+        width: 100%;
+        background-color: $dark-grey;
+        padding: 5px 5px 5px 15px;
+        color: white;
+        @include box-shadow(0px -2px 1px 0px rgba(0,0,0,0.75));
+
+        .about-me {
+            font-size: 1em;
+            color: lighten($dark-grey, 28%);
+            margin: 7px 0;
+        }
+
+
+        .about-me+p {
+            color: lighten($dark-grey, 50%);
+            margin: 25px 0 0;
+            padding: 0;
+        }
+        
+
+        .artists {
+
+            margin-top: 0;
+            -webkit-columns: 8;
+            -moz-columns: 8;
+            columns: 8;
+            padding: 10px;
+
+            a {
+                color: lighten($dark-grey, 28%);
+                font-size: 0.9em;
+                text-decoration: underline;
+            }
+        }
+
+        .creditsButton {
+            
+            margin: 0;
+            
+            cursor: pointer;
+            float: right;
+            background-color: lighten($dark-grey, 5%);
+            padding: 4px 5px 1px;
+            border-radius: 5px;
+            border: 2px solid darken($dark-grey, 5%);
+            width: 20px;
+            height: 20px;
+            position: relative;
+
+            p {
+                font-family: "Humanistic", serif;
+                font-size: 1em;
+                
+                margin: 0;
+                padding: 0;
+                text-align: left;
+                padding-left: 4px;
+
+            }
+
+            img {
+                width: 15px;
+                height: 15px;
+                position: absolute;
+                right: 7px;
+                top: 5px;
+            }
+        }
+    }
 }
 
 #loginContainer {

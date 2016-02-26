@@ -17,4 +17,45 @@ Zepto(function($){
     $("#index").css({
         background: "url(" + backgrounds[Math.floor(Math.random() * 3)] + ")"
     });
+
+    var visibleCredits = false;
+
+
+    $(".creditsButton").mouseenter(function() {
+        $(this).animate({
+            width: "80px"
+        }, 'slow', 'ease-out', function() {
+            $(".creditsButton p").text("Crédits");
+        });
+    });
+
+    $(".creditsButton").click(function() {
+
+        if (visibleCredits) {
+            $("#credit-container").animate({
+                bottom: "-200px"
+            }, 'fast', 'ease-out', function() {
+                console.log( "down");
+                visibleCredits = false;
+                $("#credit-container img").animate({
+                    rotate: '0deg'
+                }, 'fast', 'ease-out');
+            });
+        }else {
+            $("#credit-container").animate({
+                bottom: 0
+            }, 'fast', 'ease-out', function() {
+                console.log( "up");
+                visibleCredits = true;
+                $("#credit-container img").animate({
+                    rotate: '180deg'
+                }, 'fast', 'ease-out');
+            });
+        }
+         
+    });
+
+
+
+
 });

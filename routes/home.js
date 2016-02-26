@@ -33,8 +33,6 @@ router.get('/home', function(req, res, next) {
 
     if (req.session && req.session.userId) {
 
-        console.log("blablablabalbla");
-
         var currentPlayer = new Player({login: req.session.login});
 
 

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var colors = require('colors');
-
+var bcrypt = require('bcryptjs');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -33,21 +33,35 @@ router.post('/login', function(req, res, next) {
 
 		var db = req.db.get();
 		var collection = db.collection('users');
+		var loggedInUser = null;
 
-		collection.findOne({login: req.body.login, password: req.body.password}, function(err, doc) {
+		collection.find({login: req.body.login}).toArray(function(err, docs) {
 			if (!err ) {
-				if (doc == null) {
+
+				if (docs.length === 0) {
 					req.session.customInfo = "Identifiant et/ou mot de passe incorrect(s)";
 					res.redirect("/");
 				}
 				else {
 
-					console.log(doc.magenta);
-					req.session.login = doc.login;
-					req.session.userId = doc._id;
-					req.session.avatar = doc.avatar;
+					for (var i = 0; i < docs.length; i++) {
+						if (validPassword(req.body.password, docs[i].password)) {
+							loggedInUser = docs[i];
+							req.session.login = loggedInUser.login;
+							req.session.userId = loggedInUser._id;
+							req.session.avatar = loggedInUser.avatar;
 
-					res.redirect('/home');
+							res.redirect('/home');
+							break;
+						}
+					}
+
+					if (!loggedInUser) {
+						req.session.customInfo = "Identifiant et/ou mot de passe incorrect(s)";
+						res.redirect("/");
+					}
+
+					
 				}
 			}
 			else {
@@ -69,7 +83,7 @@ router.post('/register', function(req, res, next) {
 				if (doc == null) {
 					collection.insertOne({
 							login: req.body.login,
-							password: req.body.password,
+							password: generateHash(req.body.password),
 							email: req.body.email,
 							at: new Date().getTime(),
 							games: 0,
@@ -155,6 +169,16 @@ router.post('/choose-deck', function(req, res, next) {
         res.redirect("/");
 	}
 });
+
+
+var generateHash = function(password) {
+	var salt = bcrypt.genSaltSync(10);
+	return bcrypt.hashSync(password, salt);
+};
+
+var validPassword = function(password, hash) {
+	return bcrypt.compareSync(password, hash);
+};
 
 
 

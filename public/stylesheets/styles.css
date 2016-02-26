@@ -103,6 +103,60 @@ a {
   padding: 1% 5%;
   border: 2px solid #333;
   text-align: center; }
+#index #credit-container {
+  position: absolute;
+  bottom: -200px;
+  height: 240px;
+  width: 100%;
+  background-color: #222;
+  padding: 5px 5px 5px 15px;
+  color: white;
+  -webkit-box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.75);
+  -ms-box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px -2px 1px 0px rgba(0, 0, 0, 0.75); }
+  #index #credit-container .about-me {
+    font-size: 1em;
+    color: dimgray;
+    margin: 7px 0; }
+  #index #credit-container .about-me + p {
+    color: #a2a2a2;
+    margin: 25px 0 0;
+    padding: 0; }
+  #index #credit-container .artists {
+    margin-top: 0;
+    -webkit-columns: 8;
+    -moz-columns: 8;
+    columns: 8;
+    padding: 10px; }
+    #index #credit-container .artists a {
+      color: dimgray;
+      font-size: 0.9em;
+      text-decoration: underline; }
+  #index #credit-container .creditsButton {
+    margin: 0;
+    cursor: pointer;
+    float: right;
+    background-color: #2f2f2f;
+    padding: 4px 5px 1px;
+    border-radius: 5px;
+    border: 2px solid #151515;
+    width: 20px;
+    height: 20px;
+    position: relative; }
+    #index #credit-container .creditsButton p {
+      font-family: "Humanistic", serif;
+      font-size: 1em;
+      margin: 0;
+      padding: 0;
+      text-align: left;
+      padding-left: 4px; }
+    #index #credit-container .creditsButton img {
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      right: 7px;
+      top: 5px; }
 
 #loginContainer {
   /*
