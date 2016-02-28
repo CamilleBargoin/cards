@@ -18,6 +18,7 @@ block content
                             else
                                 p=  "Parties jouées: 0"
                             p(id="accountVictories") Victoires:
+                            a(id="scoresButton", class="button dark-grey", href="/scores") Voir les scores
                             a(class="logout button dark-grey" href="/users/logout") Deconnexion
 
                 .scores
@@ -29,6 +30,7 @@ block content
                     .army-option(deckName="humans")
                     .army-option(deckName="monsters")
                     a(id="playButton", class="button dark-grey", href="/game") Fight!
+                    //a(id="scoresButton", class="button dark-grey", href="/scores") Voir les scores
     include avatarPicker.jade
 
     script(src="/javascripts/home.js")

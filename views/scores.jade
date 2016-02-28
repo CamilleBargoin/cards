@@ -1,0 +1,12 @@
+extends layout
+
+block content
+	#scores
+		a(class="button dark-grey", href="/home") Retour
+			img(src="/images/chevron.png")
+		.scores
+			h1 Derniers resultats
+			ul
+	script.
+		var games = !{JSON.stringify(games)};
+	script(src="/javascripts/scores.js")

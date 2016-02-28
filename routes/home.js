@@ -40,6 +40,8 @@ router.get('/home', function(req, res, next) {
 
             if (user != null) {
 
+
+                // ATTENTION !!!!! A MODIFIER !!!!!!
                 req.session.player = user;
 
                 res.render('home', {
@@ -63,6 +65,20 @@ router.get('/home', function(req, res, next) {
     }
 
 
+});
+
+router.get('/scores', function(req, res, next) {
+    if (req.session && req.session.userId) {
+        var currentPlayer = new Player({login: req.session.login});
+
+        currentPlayer.get(function(user) {
+            if (user != null) {
+                res.render('scores', {
+                    games: user.games
+                });
+            }
+        });
+    }
 });
 
 
