@@ -66,7 +66,8 @@ app.use(session({
 
 
 // DATABASE
-var urlDatabase = 'mongodb://localhost:27017/cards';
+//var urlDatabase = 'mongodb://localhost:27017/cards';
+var urlDatabase = 'mongodb://camille:card-wars@ds047935.mlab.com:47935/card-wars';
 
 var mongo = require('mongodb');
 var mongoClient = mongo.MongoClient;
