@@ -731,13 +731,18 @@ a {
     background-color: rgba(0, 0, 0, 0.6);
     //display: inline-block;
     width: 25%;
+
     height: 100%;
     float: left;
 
     .button-container {
-        width: 192px;
+
+        @media screen and (min-width: 1600px) and (min-height: 900px) {
+            width: 192px;
+        }     
+        width: 180px;   
         height: 10%;
-        margin-left: 100px;
+        margin-left: 10%;
         padding: 10px 30px;
 
 
@@ -758,15 +763,22 @@ a {
     .avatarContainer {
         width: 100%;
         height: 45%;
+        
         //border: 1px dashed white;
         position: relative;
         top: 0;
         left: 0;
 
         .avatar-box {
-            width: 192px;
-            height: 269px;
-            left: 100px;
+            width: 160px;
+            height: 224px;
+
+            @media screen and (min-width: 1600px) and (min-height: 900px) {
+                width: 192px;
+                height: 269px;
+            }
+
+            left: 10%;
             background-color: rgba(255, 255, 255, 0.1);
             overflow: hidden;
 
@@ -797,34 +809,35 @@ a {
             text-align: center;
             letter-spacing: 0.1em;
             font-size: 1.8em;
-            width: 192px;
-            margin-left: 100px;
+            //width: 192px;
+            
+            width: 160px;
+            @media screen and (min-width: 1600px) and (min-height: 900px) {
+                width: 192px;
+            }
+            margin-left: 10%;
+            z-index: 3;
             position: absolute;
         }
 
         .resource-box {
             width: 80px;
-            height: 269px;
+            height: 224px;
             border: 2px solid #222;
             background-color: rgba(255, 255, 255, 0.03);
             position: absolute;
-            left: 300px;
+            left: 200px;
+            @media screen and (min-width: 1600px) and (min-height: 900px) {
+                left: 250px;
+                height: 269px;
+            }
 
             p {
                 color: white;
                 font-size: 2em;
                 text-align: center;
             }
-            /*
-            .resource {
-                width: 38px;
-                height: 50px;
-                background-color: $orange;
-                display: inline-block;
-                margin: 0;
-                padding: 0;
-            }
-            */
+
         }
     }
 
@@ -832,16 +845,19 @@ a {
 
         .player-name {
             color: red;
-            top: 40px;
+            top: 1%;
+            @media screen and (min-width: 1600px) and (min-height: 900px) {
+                top: 40px;
+            }
         }
 
         .avatar-box {
             position: absolute;
-            bottom: 2.5em;
+            bottom: 2%;
         }
 
         .resource-box {
-            bottom: 2.5em;
+            bottom: 2%;
         }
     }
 
@@ -849,32 +865,28 @@ a {
 
         .player-name {
             color: $yellow;
-            bottom: 40px;
+            bottom: 1%;
+            @media screen and (min-width: 1600px) and (min-height: 900px) {
+                bottom: 40px;
+            }
         }
 
          .avatar-box {
             position: absolute;
-            top: 2.5em;
+            top: 2%;
         }
 
         .resource-box {
-            top: 2.5em;
+            top: 2%;
         }
     }
 }
 
-#board-center {
-    //display: inline-block;
-    width: 50%;
-    height: 100%;
-    display: inline-block;
-background-color: rgba(0, 0, 0, 0.6);
-
-}
-
 #board-right {
     float: right;
+    
     width: 75%;
+        
     height: 100%;
     //background-color: rgba(0, 0, 255, 0.2);
     background-color: rgba(0, 0, 0, 0.6);
@@ -1053,14 +1065,20 @@ background-color: rgba(0, 0, 0, 0.6);
         }
 
         .deck-box:nth-child(odd) {
+            display: none;
             border: 5px solid  lighten($dark-purple, 15%);
             color: lighten( $dark-purple, 30% );
+            @media screen and (min-width: 1400px) and (min-height: 800px) {
+                display: inline-block;
+            }
 
         }
 
         .deck-box:nth-child(even) {
+            display: inline-block;
             border: 5px solid lighten($dark-blue, 12%);
             color: lighten( $dark-blue, 30% );
+            
         }
     }
 

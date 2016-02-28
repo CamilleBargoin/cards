@@ -449,10 +449,13 @@ a {
   height: 100%;
   float: left; }
   #board-left .button-container {
-    width: 192px;
+    width: 180px;
     height: 10%;
-    margin-left: 100px;
+    margin-left: 10%;
     padding: 10px 30px; }
+    @media screen and (min-width: 1600px) and (min-height: 900px) {
+      #board-left .button-container {
+        width: 192px; } }
     #board-left .button-container button {
       width: 100%;
       height: 100%;
@@ -469,11 +472,15 @@ a {
     top: 0;
     left: 0; }
     #board-left .avatarContainer .avatar-box {
-      width: 192px;
-      height: 269px;
-      left: 100px;
+      width: 160px;
+      height: 224px;
+      left: 10%;
       background-color: rgba(255, 255, 255, 0.1);
       overflow: hidden; }
+      @media screen and (min-width: 1600px) and (min-height: 900px) {
+        #board-left .avatarContainer .avatar-box {
+          width: 192px;
+          height: 269px; } }
       #board-left .avatarContainer .avatar-box p {
         color: white;
         font-size: 1.6em;
@@ -496,52 +503,50 @@ a {
       text-align: center;
       letter-spacing: 0.1em;
       font-size: 1.8em;
-      width: 192px;
-      margin-left: 100px;
+      width: 160px;
+      margin-left: 10%;
+      z-index: 3;
       position: absolute; }
+      @media screen and (min-width: 1600px) and (min-height: 900px) {
+        #board-left .avatarContainer .player-name {
+          width: 192px; } }
     #board-left .avatarContainer .resource-box {
       width: 80px;
-      height: 269px;
+      height: 224px;
       border: 2px solid #222;
       background-color: rgba(255, 255, 255, 0.03);
       position: absolute;
-      left: 300px;
-      /*
-      .resource {
-          width: 38px;
-          height: 50px;
-          background-color: $orange;
-          display: inline-block;
-          margin: 0;
-          padding: 0;
-      }
-      */ }
+      left: 200px; }
+      @media screen and (min-width: 1600px) and (min-height: 900px) {
+        #board-left .avatarContainer .resource-box {
+          left: 250px;
+          height: 269px; } }
       #board-left .avatarContainer .resource-box p {
         color: white;
         font-size: 2em;
         text-align: center; }
   #board-left .avatarContainer:first-child .player-name {
     color: red;
-    top: 40px; }
+    top: 1%; }
+    @media screen and (min-width: 1600px) and (min-height: 900px) {
+      #board-left .avatarContainer:first-child .player-name {
+        top: 40px; } }
   #board-left .avatarContainer:first-child .avatar-box {
     position: absolute;
-    bottom: 2.5em; }
+    bottom: 2%; }
   #board-left .avatarContainer:first-child .resource-box {
-    bottom: 2.5em; }
+    bottom: 2%; }
   #board-left .avatarContainer:last-child .player-name {
     color: #ffd40c;
-    bottom: 40px; }
+    bottom: 1%; }
+    @media screen and (min-width: 1600px) and (min-height: 900px) {
+      #board-left .avatarContainer:last-child .player-name {
+        bottom: 40px; } }
   #board-left .avatarContainer:last-child .avatar-box {
     position: absolute;
-    top: 2.5em; }
+    top: 2%; }
   #board-left .avatarContainer:last-child .resource-box {
-    top: 2.5em; }
-
-#board-center {
-  width: 50%;
-  height: 100%;
-  display: inline-block;
-  background-color: rgba(0, 0, 0, 0.6); }
+    top: 2%; }
 
 #board-right {
   float: right;
@@ -676,9 +681,14 @@ a {
       top: -5px;
       left: 0px; }
   #board-right .middle-row .deck-box:nth-child(odd) {
+    display: none;
     border: 5px solid #6240a8;
     color: #8b6dc8; }
+    @media screen and (min-width: 1400px) and (min-height: 800px) {
+      #board-right .middle-row .deck-box:nth-child(odd) {
+        display: inline-block; } }
   #board-right .middle-row .deck-box:nth-child(even) {
+    display: inline-block;
     border: 5px solid #2772a1;
     color: #4fa1d5; }
   #board-right .bottom-row {
