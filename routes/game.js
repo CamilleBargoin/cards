@@ -12,6 +12,9 @@ module.exports = function(io) {
     var player = null;
 
 
+    var server_url = process.env.URL + "";
+
+
     router.get('/', function(req, res, next) {
 
         if (req.session && req.session.login) {
@@ -23,13 +26,15 @@ module.exports = function(io) {
             player.get(function(user) {
 
                 if (user) {
+
                    res.render('game', {
                         player: {
                             login: user.login,
                             deckName: user.deckName,
                             avatar: user.avatar
                         },
-                        title: 'Cards'
+                        title: 'Cards', 
+                        server_url: server_url
                     });
 
                 }

@@ -1,8 +1,7 @@
 Zepto(function($){
 
 
-    //var socket = io('http://192.168.104.174:3000');
-    var socket = io('http://192.168.1.93:3000');
+    var socket = io(server_url);
 
     var opponent = null;
 
