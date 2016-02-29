@@ -366,7 +366,7 @@ Zepto(function($){
 
             socket.on("endGame", function(data) {
                 if (data) {
-                    //socket.emit("quitGame", {});
+                    socket.emit("quitGame", {});
 
                     if (data.winner == player.login) {
 

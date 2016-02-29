@@ -306,16 +306,11 @@ module.exports = function(io) {
                             opponent.saveGameResult(false);
                         });
                         
-
                     }
                     else {
-
                         if (callback)
                             callback();
                     }
-
-
-
                 }
 
             }, 300);
@@ -323,26 +318,21 @@ module.exports = function(io) {
         };
 
         socket.on("quitGame", function() {
-            var currentPlayer = selectedRoom.players[socket.index];
 
-            console.log(currentPlayer);
+            var currentPlayer = selectedRoom.players[socket.index];
             console.log(currentPlayer.name + " has quit");
 
             selectedRoom.players[socket.index] = null;
-            selectedRoom.players.splice(socket.index, 1);
             socket.leave(selectedRoom.name);
             socket.disconnect();
-            console.log(io.sockets.in(selectedRoom.name).clients());
+
+            if (selectedRoom.players[0] == null && selectedRoom.players[1] == null) {
+                selectedRoom.players = [];
+            }
+
         });
 
-/*
-         socket.on("wins", function() {
-console.log("blablabla".red);
-            var currentPlayer = selectedRoom.players[socket.index];
-            currentPlayer.saveGameResult(true);
-        });
 
-*/
          var displayPlayersMoney = function() {
 
             var response = {};
