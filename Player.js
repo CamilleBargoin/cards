@@ -13,6 +13,7 @@ module.exports = function(playerData) {
     this.deckName = (playerData.deckName)? playerData.deckName : null;
     this.deck = [];
     this.hand = [];
+    this.discarded = [];
     this.avatar = (playerData.avatar)? playerData.avatar : null;
     this.isPlaying = false; // true if its the player's turn to play
 
@@ -307,8 +308,10 @@ module.exports = function(playerData) {
     this.removeDeadCards = function() {
 
         for (var i = 0; i < this.cardLayout.length; i++) {
-            if (this.cardLayout[i] && this.cardLayout[i].health <= 0)
+            if (this.cardLayout[i] && this.cardLayout[i].health <= 0){
+                this.discarded.push(this.cardLayout[i]);
                 this.cardLayout[i] = null;
+            }
         }
     };
 

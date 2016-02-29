@@ -58,15 +58,8 @@ module.exports = function(io) {
 
         console.log("New connection to game server".cyan);
 
-        // player.address = socket.handshake.address;
-        // player.socketId = socket.id;
-        // player.index = 0;
-        // player.currentMoney = 20;
-        // player.totalMoney = 20;
-        // player.health = 20;
 
         var selectedRoom = null;
-
 
         // Looking for a room with less than 2 players
         // If one is found, we select it
@@ -299,7 +292,6 @@ module.exports = function(io) {
                         cardLayout: opponent.cardLayout,
                         playerName: opponent.name
                     });
-
 
 
                     if (opponent.health <= 0) {

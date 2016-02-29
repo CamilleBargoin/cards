@@ -1,7 +1,10 @@
 Zepto(function($){
 
 
+
     var socket = io(server_url);
+    
+    //var socket = io("http://192.168.1.93:3000");
 
     var opponent = null;
 
@@ -285,7 +288,7 @@ Zepto(function($){
                     }
 
                     var $attackedCard = $($side.children()[0]);
-                    $attackedCard.find("span").text(card.health);
+                    $attackedCard.find(".card-health").text(card.health);
                 }
             });
 
@@ -295,23 +298,27 @@ Zepto(function($){
                 if(data) {
 
                     var $side = null;
-
+                    console.log(data);
                     for (var i = 0; i < data.cardLayout.length; i++) {
 
 
                         if (data.playerName == opponent.name) {
                             $side = $(opponentCardPositions[i]);
+                            $discardPile = $("#opponent-discard");
                         }
                         else {
                             $side = $(playerCardPositions[i]);
+                            $discardPile = $("#player-discard");
                         }
 
                         if (!data.cardLayout[i] ) {
 
                             var $deadCard = $($side.children()[0]);
-                            if ($deadCard) {
+                            console.log($deadCard);
+                            if ($deadCard.length > 0) {
                                 $deadCard.fadeOut(200, function() {
                                     $(this).remove();
+                                    addCardToDiscardPile($discardPile);
                                 });
                             }
 
@@ -419,6 +426,11 @@ Zepto(function($){
     var addCardToDeck = function(deck) {
         var $card = $("<div class='card'></div>");
         deck.append($card);
+    };
+
+    var addCardToDiscardPile = function(discardPile) {
+        var $card = $("<div class='card'></div>");
+        discardPile.append($card);
     };
 
     var addCardToMyBoard = function(index, card) {
