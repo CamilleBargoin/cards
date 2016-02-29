@@ -6,7 +6,7 @@ block content
       // BOARD LEFT
       #board-left
         .avatarContainer
-          p.player-name Player 2
+          p.player-name En attente d'un joueur
           .avatar-box
             p.player-health
             .screen
@@ -31,8 +31,8 @@ block content
           // TOP (opponent hand)
           .top-row
             .hand
-            .menu-bar
-              span Menu
+            //.menu-bar
+            //  span Menu
           // MIDDLE (played cards + decks)
           .middle-row
             .cards-row
@@ -43,9 +43,9 @@ block content
               .card-box
               .deck-container
                 .deck-box#opponent-discard
-                  p Discarded Pile
+                  p Defausse
                 .deck-box#opponent-deck
-                  p Deck Pile
+                  p Pioche
             .cards-row
               .card-box
               .card-box
@@ -54,9 +54,9 @@ block content
               .card-box
               .deck-container
                 .deck-box#player-discard
-                  p Discarded Pile
+                  p Defausse
                 .deck-box#player-deck
-                  p Deck Pile
+                  p Pioche
           // BOTTOM (player hand)
           .bottom-row
             #hand

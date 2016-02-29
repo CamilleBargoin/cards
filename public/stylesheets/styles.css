@@ -464,12 +464,13 @@ a {
     #board-left .button-container button {
       width: 100%;
       height: 100%;
-      background-color: #880403;
+      background-color: #222;
       display: block;
       margin: auto;
       color: #ffd40c;
       font-family: "optimusprincepsregular", serif;
-      font-size: 1.5em; }
+      font-size: 1.5em;
+      border: 2px solid #b3b3b3; }
   #board-left .avatarContainer {
     width: 100%;
     height: 45%;
@@ -488,13 +489,15 @@ a {
           height: 269px; } }
       #board-left .avatarContainer .avatar-box p {
         color: white;
-        font-size: 1.6em;
+        font-size: 4em;
         text-align: right;
         position: absolute;
         top: 0;
         right: 0;
         margin: 0;
-        padding: 5px; }
+        padding: 5px;
+        font-family: "Humanistic";
+        line-height: 0.5em; }
       #board-left .avatarContainer .avatar-box .screen {
         position: absolute;
         top: 0;
