@@ -227,7 +227,7 @@ module.exports = function(io) {
         });
 
         var launchAttacks = function(callback) {
-            var currentPlayer = selectedRoom.players[socket.index];
+            var currentPlayer = selectedRoom.players[parseInt(socket.index)];
             var opponent = selectedRoom.players[1 - socket.index];
 
             var currentCardIndex = 0;
@@ -299,8 +299,13 @@ module.exports = function(io) {
                         console.log("YOU WIN !!!!!!!".cyan);
 
                         io.sockets.in(selectedRoom.name).emit("endGame", {
-                            winner: player.name
+                            winner: currentPlayer.name
                         });
+
+                        currentPlayer.saveGameResult(true, function() {
+                            opponent.saveGameResult(false);
+                        });
+                        
 
                     }
                     else {

@@ -86,8 +86,7 @@ router.post('/register', function(req, res, next) {
 							password: generateHash(req.body.password),
 							email: req.body.email,
 							at: new Date().getTime(),
-							games: 0,
-							victories: 0
+							games: []
 					}, function(err, result) {
 						if (!err) {
 							if (result.result.ok == 1) {

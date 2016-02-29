@@ -366,7 +366,7 @@ Zepto(function($){
 
             socket.on("endGame", function(data) {
                 if (data) {
-                    socket.emit("quitGame", {});
+                    //socket.emit("quitGame", {});
 
                     if (data.winner == player.login) {
 
@@ -381,7 +381,7 @@ Zepto(function($){
                     }
                     else {
                         $("#endGameContainer h1").text("Vous avez perdu !");
-                        ("#endGameContainer p").text("Du texte pour vous encourager...");
+                        $("#endGameContainer p").text("Du texte pour vous encourager...");
                         $("#endGameContainer").css({
                             display: "table"
                         });
