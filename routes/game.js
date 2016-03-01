@@ -132,7 +132,6 @@ module.exports = function(io) {
             startingHand = currentPlayer.drawCards(4);
 
             console.log(currentPlayer.name.magenta + "'s starting cards".yellow);
-            //console.log(startingHand);
             console.log("_________________________".yellow);
 
             var firstPlayer = selectedRoom.players[selectedRoom.firstPlayer];
@@ -207,6 +206,23 @@ module.exports = function(io) {
             else {
                 console.log(result.error.red);
             }
+        });
+
+
+        socket.on("movesCard", function(data, callback) {
+
+            var currentPlayer = selectedRoom.players[socket.index];
+            var result = currentPlayer.moveCard(data.positionFrom, data.positionTo);
+
+            callback(result);
+
+            if (!result.error) {
+
+                console.log("--> ".yellow + currentPlayer.name.magenta + " moves ".yellow + data.name.magenta + 
+                    " from ".yellow + data.positionFrom + " to ".yellow +  data.positionTo);
+
+            }
+
 
 
         });

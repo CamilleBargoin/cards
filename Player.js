@@ -305,6 +305,24 @@ module.exports = function(playerData) {
         return cardToPlay;
     };
 
+
+    this.moveCard = function( positionFrom, positionTo) {
+
+        var cardToMove = this.cardLayout[positionFrom];
+console.log(positionFrom);
+        this.cardLayout[positionFrom] = null;
+        this.cardLayout[positionTo] = cardToMove;
+
+
+        if (!cardToMove) {
+            return {error: "card does not exist"};
+        }
+
+        return cardToMove;
+
+
+    };
+
     this.removeDeadCards = function() {
 
         for (var i = 0; i < this.cardLayout.length; i++) {

@@ -88,7 +88,6 @@ Zepto(function($){
                         }
 
                         toggleCardInfo();
-                        toggleCardSelection();
                     }
                 });
 
@@ -298,7 +297,7 @@ Zepto(function($){
                 if(data) {
 
                     var $side = null;
-                    console.log(data);
+
                     for (var i = 0; i < data.cardLayout.length; i++) {
 
 
@@ -314,7 +313,7 @@ Zepto(function($){
                         if (!data.cardLayout[i] ) {
 
                             var $deadCard = $($side.children()[0]);
-                            console.log($deadCard);
+
                             if ($deadCard.length > 0) {
                                 $deadCard.fadeOut(200, function() {
                                     $(this).remove();
@@ -411,7 +410,7 @@ Zepto(function($){
         $("#hand").append($card);
 
         toggleCardInfo();
-        toggleCardSelection();
+        $card.click(selectCard);
     };
 
     var addCardToOpponent = function() {
@@ -435,7 +434,7 @@ Zepto(function($){
 
     var addCardToMyBoard = function(index, card) {
 
-        var $card = $("<div class='card' name='" + card.name + "'>" + 
+        var $card = $("<div class='card' name='" + card.name + "' index='" + index + "'>" + 
             "<p class='card-health'>" + card.health + "</p>" + 
             "<p class='card-cost'>" + card.cost + "</p>" + 
             "<p class='card-attack'>" + card.attack + "</p>" + 
@@ -445,15 +444,13 @@ Zepto(function($){
 
         $card.append($image);
         $(playerCardPositions[index]).append($card);
+
+        $card.click(selectCard);
+        $("#hand .card").on("click", selectCard);
     };
 
     var addCardToOpponentBoard = function(index, card) {
-        // var $card = $("<div class='card'>" + card.name +
-        //     "<br/>coût: " + card.cost +
-        //     "<br/>force: " + card.attack +
-        //     "<br/>pv:  <span class='card-health'>" + card.health + "</span>" +
-        //     "</div>");
-             
+    
         var $card = $("<div class='card' name='" + card.name + "'>" + 
             "<p class='card-health'>" + card.health + "</p>" + 
             "<p class='card-cost'>" + card.cost + "</p>" + 
@@ -474,8 +471,6 @@ Zepto(function($){
             if (cardsInHand[i].name == $selectedCard.attr("name"))
                 cardsInHand.splice(i, 1);
         }
-
-        //console.log(cardsInHand);
     };
 
 
@@ -503,42 +498,35 @@ Zepto(function($){
 
     };
 
-    var toggleCardSelection = function() {
 
+    var selectCard = function() {
 
-        /**
-         *
-         *  CLICK ON CARD IN HAND IN ORDER TO PLAY IT
-         *
-         **/
-        var onclickCard  = function() {
-             if ($(this).hasClass("selected")) {
-                $(this).removeClass("selected");
-                $("#hand .card").on("click", onclickCard);
+        if ($(this).hasClass("selected")) {
+            $(this).removeClass("selected");
 
-                $.each(playerCardPositions, function(index, item) {
-                    $(item).removeClass('available');
-                    $(item).off("click");
-                });
-            }
-            else {
+            $(this).off("click");
+            $(".card").on("click", selectCard);
 
-                $(this).addClass("selected");
-                $("#hand .card").off("click");
-                $(this).on("click", onclickCard);
+            $.each(playerCardPositions, function(index, item) {
+                 $(item).removeClass('available');
+                 $(item).off("click");
+             });
+        }
+        else {
+            $(this).addClass("selected");
 
-                $selectedCard = $(this);
+            $(".card").off("click");
+            $(this).on("click", selectCard);
 
-                socket.emit("selectsCard", {name: $(this).attr("name")}, function(data) {
-                    highlightOpenPositions(data.openPositions);
-                });
+            $selectedCard = $(this);
 
-            }
-        };
-
-
-        $("#hand .card").click(onclickCard);
+            socket.emit("selectsCard", {name: $(this).attr("name")}, function(data) {
+                 highlightOpenPositions(data.openPositions);
+            });
+        }
     };
+
+
 
 
     var getCardData = function(cardName) {
@@ -552,6 +540,7 @@ Zepto(function($){
 
 
     var highlightOpenPositions = function(openPositions) {
+
 
         for (var i = 0; i < openPositions.length; i++) {
             var $currentPosition = $(playerCardPositions[openPositions[i]]);
@@ -569,42 +558,64 @@ Zepto(function($){
 
             var chosenPosition = $.inArray(this, playerCardPositions);
 
-            socket.emit("playsCard", {
-                name: $selectedCard.attr("name"),
-                position: chosenPosition
-            }, function(data) {
-                if (data.error) {
-                    alert(data.error);
-                }
-                else {
+            if($selectedCard.parent("#hand").length > 0) {
 
-                    addCardToMyBoard(chosenPosition, data);
-                    removeCardFromHand($selectedCard);
+                socket.emit("playsCard", {
+                    name: $selectedCard.attr("name"),
+                    position: chosenPosition
+                }, function(data) {
 
-                    $.each(playerCardPositions, function(index, item) {
-                        $(item).removeClass('available');
-                        $(item).off("click");
+                    if (data.error) {
+                        alert(data.error);
+                    }
+                    else {
+                        addCardToMyBoard(chosenPosition, data);
+                        removeCardFromHand($selectedCard);
+
+                        $.each(playerCardPositions, function(index, item) {
+                            $(item).removeClass('available');
+                            $(item).off("click");
+                        });
+
+                        $(".card").on("click", selectCard);
+                    }
+                });
+            }
+            else {
+                if($selectedCard.parent(".card-box").length > 0) {
+                    
+
+                    socket.emit("movesCard", {
+                        name: $selectedCard.attr("name"),
+                        positionFrom: $selectedCard.attr('index'),
+                        positionTo: chosenPosition
+                    }, function(data) {
+
+                        if(data.error) {
+                            alert(data.error);
+                        }
+                        else {
+
+                            $selectedCard.remove();
+                            addCardToMyBoard(chosenPosition, data);
+
+                            $.each(playerCardPositions, function(index, item) {
+                            $(item).removeClass('available');
+                                $(item).off("click");
+                            });
+
+                            $(".card").on("click", selectCard);
+                        }
                     });
 
-                    toggleCardSelection();
                 }
-            });
+            }
+            
         }
 
 
     };
 
-
-/*
-    $("#endGameContainer a").click(function(event) {
-        event.preventDefault();
-
-
-        socket.emit("quitGame", {});
-
-
-
-    });*/
 
 
 });
