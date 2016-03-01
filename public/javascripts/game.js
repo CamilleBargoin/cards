@@ -52,7 +52,7 @@ Zepto(function($){
                 });
 
                 $("#board-left .player-health").first().text(opponent.health);
-                console.log($("#board-left .player-health").last());
+
                 $("#board-left .player-health").last().text(player.health);
 
                 socket.emit("getStartingCards", {}, function(data) {
@@ -191,8 +191,14 @@ Zepto(function($){
                         removeCardToOpponent();
 
                     }
+                });
 
-
+                socket.on("oppMovedOneCard", function(result) {
+                    if (result) {
+                        var movingCard = $(opponentCardPositions[result.positionFrom]).find('.card');
+                        var newPosition = $(opponentCardPositions[result.positionTo]);
+                        movingCard.appendTo(newPosition);
+                    }
                 });
 
 

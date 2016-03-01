@@ -221,6 +221,15 @@ module.exports = function(io) {
                 console.log("--> ".yellow + currentPlayer.name.magenta + " moves ".yellow + data.name.magenta + 
                     " from ".yellow + data.positionFrom + " to ".yellow +  data.positionTo);
 
+
+                socket.in(selectedRoom.name).broadcast.emit("oppMovedOneCard", {
+                    card: result,
+                    positionFrom: data.positionFrom,
+                    positionTo: data.positionTo
+                });
+            }
+            else {
+                console.log(result.error.red);
             }
 
 
