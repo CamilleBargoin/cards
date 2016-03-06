@@ -89,8 +89,8 @@ module.exports = function(io) {
 
             player.address = socket.handshake.address;
             player.socketId = socket.id;
-            player.currentMoney = 20;
-            player.totalMoney = 20;
+            player.currentMoney = 2;
+            player.totalMoney = 2;
             player.health = 20;
 
 
@@ -167,6 +167,7 @@ module.exports = function(io) {
 
 
         socket.on("selectsCard", function(data, callback) {
+            console.log(data);
 
             var currentPlayer = selectedRoom.players[socket.index];
 

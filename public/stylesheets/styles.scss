@@ -862,8 +862,11 @@ a {
             margin: auto;
             color: $yellow;
             font-family: $optimus, serif;
-            font-size: 1.5em;
+            font-size: 1.1em;
             border: 2px solid lighten(grey, 20%);
+            @media screen and (min-width: 1600px) and (min-height: 900px) {
+                font-size: 1.5em;
+            }  
         }
     }
 
@@ -891,12 +894,27 @@ a {
             background-color: rgba(255, 255, 255, 0.1);
             overflow: hidden;
 
-            p {
+            .player-health {
                 color: white;
                 font-size: 4em;
                 text-align: right;
                 position: absolute;
                 top: 0;
+                left: 0;
+                margin: 0;
+                padding: 5px;
+                font-family: "Humanistic";
+                line-height: 0.5em;
+                text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+            }
+
+            .player-resource {
+                color: #D6A208;
+                text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+                font-size: 2em;
+                text-align: right;
+                position: absolute;
+                bottom: 0;
                 right: 0;
                 margin: 0;
                 padding: 5px;
@@ -1158,7 +1176,7 @@ a {
                 text-align: center;
             }
 
-            .card {
+            .deck-card {
                 width:  $card-height;
                 height: $card-width;
                 //background-color: black;
@@ -1169,7 +1187,7 @@ a {
                 position: absolute;
                 top: -5px;
                 left: 0px;
-
+                cursor: pointer;
 
 
             }
@@ -1243,8 +1261,8 @@ a {
 
                 .card-attack {
                     position: absolute;
-                    right: 1px;
-                    top: 34px;
+                    right: 2px;
+                    top: 37px;
                     width: 24px;
                 }
 
@@ -1289,7 +1307,7 @@ a {
         border-bottom: none;
         height: 200px;
         padding: 10px 20px;
-        font-family: $optimus, serif;
+        font-family: 'Humanistic', serif;
         color: white;
         right: 5%;
 

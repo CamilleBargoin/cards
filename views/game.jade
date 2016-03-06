@@ -9,11 +9,11 @@ block content
           p.player-name En attente d'un joueur
           .avatar-box
             p.player-health
+            p.player-resource
             .screen
             img
-
-          .resource-box
-            p
+          //- .resource-box
+          //-   p
         .button-container
           button
             | Fin du Tour
@@ -21,10 +21,11 @@ block content
           p.player-name= player.login
           .avatar-box
             p.player-health
+            p.player-resource
             .screen
             img(src= player.avatar)
-          .resource-box
-            p
+          //- .resource-box
+          //-   p
       // BOARD RIGHT
       #board-right
         .container.table

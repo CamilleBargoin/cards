@@ -210,13 +210,13 @@ Zepto(function($){
                             currentMoney = parseInt(data[player.login].current);
                             totalMoney = data[player.login].total;
 
-                            $(".avatarContainer:last-of-type .resource-box p").text(currentMoney + "/" + totalMoney);
+                            $(".avatarContainer:last-of-type .player-resource").text(currentMoney + "/" + totalMoney);
                         }
 
                         if (data[opponent.name]) {
                             var oppCurrent = data[opponent.name].current;
                             var oppTotal = data[opponent.name].total;
-                            $(".avatarContainer:first-of-type .resource-box p").text(oppCurrent + "/" + oppTotal);
+                            $(".avatarContainer:first-of-type .player-resource").text(oppCurrent + "/" + oppTotal);
                         }
                     }
                 });
@@ -429,12 +429,12 @@ Zepto(function($){
     };
 
     var addCardToDeck = function(deck) {
-        var $card = $("<div class='card'></div>");
+        var $card = $("<div class='deck-card'></div>");
         deck.append($card);
     };
 
     var addCardToDiscardPile = function(discardPile) {
-        var $card = $("<div class='card'></div>");
+        var $card = $("<div class='deck-card'></div>");
         discardPile.append($card);
     };
 
@@ -492,6 +492,11 @@ Zepto(function($){
             if (currentCard) {
                 $("#info-container h3").html(currentCard.name.toUpperCase());
                 $("#info-container p").last().html(currentCard.description);
+                $("#info-container p").last().append("<br/><hr>");
+                var description = "Coût: " + currentCard.cost + "<br/>";
+                description     += "Vie: " + currentCard.health + "<br/>";
+                description     += "Attaque: " + currentCard.attack;
+                $("#info-container p").last().append(description);
             }
 
 
