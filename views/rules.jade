@@ -1,0 +1,56 @@
+extends layout
+block content
+	#rules
+		.container
+			a(class="button dark-grey", href="/home") Retour
+				img(src="/images/chevron.png")
+			h1 Comment Jouer
+			.about
+				h2 PRÉSENTATION
+				p
+					|Dans Final Duel, deux joueurs jouent chacun leur tour des cartes constituant leur armée dans le but de vaincre l'adversaire et faire descendre ses points de vie à 0.
+
+
+			.elements
+				
+				img(src="/images/rules1.jpg")
+				h2 ÉLÉMENTS DU JEU
+				p
+					|Sur la gauche du plateau se trouvent les avatars des 2 joueurs, avec en haut à droite leurs points de vie. et à gauche la réserve d'or.
+					br
+					br
+					|Le bouton "Fin du tour", placé entre les deux avatars permet à un jouer de terminer son tour, ce qui déclenche automatiquement l'attaque de ses cartes.
+					br
+					br
+					|Le centre du plateau est divisé en 3 parties. La zone du haut correspond à la main de l'adversaire. Il est possible de savoir à tout moment combien de carte celui-ci dispose dans sa main.
+					br
+					br
+					|La partie du milieu représente le champs de bataille à proprement parler. Celui-ci est constitué de 2 rangées, une par joueur, contenant 5 emplacements où seront placées les cartes.
+					br
+					br
+					|La zone du bas contient les cartes que vous possédez actuellement dans votre main, et qu'il est donc possible de jouer.
+					br
+					br
+					|La partie de droite regroupe les piles de cartes constituant la pioche de chaque joueur, ainsi que la défausse, où sont placées les cartes tuées à la fin de chaque tour de jeu.
+
+			
+
+
+			.turn
+				h2 DÉROULEMENT DU TOUR
+				p
+					|Chaque joueur commence avec 4 cartes dans sa main tirées au hasard parmis l'ensemble de son jeu (deck). Le reste des cartes forme la pioche et permettra de se réapprovisionner en troupes.
+					br
+					br
+					|Au premier tour, chaque joueur commence avec 2 pieces d'or à dépenser pour jouer des cartes. A chque début de tour, le total augmente de 1, permettant donc de jouer plus de cartes, ou des cartes plus puissantes. Le coùt des cartes est indiqué sur chacune d'elles, dans un cercle doré.
+					br
+					br
+					|En selectionnant une carte de votre main, le jeu vous indiquera les emplacements disponibles sur le champs de bataille par un contour vert. Une fois votre choix fait, si vous avez assez de pièces d'or, la carte sera posée sur l'emplacement voulu.
+					br
+					br
+					|Il est également possible à tout moment de déplacer une carte du champ de bataille sur un autre emplacement.
+					br
+					|Vous pouvez aussi, pour une pièce d'or, piocher une carte supplémentaire de la pioche en cliquant dessus.
+					br
+					br
+					|Une fois que vous avez fini de poser de nouvelles cartes sur la table et que vous êtes prêt à lancer l'attaque, appuyez sur "Fin du tour". Les cartes sur le champs de bataille vont automatiquement attaquer celles de l'adversaire directement en face, leur infligeant le nombre de dégat prévu. Si l'adversaire n'a pas de cartes en face, votre carte attaquera son héro!

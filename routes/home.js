@@ -81,5 +81,9 @@ router.get('/scores', function(req, res, next) {
     }
 });
 
+router.get("/rules", function(req, res, next) {
+    res.render('rules');
+});
+
 
 module.exports = router;

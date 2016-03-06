@@ -75,7 +75,7 @@ a {
 .right {
   float: right; }
 
-#index, #board, #main, #scores {
+#index, #board, #main, #scores, #rules {
   height: 100vh; }
 
 #index .main-title {
@@ -352,6 +352,21 @@ a {
       #main .right .army-options #playButton:hover {
         background-color: white;
         color: #222; }
+      #main .right .army-options #rulesButton {
+        width: 200px;
+        height: 45px;
+        margin: 5% auto 0;
+        display: block;
+        color: white;
+        text-align: center;
+        line-height: 48px;
+        font-size: 1.3em;
+        text-decoration: none;
+        font-weight: bold;
+        border: 1px solid #b3b3b3; }
+      #main .right .army-options #rulesButton:hover {
+        background-color: white;
+        color: #222; }
 
 #avatarPickerContainer {
   position: absolute;
@@ -444,6 +459,58 @@ a {
       color: white; }
     #scores .scores .defeat {
       color: #e20705; }
+
+#rules {
+  font-family: "optimusprincepsregular", "Playfair Display", serif;
+  letter-spacing: 0.4em;
+  background: url("/images/backgrounds/background1.jpg"); }
+  #rules a {
+    width: 60px;
+    color: white;
+    text-align: center;
+    position: relative;
+    padding-left: 33px;
+    border: 1px solid #b3b3b3;
+    float: left; }
+    #rules a img {
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      top: 7px;
+      left: 7px;
+      transform: rotate(-90deg); }
+  #rules a:hover {
+    background-color: white;
+    color: #222; }
+  #rules .container {
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    overflow-y: scroll; }
+    #rules .container h1 {
+      text-align: center; }
+    #rules .container h2 {
+      font-size: 1.3em;
+      font-family: "Humanistic"; }
+    #rules .container p {
+      font-size: 1em;
+      font-family: 'Humanistic';
+      letter-spacing: 0.02em; }
+    #rules .container .about {
+      margin-top: 50px; }
+    #rules .container .elements {
+      margin-top: 50px;
+      min-height: 500px;
+      margin-bottom: 10px; }
+      #rules .container .elements h2 {
+        padding-top: 10px; }
+      #rules .container .elements img {
+        float: left;
+        margin-top: 10px;
+        border: 2px solid black;
+        margin-right: 10px; }
+    #rules .container .turn {
+      margin-top: 50px; }
 
 #board {
   background: url("/images/backgrounds/background5.jpg") no-repeat; }
