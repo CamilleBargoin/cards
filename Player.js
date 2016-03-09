@@ -204,20 +204,11 @@ module.exports = function(playerData) {
 
 
              this.deck = [
-                // new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
-                // new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
-                // new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
-                // new Card({name: "Goule", cost: 1, health: 1, attack: 1}),
+
                 new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette.jpg"}),
                 new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette.jpg"}),
                 new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette.jpg"}),
                 new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette.jpg"}),
-/*
-                new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette2.jpg"}),
-                new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette2.jpg"}),
-                new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette2.jpg"}),
-                new Card({name: "Squelette", cost: 2, health: 1, attack: 2, src:"/armies/monsters/squelette2.jpg"}),
-                */
 
                 new Card({name: "Mort-vivant", cost: 2, health: 1, attack: 2, src:"/armies/monsters/mort-vivant.jpg"}),
                 new Card({name: "Mort-vivant", cost: 2, health: 1, attack: 2, src:"/armies/monsters/mort-vivant.jpg"}),
@@ -309,7 +300,7 @@ module.exports = function(playerData) {
     this.moveCard = function( positionFrom, positionTo) {
 
         var cardToMove = this.cardLayout[positionFrom];
-console.log(positionFrom);
+
         this.cardLayout[positionFrom] = null;
         this.cardLayout[positionTo] = cardToMove;
 

@@ -1,3 +1,7 @@
+/**
+ * Client-side JS for the landing page
+ */
+
 Zepto(function($){
 
     $("#showRegisterButton").click(function(){
@@ -54,8 +58,5 @@ Zepto(function($){
         }
          
     });
-
-
-
 
 });

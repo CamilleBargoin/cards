@@ -14,7 +14,7 @@ module.exports = function(io) {
 
     var server_url = process.env.URL + "";
 
-
+    // Player arrives on the game page
     router.get('/', function(req, res, next) {
 
         if (req.session && req.session.login) {
@@ -94,7 +94,6 @@ module.exports = function(io) {
             player.health = 20;
 
 
-            //player.name = data.playerName;
             player.index = selectedRoom.players.length;
             socket.index = player.index;
 
@@ -103,7 +102,6 @@ module.exports = function(io) {
             console.log("--> ".yellow + player.name.magenta + " joins  the Game in room ".yellow + selectedRoom.name);
 
             // If the current room is full (2 players), we can start the game
-
 
             if (selectedRoom.players.length == 2) {
 
@@ -132,7 +130,6 @@ module.exports = function(io) {
             startingHand = currentPlayer.drawCards(4);
 
             console.log(currentPlayer.name.magenta + "'s starting cards".yellow);
-            console.log("_________________________".yellow);
 
             var firstPlayer = selectedRoom.players[selectedRoom.firstPlayer];
 
@@ -147,11 +144,8 @@ module.exports = function(io) {
 
         socket.on("drawsOneCard", function(data, callback) {
 
-
-
             var currentPlayer = selectedRoom.players[socket.index];
             var result = currentPlayer.drawCardsForMoney(1);
-
 
             callback(result);
 
@@ -167,7 +161,6 @@ module.exports = function(io) {
 
 
         socket.on("selectsCard", function(data, callback) {
-            console.log(data);
 
             var currentPlayer = selectedRoom.players[socket.index];
 
@@ -176,14 +169,10 @@ module.exports = function(io) {
 
             var openPositions = currentPlayer.getOpenCardPositions();
 
-            console.log(openPositions);
-
             callback({
                 openPositions: openPositions
             });
-
         });
-
 
 
         socket.on("playsCard", function(data, callback) {
@@ -232,9 +221,6 @@ module.exports = function(io) {
             else {
                 console.log(result.error.red);
             }
-
-
-
         });
 
 
@@ -243,7 +229,6 @@ module.exports = function(io) {
             var currentPlayer = selectedRoom.players[socket.index];
             console.log("--> ".yellow + currentPlayer.name.magenta + " ends his turn".yellow);
 
-
             launchAttacks(function() {
                 selectedRoom.changeTurn();
                 socket.in(selectedRoom.name).broadcast.emit("newTurn", {});
@@ -251,6 +236,7 @@ module.exports = function(io) {
             });
 
         });
+
 
         var launchAttacks = function(callback) {
             var currentPlayer = selectedRoom.players[parseInt(socket.index)];
@@ -263,7 +249,6 @@ module.exports = function(io) {
 
                     if (currentPlayer.cardLayout[currentCardIndex]) {
                         console.log(currentPlayer.cardLayout[currentCardIndex].name + " attacks !".yellow);
-
 
 
                         // ANIMATION
@@ -293,20 +278,17 @@ module.exports = function(io) {
                         }
                         else {
 
-
                             opponent.health -= attackingCard.attack;
 
                             io.sockets.in(selectedRoom.name).emit("attackedHero", {
                                 playerName: opponent.name,
                                 health: opponent.health
                             });
-
-
-
                         }
-
                     }
+
                     currentCardIndex ++;
+                    
                 } else {
                     clearInterval(attackInterval);
 

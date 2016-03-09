@@ -1,3 +1,11 @@
+/**
+ *
+ *  Client-side JS running during the card game
+ *  Client-side web socket event handlers
+ * 
+ **/
+
+
 Zepto(function($){
 
 
@@ -28,13 +36,17 @@ Zepto(function($){
 
 
         socket.on("joiningRoom", function(data) {
-            console.log("connected to room: " + data.room);
+
 
             socket.emit("joinsGame", {player: player});
+
 
             socket.on("gameReady", function(data) {
                 console.log("The game has started !");
 
+
+                // Display of player informations
+                
                 if (data.players) {
                     if (data.players[0].name == player.login) {
                         opponent = data.players[1];
@@ -52,11 +64,13 @@ Zepto(function($){
                 });
 
                 $("#board-left .player-health").first().text(opponent.health);
-
                 $("#board-left .player-health").last().text(player.health);
 
-                socket.emit("getStartingCards", {}, function(data) {
 
+
+
+
+                socket.emit("getStartingCards", {}, function(data) {
 
 
                     if (data && data.startingHand && data.deck) {
@@ -96,13 +110,8 @@ Zepto(function($){
 
 
                 /**
-                 *
-                 *  CLICK ON DECK TO DRAW A NEW CARD
-                 *  ONCE PER TURN ONLY
-                 *  COST 1
-                 *
-                 **/
-
+                 * Click on Deck for additionnal card
+                 */
                 $("#player-deck").click(function() {
 
                     if (isMyTurn && !hadDrawnCard) {
@@ -125,13 +134,9 @@ Zepto(function($){
 
 
 
-
                 /**
-                 *
-                 *  CLICK ON END TURN BUTTON
-                 *
-                 ***/
-
+                 * Click on end-turn button
+                 */
                 $("#board-left button").click(function() {
 
                     if (isMyTurn) {
@@ -148,6 +153,9 @@ Zepto(function($){
                 });
 
 
+                /**
+                 * Starts a new turn
+                 */
                 socket.on("newTurn", function() {
                     isMyTurn = true;
                     hadDrawnCard = false;
@@ -162,34 +170,20 @@ Zepto(function($){
                 });
 
 
-                var getFreeCards = function(number) {
-                    socket.emit("getFreeCards", {number: number}, function(cards) {
-                        if (cards.error) {
-                            alert(cards.error);
-                        }
-                        else {
-                            for (var i = 0; i < cards.length; i++) {
-                                addCardToHand(cards[i]);
-                                cardsInHand.push(cards[i]);
-                            }
-                        }
-                    });
-                };
 
-
+                /**
+                 * Opponent Events
+                 */
                 socket.on("oppDrewOneCard", function() {
                     addCardToOpponent();
                 });
-
 
                 socket.on("oppPlayedOneCard", function(result) {
 
                     if (result) {
                         var card = result.card;
-
                         addCardToOpponentBoard(result.position, card);
                         removeCardToOpponent();
-
                     }
                 });
 
@@ -201,7 +195,20 @@ Zepto(function($){
                     }
                 });
 
+                socket.on("oppAttackAnimation", function(data) {
+                    attackAnimation(false, data.index);
+                });
 
+
+                socket.on("attackAnimation", function(data) {
+                    attackAnimation(true, data.index);
+                });
+
+
+
+                /**
+                 * Updates the money for both players
+                 */
                 socket.on("updatePlayersMoney",  function(data) {
 
                     if (data) {
@@ -220,185 +227,192 @@ Zepto(function($){
                         }
                     }
                 });
-            });
 
-            socket.on("disconnected", function() {
-                alert("deconnect");
-                $("#disconnectionContainer").css({
-                    display: "table"
-                });
+                /**
+                 * Updates card health
+                 */
+                socket.on("updateHealth", function(data) {
+                    if (data) {
 
-                socket.emit("wins");
-            });
-
-
-            socket.on("attackAnimation", function(data) {
-                attackAnimation(true, data.index);
-            });
-
-
-            socket.on("oppAttackAnimation", function(data) {
-                attackAnimation(false, data.index);
-            });
-
-
-            var attackAnimation = function(self, index) {
-
-                var $side = null;
-                var top = null;
-                if (self) {
-                    $side = $(playerCardPositions[index]);
-                    top = "-100px";
-                }
-                else {
-                    $side = $(opponentCardPositions[index]);
-                    top = "100px";
-                }
-
-                $side.css({
-                    overflow: "visible"
-                });
-
-                var $attackingCard = $($side.children()[0]);
-
-
-                $attackingCard.animate({
-                    backgroundColor: "red",
-                    "top": top
-                }, 400, 'ease-out', function() {
-
-                    $attackingCard.animate({
-                        backgroundColor: "white",
-                        "top": "0px"
-                    }, 400, 'ease-out', function() {
-                        $side.css({
-                            overflow: "hidden"
-                        });
-                    });
-                });
-
-            };
-
-            socket.on("updateHealth", function(data) {
-                if (data) {
-
-                    var $side = null;
-                    var card = data.card;
-
-                    if (data.playerName == opponent.name) {
-                        $side = $(opponentCardPositions[data.index]);
-                    }
-                    else {
-                        $side = $(playerCardPositions[data.index]);
-                    }
-
-                    var $attackedCard = $($side.children()[0]);
-                    $attackedCard.find(".card-health").text(card.health);
-                }
-            });
-
-
-            socket.on("removeDeadCards", function(data) {
-
-                if(data) {
-
-                    var $side = null;
-
-                    for (var i = 0; i < data.cardLayout.length; i++) {
-
+                        var $side = null;
+                        var card = data.card;
 
                         if (data.playerName == opponent.name) {
-                            $side = $(opponentCardPositions[i]);
-                            $discardPile = $("#opponent-discard");
+                            $side = $(opponentCardPositions[data.index]);
                         }
                         else {
-                            $side = $(playerCardPositions[i]);
-                            $discardPile = $("#player-discard");
+                            $side = $(playerCardPositions[data.index]);
                         }
 
-                        if (!data.cardLayout[i] ) {
+                        var $attackedCard = $($side.children()[0]);
+                        $attackedCard.find(".card-health").text(card.health);
+                    }
+                });
 
-                            var $deadCard = $($side.children()[0]);
+                /**
+                 * Removes the dead cards from the board
+                 */
+                socket.on("removeDeadCards", function(data) {
+                    if(data) {
 
-                            if ($deadCard.length > 0) {
-                                $deadCard.fadeOut(200, function() {
-                                    $(this).remove();
-                                    addCardToDiscardPile($discardPile);
-                                });
+                        var $side = null;
+                        for (var i = 0; i < data.cardLayout.length; i++) {
+
+                            if (data.playerName == opponent.name) {
+                                $side = $(opponentCardPositions[i]);
+                                $discardPile = $("#opponent-discard");
+                            }
+                            else {
+                                $side = $(playerCardPositions[i]);
+                                $discardPile = $("#player-discard");
                             }
 
+                            if (!data.cardLayout[i] ) {
+                                var $deadCard = $($side.children()[0]);
+
+                                if ($deadCard.length > 0) {
+                                    $deadCard.fadeOut(200, function() {
+                                        $(this).remove();
+                                        addCardToDiscardPile($discardPile);
+                                    });
+                                }
+                            }
                         }
-
                     }
-
-                }
-            });
+                });
 
 
-            socket.on("attackedHero", function(data) {
-                if (data) {
+                /**
+                 * Deals damage to one of the players avatar
+                 */
+                socket.on("attackedHero", function(data) {
+                    if (data) {
 
-                    if (data.playerName == opponent.name) {
-                        $("#board-left .player-health").first().text(data.health);
+                        if (data.playerName == opponent.name) {
+                            $("#board-left .player-health").first().text(data.health);
 
-                        $(".avatar-box .screen").first().animate({
-                            backgroundColor: "#BA1B1B",
-                            opacity: 1
-                        }, 300, function() {
-                            $(this).animate({
-                                opacity: 0
-                            }, 600);
-                        });
+                            $(".avatar-box .screen").first().animate({
+                                backgroundColor: "#BA1B1B",
+                                opacity: 1
+                            }, 300, function() {
+                                $(this).animate({
+                                    opacity: 0
+                                }, 600);
+                            });
 
-                        console.log("l'adversaire a " + data.health + " pv");
+                            console.log("l'adversaire a " + data.health + " pv");
+                        }
+                        else {
+                            $("#board-left .player-health").last().text(data.health);
+                            console.log("il me reste " + data.health+ " pv");
+
+                            $(".avatar-box .screen").last().animate({
+                                backgroundColor: "#BA1B1B",
+                                opacity: 1
+                            }, 300, function() {
+                                $(this).animate({
+                                    opacity: 0
+                                }, 600);
+                            });
+                        }
                     }
-                    else {
-                        $("#board-left .player-health").last().text(data.health);
-                        console.log("il me reste " + data.health+ " pv");
+                });
 
-                        $(".avatar-box .screen").last().animate({
-                            backgroundColor: "#BA1B1B",
-                            opacity: 1
-                        }, 300, function() {
-                            $(this).animate({
-                                opacity: 0
-                            }, 600);
-                        });
+                socket.on("disconnected", function() {
+                    $("#disconnectionContainer").css({
+                        display: "table"
+                    });
+
+                    socket.emit("wins");
+                });
+
+
+                socket.on("endGame", function(data) {
+                    if (data) {
+                        socket.emit("quitGame", {});
+
+                        if (data.winner == player.login) {
+
+
+                            $("#endGameContainer h1").text("Vous avez gagné !");
+                            $("#endGameContainer p").text("Du texte pour vous féliciter...");
+                            $("#endGameContainer").css({
+                                display: "table"
+                            });
+
+
+                        }
+                        else {
+                            $("#endGameContainer h1").text("Vous avez perdu !");
+                            $("#endGameContainer p").text("Du texte pour vous encourager...");
+                            $("#endGameContainer").css({
+                                display: "table"
+                            });
+                        }
                     }
-                }
-            });
+                });
 
 
-            socket.on("endGame", function(data) {
-                if (data) {
-                    socket.emit("quitGame", {});
+            });// END GAME READY
 
-                    if (data.winner == player.login) {
+        }); // END JOINING ROOM
 
-
-                        $("#endGameContainer h1").text("Vous avez gagné !");
-                        $("#endGameContainer p").text("Du texte pour vous féliciter...");
-                        $("#endGameContainer").css({
-                            display: "table"
-                        });
+    });// END CONNECT
 
 
-                    }
-                    else {
-                        $("#endGameContainer h1").text("Vous avez perdu !");
-                        $("#endGameContainer p").text("Du texte pour vous encourager...");
-                        $("#endGameContainer").css({
-                            display: "table"
-                        });
-                    }
-                }
-            });
 
+    var attackAnimation = function(self, index) {
+
+        var $side = null;
+        var top = null;
+        if (self) {
+            $side = $(playerCardPositions[index]);
+            top = "-100px";
+        }
+        else {
+            $side = $(opponentCardPositions[index]);
+            top = "100px";
+        }
+
+        $side.css({
+            overflow: "visible"
         });
 
-    });
+        var $attackingCard = $($side.children()[0]);
 
 
+        $attackingCard.animate({
+            backgroundColor: "red",
+            "top": top
+        }, 400, 'ease-out', function() {
+
+            $attackingCard.animate({
+                backgroundColor: "white",
+                "top": "0px"
+            }, 400, 'ease-out', function() {
+                $side.css({
+                    overflow: "hidden"
+                });
+            });
+        });
+
+    };
+
+
+
+    var getFreeCards = function(number) {
+        socket.emit("getFreeCards", {number: number}, function(cards) {
+            if (cards.error) {
+                alert(cards.error);
+            }
+            else {
+                for (var i = 0; i < cards.length; i++) {
+                    addCardToHand(cards[i]);
+                    cardsInHand.push(cards[i]);
+                }
+            }
+        });
+    };
 
 
     var addCardToHand = function(card) {
@@ -564,7 +578,6 @@ Zepto(function($){
 
     var playCard = function() {
 
-
         if(isMyTurn) {
 
             var chosenPosition = $.inArray(this, playerCardPositions);
@@ -623,10 +636,6 @@ Zepto(function($){
             }
             
         }
-
-
     };
-
-
 
 });

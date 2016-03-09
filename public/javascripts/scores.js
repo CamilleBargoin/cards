@@ -1,3 +1,6 @@
+/**
+ * Client-side JS for the score page
+ */
 Zepto(function($){
 
 	var victories = 0;

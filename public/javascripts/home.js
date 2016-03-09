@@ -1,31 +1,36 @@
+/**
+ * Cleint-side JS for the home screen
+ */
 Zepto(function($){
 
     var avatarFilename = null;
     var chosenDeck = null;
 
+
+
+
+    // Selection of an army
     $(".army-option").click(function() {
     	$(".army-option").removeClass("active");
     	$(this).addClass("active");
         
         var deck = $(this).attr("deckName");
-        //console.log("selected deck: " + deckName);
        
-
         $.post('/users/choose-deck', {
             deck: deck
         }, function(e) {
                 chosenDeck = e.deck;
-                console.log(e);
         } );
 
     });
 
-
+    // Displays the avatar picker modal
     $(".avatar").click(function() {
         $("#avatarPickerContainer").toggle();
     });
 
 
+    // Selection of a new avatar
     $(".avatarContainer img").click(function() {
 
         setTimeout(function() {
@@ -40,20 +45,16 @@ Zepto(function($){
 
 
         $.post('/users/update-avatar', {avatar: avatarFilename}, function(response) {
-            console.log(response);
         });
 
     });
 
 
-
+    // Starts the game
     $("#playButton").click(function(e) {
         e.preventDefault();
 
         if (chosenDeck) {
-
-            console.log("start game with " + chosenDeck);
-
             window.open("/game", "_self");
         }
         else {
@@ -63,6 +64,7 @@ Zepto(function($){
 
 
 
+    // Displays the victories and defeats fo the player
     var victories = 0;
     for (var i = 0; i < games.length; i++) {
 
@@ -83,8 +85,6 @@ Zepto(function($){
         }
 
         $gameDate = $("<p class='date'>" + new Date(games[i].at).toLocaleDateString() + "</p>");
-
-
 
         $gameLi.append($gameDate);
         $gameLi.append($gameResult);

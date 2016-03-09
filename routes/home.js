@@ -40,13 +40,19 @@ router.get('/home', function(req, res, next) {
 
             if (user != null) {
 
-
-                // ATTENTION !!!!! A MODIFIER !!!!!!
-                req.session.player = user;
+                req.session.player = {
+                    login: user.login,
+                    deckName: user.deckName,
+                    avatar: user.avatar
+                };
 
                 res.render('home', {
                     title: appName,
-                    player: user,
+                    player: {
+                        login: user.login,
+                        games: user.games,
+                        avatar: user.avatar
+                    },
                     registrationDate: new Date(user.at).toLocaleDateString()
                 });
             }
@@ -63,8 +69,6 @@ router.get('/home', function(req, res, next) {
         req.session.customInfo = "Accès refusé";
         res.redirect("/");
     }
-
-
 });
 
 router.get('/scores', function(req, res, next) {
